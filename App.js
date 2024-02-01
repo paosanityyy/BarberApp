@@ -5,6 +5,13 @@ import { View, Image, Text, StyleSheet, ScrollView, ImageBackground } from 'reac
 import Home from './screens/Home';
 import AppointmentScreen from './screens/AppointmentScreen';
 import SignupScreen from './screens/SignupScreen';
+import LoginScreen from './screens/LoginScreen';
+import ConsultationScreen from './screens/ConsultationScreen';
+import BarbersScreen from './screens/BarbersScreen';
+import ReviewsScreen from './screens/ReviewsScreen';
+import AboutScreen from './screens/AboutScreen';
+import React from 'react';
+
 
 function CustomDrawerContent(props) {
     return (
@@ -42,8 +49,9 @@ export default function App(){
                     },
                 }}
             >
+                <Drawer.Screen name='Login' component={LoginScreen} />
+                {/* <Drawer.Screen name='Signup' component={SignupScreen} /> */}
                 <Drawer.Screen name='Home' component={Home} />
-                <Drawer.Screen name='Signup' component={SignupScreen} />
                 <Drawer.Screen name='Appointment' component={AppointmentScreen} />
             </Drawer.Navigator>
         </NavigationContainer>

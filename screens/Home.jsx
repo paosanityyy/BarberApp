@@ -80,7 +80,7 @@ const styles = {
   },
   button: {
     backgroundColor: '#3e3e3e',
-    padding: 20,
+    padding: 15,
     width: 200,
     marginBottom:10,
     borderRadius: 5
@@ -116,11 +116,13 @@ const styles = {
     marginTop: 10,
     fontSize: 16,
     lineHeight: 24,
+    padding: 15,
   },
   footerText: {
     textAlign: 'center',
     padding: 15,
     marginBottom: 30,
+    marginTop: 30,
   },
   fab: {
     position: 'absolute',

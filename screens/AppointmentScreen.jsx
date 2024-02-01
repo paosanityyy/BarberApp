@@ -108,7 +108,8 @@ const styles = {
 
     pickerItem: {
         fontSize: 16,
-        marginTop:0
+        marginTop: 0
+        
     },
 }
 

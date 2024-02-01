@@ -13,7 +13,7 @@ const SignupScreen = ({ navigation }) => {
                 source={require('../assets/logo.png')}
                 style={styles.logo}
             />
-            <Text>Create Account</Text>
+            <Text style={styles.createTitle}>Create Account</Text>
             <TextInput 
                 placeholder="First Name"
                 // change placeholder color
@@ -39,6 +39,12 @@ const SignupScreen = ({ navigation }) => {
                 style={styles.input}
             />
             <TextInput 
+                placeholder="Username"
+                // change placeholder color
+                placeholderTextColor="#c0c0c0"
+                style={styles.input}
+            />
+            <TextInput 
                 placeholder="Password"
                 // change placeholder color
                 placeholderTextColor="#c0c0c0"
@@ -48,17 +54,27 @@ const SignupScreen = ({ navigation }) => {
                 <Text style={styles.buttonTxt}>Sign Up</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.jumpTo("Login")}>
-                <Text>Already have an account? Login</Text>
+                <Text style={styles.goToLogin}>Already have an account? Login</Text>
             </TouchableOpacity>
         </View>
     );
 };
 
 const styles = {
+    createTitle: {
+        padding: 20,
+        fontSize: 20,
+    },
+    goToLogin
+    : {
+        color: '#3e3e3e',
+        marginTop: 20,
+    },
     container: {
         height: '100%',
         alignItems: 'center',
         backgroundColor: 'white',
+        paddingTop: 50,
     },
     logo: {
         width: 300,
@@ -70,7 +86,7 @@ const styles = {
         height: 40,
         margin: 12,
         borderBottomWidth: 1,
-        padding: 10,
+        padding: 0,
         width: 350,
       },
     button: {
