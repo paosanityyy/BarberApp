@@ -28,8 +28,8 @@ const LoginScreen = ({ navigation }) => {
             <TouchableOpacity style={styles.button} onPress={() => navigation.jumpTo("Home")}>
                 <Text style={styles.buttonTxt}>Login</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.jumpTo("SignupScreen")}>
-                <Text style={styles.goToLogin}>Don't have an account yet? Sign up here</Text>
+            <TouchableOpacity onPress={() => navigation.jumpTo("Signup")}>
+                <Text style={styles.goToLogin}>Don't have an account yet? Sign up</Text>
             </TouchableOpacity>
         </View>
     );

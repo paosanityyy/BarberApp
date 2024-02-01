@@ -38,7 +38,7 @@ export default function App(){
         <NavigationContainer>
             <Drawer.Navigator
                 drawerContent={(props) => <CustomDrawerContent {...props} />}
-                screenOptions={{
+                screenOptions={({ route }) => ({
                     headerTitle: ' ',
                     drawerActiveBackgroundColor: '#c0c0c0',
                     drawerActiveTintColor: '#ffffff',
@@ -47,10 +47,11 @@ export default function App(){
                         shadowColor: 'transparent',
                         elevation: 0,
                     },
-                }}
+                    drawerItemStyle: route.name === 'Signup' ? { display: 'none' } : {},
+                })}
             >
                 <Drawer.Screen name='Login' component={LoginScreen} />
-                {/* <Drawer.Screen name='Signup' component={SignupScreen} /> */}
+                <Drawer.Screen name='Signup' component={SignupScreen} />
                 <Drawer.Screen name='Home' component={Home} />
                 <Drawer.Screen name='Appointment' component={AppointmentScreen} />
             </Drawer.Navigator>
