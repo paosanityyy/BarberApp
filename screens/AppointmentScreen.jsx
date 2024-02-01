@@ -17,12 +17,11 @@ const AppointmentScreen = () => {
     const timeSlots = ['12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM'];
 
     return (
-        <ScrollView style={{ padding: 50 }}>
-            <Text>Barber Appointment</Text>
-
+        <ScrollView style={{ padding: 30 }}>
+            <Text style={{fontSize:'32', textAlign:'center'}}>Barber Appointment</Text>
             <Text style={styles.headerTxt}>Select Barber:</Text>
             <Picker
-                style={styles.dropdown} // Apply your existing style
+                style={styles.dropdown}
                 selectedValue={selectedBarber}
                 onValueChange={(itemValue, itemIndex) => setSelectedBarber(itemValue)}
                 itemStyle={styles.pickerItem} // Add an itemStyle to style each option
@@ -31,11 +30,14 @@ const AppointmentScreen = () => {
                 <Picker.Item label="Kurt" value="Kurt" />
                 <Picker.Item label="Renz" value="Renz" />
             </Picker>
-
             <Text style={styles.headerTxt}>Select Service:</Text>
+            
             <Picker
+                style={styles.dropdown}
                 selectedValue={selectedService}
-                onValueChange={(itemValue, itemIndex) => setSelectedService(itemValue)}>
+                onValueChange={(itemValue, itemIndex) => setSelectedService(itemValue)}
+                itemStyle={styles.pickerItem} // Add an itemStyle to style each option
+            >
                 <Picker.Item label="Haircut" value="Haircut" />
                 <Picker.Item label="Haircut + Beard" value="Haircut + Beard" />
                 <Picker.Item label="Braids" value="Braids" />
@@ -43,6 +45,9 @@ const AppointmentScreen = () => {
 
             <Text style={styles.headerTxt}>Select Date:</Text>
             <Calendar
+                // change color of the calendar
+                
+                style={styles.calendar}
                 onDayPress={(day) => setSelectedDate(day.dateString)}
                 markedDates={{ [selectedDate]: { selected: true } }}
                 minDate={new Date().toISOString().split('T')[0]}
@@ -91,14 +96,14 @@ const styles = {
         textAlign: 'center',
     },
     headerTxt: {
-        fontSize: 16,
+        fontSize: 18,
         marginTop: 20,
-        marginBottom: 20,
+        marginBottom: 0,
     },
     dropdown: {
-        marginTop:0,
-        width: 300,
+        width: 250,
         alignSelf: 'center',
+        margin:0
     },
 
     pickerItem: {

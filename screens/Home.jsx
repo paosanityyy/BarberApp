@@ -61,7 +61,7 @@ const Home = ({ navigation }) => {
         style={styles.fab}
         onPress={() => {}}
       >
-        <FontAwesomeIcon icon={faComment} color='#ffffff' />
+        <FontAwesomeIcon icon={faComment} color='#ffffff' size={24} />
       </TouchableOpacity>
     </View>
   );
@@ -73,20 +73,20 @@ const styles = {
     backgroundColor: 'white'
   },
   logo: {
-    marginTop: 200,
-    width: 300,
-    height: 75,
-    marginBottom: 50,
+    marginTop: 50,
+    width: 375,
+    height: 100,
+    marginBottom: 100,
   },
   button: {
     backgroundColor: '#3e3e3e',
-    padding: 10,
-    width: 175,
+    padding: 20,
+    width: 200,
     marginBottom:10,
     borderRadius: 5
   },
   buttonTxt:{
-    fontSize: 16,
+    fontSize: 18,
     color: 'white',
     textAlign: 'center'
   },
@@ -127,8 +127,8 @@ const styles = {
     backgroundColor: '#3e3e3e',
     right: 16,
     bottom: 16,
-    padding: 16,
-    borderRadius: 30,
+    padding: 20,
+    borderRadius: 100,
   },
   
 };

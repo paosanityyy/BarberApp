@@ -1,23 +1,45 @@
 import 'react-native-gesture-handler'
 import { NavigationContainer } from '@react-navigation/native'
-import { createDrawerNavigator } from '@react-navigation/drawer'
-import { Text } from 'react-native'
+import { DrawerItemList, createDrawerNavigator } from '@react-navigation/drawer'
+import { View, Image, Text, StyleSheet, ScrollView, ImageBackground } from 'react-native';
 import Home from './screens/Home';
 import AppointmentScreen from './screens/AppointmentScreen';
 import SignupScreen from './screens/SignupScreen';
+
+function CustomDrawerContent(props) {
+    return (
+      <ScrollView style={{ flex: 1 }}>
+        <ImageBackground
+          source={require('./assets/nav.png')}
+          style={{ width: undefined, padding:16, paddingTop: 150}}
+        >
+        <View style={styles.drawerHeader}>
+          <Text style={styles.userName}>John Doe</Text>
+          <Text style={styles.userEmail}>johndoe@example.com</Text>
+        </View>
+        </ImageBackground>
+        <DrawerItemList {...props} /> 
+      </ScrollView>
+    );
+  }
+
 
 const Drawer = createDrawerNavigator();
 
 export default function App(){
     return (
         <NavigationContainer>
-            <Image
-                source={require('../assets/logo.png')}
-                style={styles.logo}
-            />
             <Drawer.Navigator
+                drawerContent={(props) => <CustomDrawerContent {...props} />}
                 screenOptions={{
-                    headerTitle:' '
+                    headerTitle: ' ',
+                    drawerActiveBackgroundColor: '#c0c0c0',
+                    drawerActiveTintColor: '#ffffff',
+                    headerTintColor: '#3e3e3e',
+                    headerStyle: {
+                        shadowColor: 'transparent',
+                        elevation: 0,
+                    },
                 }}
             >
                 <Drawer.Screen name='Home' component={Home} />
@@ -26,4 +48,16 @@ export default function App(){
             </Drawer.Navigator>
         </NavigationContainer>
     )
+}
+
+const styles = {
+    userName: {
+      color: 'white',
+      fontSize: 24,
+      fontWeight: 'bold',
+    },
+    userEmail: {
+      color: 'white',
+      fontSize: 16,
+    },
 }
