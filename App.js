@@ -18,7 +18,7 @@ function CustomDrawerContent(props) {
       <ScrollView style={{ flex: 1 }}>
         <ImageBackground
           source={require('./assets/nav.png')}
-          style={{ width: undefined, padding:16, paddingTop: 150}}
+          style={{ width: undefined, padding:16, paddingTop: 150, marginTop: 60}}
         >
         <View style={styles.drawerHeader}>
           <Text style={styles.userName}>John Doe</Text>
@@ -33,13 +33,22 @@ function CustomDrawerContent(props) {
 
 const Drawer = createDrawerNavigator();
 
+const LogoTitle = () => (
+    <Image
+      style={{ width: 100, height: 50, marginTop: 15 }} // Adjust the size according to your logo's dimensions
+      source={require('./assets/logo.png')}
+      resizeMode="contain" // Ensures that the logo is scaled properly within the header
+    />
+);
+
+
 export default function App(){
     return (
         <NavigationContainer>
             <Drawer.Navigator
                 drawerContent={(props) => <CustomDrawerContent {...props} />}
                 screenOptions={({ route }) => ({
-                    headerTitle: ' ',
+                    headerTitle: () => <LogoTitle />,
                     drawerActiveBackgroundColor: '#c0c0c0',
                     drawerActiveTintColor: '#ffffff',
                     headerTintColor: '#3e3e3e',
@@ -50,9 +59,12 @@ export default function App(){
                     drawerItemStyle: route.name === 'Signup' ? { display: 'none' } : {},
                 })}
             >
+                
+                <Drawer.Screen name='Home' component={Home} />
+                <Drawer.Screen name='Barbers' component={BarbersScreen} />
                 <Drawer.Screen name='Login' component={LoginScreen} />
                 <Drawer.Screen name='Signup' component={SignupScreen} />
-                <Drawer.Screen name='Home' component={Home} />
+
                 <Drawer.Screen name='Appointment' component={AppointmentScreen} />
             </Drawer.Navigator>
         </NavigationContainer>

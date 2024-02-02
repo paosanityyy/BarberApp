@@ -27,7 +27,7 @@ const Home = ({ navigation }) => {
         <TouchableOpacity style={styles.button} onPress={() => navigation.jumpTo("Appointment")}>
           <Text style={styles.buttonTxt}>Book Appointment</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {}} style={styles.button}>
+        <TouchableOpacity onPress={() => navigation.jumpTo("Barbers")} style={styles.button}>
           <Text style={styles.buttonTxt}>Barbers</Text>
         </TouchableOpacity>
 
