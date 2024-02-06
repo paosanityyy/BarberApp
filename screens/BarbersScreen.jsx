@@ -2,6 +2,7 @@ import React, {useRef} from 'react';
 import { View, ScrollView, Image, Text, Button, StyleSheet, Animated, TouchableOpacity } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faComment } from '@fortawesome/free-solid-svg-icons';
+import { useFonts } from 'expo-font';
 
 const BarbersScreen = ({ navigation }) => {
     const scrollY = useRef(new Animated.Value(0)).current;
@@ -11,15 +12,19 @@ const BarbersScreen = ({ navigation }) => {
         outputRange: [0, 100], // Adjust the distance the button should move
         extrapolate: 'clamp',
     });
+
+    let [fontsLoaded] = useFonts({
+        'Roboto': require('../assets/fonts/Roboto-Thin.ttf')
+      })
     return (
-        <View>
+        <View style={styles.container}>
             <ScrollView
             onScroll={Animated.event(
                 [{ nativeEvent: { contentOffset: { y: scrollY } } }],
                 { useNativeDriver: false }
             )}
             scrollEventThrottle={16}>
-                <View style={styles.container}>
+                <View>
                     <Text style={styles.title}>Barbers</Text>
                     <Image
                     source={require('../assets/jr.png')} // Adjust the path to your image
@@ -56,7 +61,6 @@ const BarbersScreen = ({ navigation }) => {
 
     const styles = StyleSheet.create({
     container: {
-        alignItems: 'center',
         backgroundColor: 'white',
         paddingTop: 50,
     },
@@ -66,11 +70,11 @@ const BarbersScreen = ({ navigation }) => {
         marginTop: 30,
     },
     title: {
-        fontFamily: 'monospace',
         fontSize: 22,
         fontWeight: 'bold',
         marginTop: 30,
         textAlign: 'center',
+        fontFamily:'Roboto-Thin'
     },
     barberImage: {
         width: 300, // Adjust based on your needs
@@ -79,14 +83,12 @@ const BarbersScreen = ({ navigation }) => {
         borderRadius: 10,
     },
     barberName: {
-        fontFamily: 'monospace',
         fontSize: 20,
         fontWeight: 'bold',
         marginTop: 20,
         textAlign: 'center',
     },
     description: {
-        fontFamily: 'Roboto', // Make sure to link custom fonts in React Native
         fontSize: 15,
         marginTop: 10,
         textAlign: 'center',
