@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     input: {
         color: 'black',
         height: 40,
-        margin: 12,
+        margin: 8,
         borderBottomWidth: 1,
         padding: 0,
         width: 350,

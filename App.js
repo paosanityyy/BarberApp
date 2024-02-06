@@ -10,7 +10,13 @@ import ConsultationScreen from './screens/ConsultationScreen';
 import BarbersScreen from './screens/BarbersScreen';
 import ReviewsScreen from './screens/ReviewsScreen';
 import AboutScreen from './screens/AboutScreen';
+import { useFonts } from 'expo-font';
 import React from 'react';
+import BarberJr from './screens/BarberJr';
+
+
+
+
 
 
 function CustomDrawerContent(props) {
@@ -43,6 +49,7 @@ const LogoTitle = () => (
 
 
 export default function App(){
+   
     return (
         <NavigationContainer>
             <Drawer.Navigator
@@ -57,15 +64,17 @@ export default function App(){
                         elevation: 0,
                     },
                     drawerItemStyle: route.name === 'Signup' ? { display: 'none' } : {},
+                    drawerItemStyle: route.name === 'BarberJr' ? { display: 'none' } : {},
                 })}
             >
                 
                 <Drawer.Screen name='Home' component={Home} />
                 <Drawer.Screen name='Barbers' component={BarbersScreen} />
+                <Drawer.Screen name='BarberJr' component={BarberJr} />
                 <Drawer.Screen name='Login' component={LoginScreen} />
                 <Drawer.Screen name='Signup' component={SignupScreen} />
-
                 <Drawer.Screen name='Appointment' component={AppointmentScreen} />
+                {/* <Drawer.Screen name='AppointmentConfirmation' component={AppointmentConfirmation} /> */}
             </Drawer.Navigator>
         </NavigationContainer>
     )
