@@ -15,15 +15,6 @@ import { useFonts } from 'expo-font';
 import React from 'react';
 import BarberJr from './screens/BarberJr';
 
-
-
-
-
-
-
-
-
-
 function CustomDrawerContent(props) {
     return (
       <ScrollView style={{ flex: 1 }}>
@@ -55,7 +46,7 @@ const LogoTitle = () => (
 
 export default function App(){
     let [fontsLoaded] = useFonts({
-      'Roboto': require('./assets/fonts/Roboto-Thin.ttf')
+      'Roboto': require('./assets/fonts/Roboto-Light.ttf')
     })
    
     return (
@@ -71,15 +62,17 @@ export default function App(){
                         shadowColor: 'transparent',
                         elevation: 0,
                     },
-                    drawerItemStyle: route.name === 'Signup' ? { display: 'none' } : {},
-                    drawerItemStyle: route.name === 'BarberJr' ? { display: 'none' } : {},
+                    drawerItemStyle: [
+                      route.name === 'Signup' ? { display: 'none' } : {},
+                      route.name === 'BarberJr' ? { display: 'none' } : {},
+                    ]
                 })}
             >
                 
                 <Drawer.Screen name='Home' component={Home} />
                 <Drawer.Screen name='Barbers' component={BarbersScreen} />
-                <Drawer.Screen name='Login' component={LoginScreen} />  
                 <Drawer.Screen name='BarberJr' component={BarberJr} />
+                <Drawer.Screen name='Login' component={LoginScreen} />  
                 <Drawer.Screen name='Signup' component={SignupScreen} />
                 <Drawer.Screen name='Appointment' component={AppointmentScreen} />
                 {/* <Drawer.Screen name='AppointmentConfirmation' component={AppointmentConfirmation} /> */}

@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'black',
     marginTop: 10,
+    fontFamily: 'Roboto',
   },
   barbers: {
     paddingTop: 0,
