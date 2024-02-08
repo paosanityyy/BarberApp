@@ -81,10 +81,11 @@ const styles = {
   },
   button: {
     backgroundColor: '#3e3e3e',
-    padding: 15,
+    padding: 12,
     width: 200,
     marginBottom:10,
-    borderRadius: 5
+    borderRadius: 5,
+    fontSize: 16,
   },
   buttonTxt:{
     fontSize: 18,
@@ -117,7 +118,7 @@ const styles = {
     marginTop: 10,
     fontSize: 16,
     lineHeight: 24,
-    padding: 15,
+    padding: 10,
   },
   footerText: {
     textAlign: 'center',
@@ -125,7 +126,8 @@ const styles = {
     marginBottom: 30,
     marginTop: 30,
   },
-  fab: {
+ 
+   fab: {
     position: 'absolute',
     backgroundColor: '#3e3e3e',
     right: 16,
@@ -133,7 +135,6 @@ const styles = {
     padding: 20,
     borderRadius: 100,
   },
-  
 };
 
 export default Home;

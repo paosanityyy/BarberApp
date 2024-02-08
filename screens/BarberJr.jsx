@@ -2,10 +2,9 @@ import React, { useRef } from 'react';
 import { View, ScrollView, Image, Text, StyleSheet, Animated, TouchableOpacity } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faComment } from '@fortawesome/free-solid-svg-icons';
-import BarberJr from './BarberJr';
 
 
-const BarbersScreen = ({ navigation }) => {
+const BarberJr = ({ navigation }) => {
   const scrollY = useRef(new Animated.Value(0)).current;
 
   const translateY = scrollY.interpolate({
@@ -16,7 +15,7 @@ const BarbersScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-        <Text style={styles.title}>Meet Our Barbers</Text>
+        <Text style={styles.title}>Meet our barbers</Text>
       <ScrollView
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
@@ -25,10 +24,9 @@ const BarbersScreen = ({ navigation }) => {
         scrollEventThrottle={16}
       >
         <View  style={styles.barbers}>
-          <View style={styles.gridContainer}>
             <TouchableOpacity
               style={styles.barbersButton}
-              onPress={() => navigation.jumpTo("BarberJr")}
+              onPress={() => {}}
             >
               <Image
                 source={require('../assets/jr.png')}
@@ -36,38 +34,8 @@ const BarbersScreen = ({ navigation }) => {
               />
               <Text style={styles.barbersButtonTxt}>JR</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.barbersButton}
-              onPress={() => {}}
-            >
-              <Image
-                source={require('../assets/kurt.png')}
-                style={styles.barberImage}
-              />
-              <Text style={styles.barbersButtonTxt}>Renz</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.barbersButton}
-              onPress={() => {}}
-            >
-              <Image
-                source={require('../assets/renz.png')}
-                style={styles.barberImage}
-              />
-              <Text style={styles.barbersButtonTxt}>Kurt</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.barbersButton}
-              onPress={() => {}}
-            >
-              <Image
-                source={require('../assets/henok.png')}
-                style={styles.barberImage}
-              />
-              <Text style={styles.barbersButtonTxt}>Henok</Text>
-            </TouchableOpacity>
+        
           </View>
-        </View>
       </ScrollView>
 
       <Text style={styles.footer}>© 2023 Central Studios. All Rights Reserved.</Text>
@@ -109,15 +77,15 @@ const styles = StyleSheet.create({
     margin: 5,
     borderRadius: 10,
     alignItems: 'center',
+    flexDirection: 'column',
   },
   barbersButtonTxt: {
     fontSize: 16,
     color: 'black',
     marginTop: 10,
-    fontFamily: 'Roboto',
   },
   barbers: {
-    paddingTop: 0,
+    paddingTop: 50,
   },
   footer: {
     textAlign: 'center',
@@ -133,13 +101,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20, // Add padding on the sides
     borderRadius: 100,
   },
-  gridContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    padding: 0,
-    margin: 0,
-  },
+
 });
 
-export default BarbersScreen;
+export default BarberJr;
