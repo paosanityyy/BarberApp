@@ -31,6 +31,7 @@ const Home = ({ navigation }) => {
           <Text style={styles.buttonTxt}>Barbers</Text>
         </TouchableOpacity>
 
+
         
 
         <Text style={styles.sectionTitle}><View style={styles.separator} />About Central Studios</Text>
