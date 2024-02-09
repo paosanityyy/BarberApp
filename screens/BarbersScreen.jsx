@@ -16,7 +16,7 @@ const BarbersScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-        <Text style={styles.title}>Meet Our Barbers</Text>
+        <Text style={styles.title}>Meet our barbers</Text>
       <ScrollView
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
@@ -96,8 +96,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
   },
   barberImage: {
-    width: 100,
-    height: 100,
+    width: 120,
+    height: 120,
     borderRadius: 100,
     marginTop: 15,
   },
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#e1e1e1',
     padding: 0,
     width: 160,
-    height: 160,
+    height: 190,
     margin: 5,
     borderRadius: 10,
     alignItems: 'center',
@@ -113,7 +113,8 @@ const styles = StyleSheet.create({
   barbersButtonTxt: {
     fontSize: 16,
     color: 'black',
-    marginTop: 10,
+    marginTop: 20,
+    fontFamily: 'Roboto',
   },
   barbers: {
     paddingTop: 0,
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'center',
     padding: 0,
-    margin: 0,
+    margin: 5,
   },
 });
 

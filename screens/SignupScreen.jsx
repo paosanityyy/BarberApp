@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     createTitle: {
         padding: 20,
         fontSize: 20,
+        fontFamily: 'Roboto',
     },
     goToLogin
     : {
