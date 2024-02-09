@@ -9,9 +9,9 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 // Slideshow component
 const Slideshow = () => {
   const images = [
-    require('../assets/jc1.png'),
-    require('../assets/jc2.png'),
-    require('../assets/jc1.png'),
+    require('../assets/k1.jpg'),
+    require('../assets/k2.jpg'),
+    require('../assets/k3.jpg'),
   ];
 
   const [currentIndex, setCurrentIndex] = React.useState(0);
@@ -41,7 +41,7 @@ const Slideshow = () => {
 };
 
 
-const BarberJr = ({ navigation }) => {
+const BarberKurt = ({ navigation }) => {
   const scrollY = useRef(new Animated.Value(0)).current;
 
   const translateY = scrollY.interpolate({
@@ -65,16 +65,16 @@ const BarberJr = ({ navigation }) => {
             onPress={() => {}}
           >
             <Image
-              source={require('../assets/jr.png')}
+              source={require('../assets/renz.png')}
               style={styles.barberImage}
             />
             <View style={styles.barberInfo}>
-              <Text style={styles.barbersButtonTxt}>JR</Text>
-              <Text style={styles.socialLink}>Instagram: @esq-cutz</Text>
+              <Text style={styles.barbersButtonTxt}>Kurt</Text>
+              <Text style={styles.socialLink}>Instagram: @kurtioo</Text>
             </View>
           </TouchableOpacity>
           <Text style={styles.sectionText}>
-          Meet JR, our skilled barber at Central Studios. With a flair for modern styles and meticulous attention to detail, JR creates personalized and trendy haircuts tailored to your unique taste. Experience the art of hairstyling with JR – where expertise meets a friendly touch for a confident and stylish look every time. </Text>
+          Meet Kurt, our talented barber at Central Studios. With a keen eye for detail and a flair for creativity, Kurt specializes in crafting unique and stylish haircuts. Whether you're seeking a classic look or a modern trend, Kurt's expertise and passion for barbering ensure a personalized and top-notch experience.</Text>
 
           {/* Include the Slideshow component */}
           <Slideshow />
@@ -212,4 +212,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BarberJr;
+export default BarberKurt;

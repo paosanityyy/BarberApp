@@ -16,7 +16,7 @@ const BarbersScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-        <Text style={styles.title}>Meet Our Barbers</Text>
+        <Text style={styles.title}>Meet our barbers</Text>
       <ScrollView
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
@@ -38,7 +38,7 @@ const BarbersScreen = ({ navigation }) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.barbersButton}
-              onPress={() => {}}
+              onPress={() => navigation.jumpTo("BarberRenz")}
             >
               <Image
                 source={require('../assets/kurt.png')}
@@ -48,7 +48,7 @@ const BarbersScreen = ({ navigation }) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.barbersButton}
-              onPress={() => {}}
+              onPress={() => navigation.jumpTo("BarberKurt")}
             >
               <Image
                 source={require('../assets/renz.png')}
@@ -58,7 +58,7 @@ const BarbersScreen = ({ navigation }) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.barbersButton}
-              onPress={() => {}}
+              onPress={() => navigation.jumpTo("BarberHenok")}
             >
               <Image
                 source={require('../assets/henok.png')}
@@ -90,14 +90,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between', // Aligns children at the beginning and end of the container
   },
   title: {
-    fontSize: 25,
+    fontSize: 24,
     margin: 30,
     textAlign: 'center',
     fontFamily: 'Roboto',
   },
   barberImage: {
-    width: 100,
-    height: 100,
+    width: 120,
+    height: 120,
     borderRadius: 100,
     marginTop: 15,
   },
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#e1e1e1',
     padding: 0,
     width: 160,
-    height: 160,
+    height: 190,
     margin: 5,
     borderRadius: 10,
     alignItems: 'center',
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   barbersButtonTxt: {
     fontSize: 16,
     color: 'black',
-    marginTop: 10,
+    marginTop: 15,
     fontFamily: 'Roboto',
   },
   barbers: {
@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 30,
     padding: 15,
+    fontWeight: '200',
   },
   fab: {
     position: 'absolute',
@@ -138,7 +139,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'center',
     padding: 0,
-    margin: 0,
+    margin: 5,
   },
 });
 
