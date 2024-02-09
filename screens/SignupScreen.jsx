@@ -5,8 +5,6 @@ import { faComment } from '@fortawesome/free-solid-svg-icons';
 import { TextInput } from 'react-native-gesture-handler';
 
 const SignupScreen = ({ navigation }) => {
-    
-    
     return (
         <View style={styles.container}>
             <Image
@@ -66,10 +64,10 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontFamily: 'Roboto',
     },
-    goToLogin
-    : {
+    goToLogin: {
         color: '#3e3e3e',
         marginTop: 20,
+        fontFamily: 'Roboto',
     },
     container: {
         height: '100%',
@@ -89,6 +87,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         padding: 0,
         width: 350,
+        fontFamily: 'Roboto',
       },
     button: {
         marginTop: 20,
@@ -101,7 +100,8 @@ const styles = StyleSheet.create({
     buttonTxt:{
         fontSize: 16,
         color: 'white',
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily: 'Roboto',
     },
       
 })

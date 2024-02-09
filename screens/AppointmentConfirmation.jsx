@@ -37,9 +37,9 @@ const styles = StyleSheet.create({
     },
     confirmHeader: {
         fontSize: 24,
-        fontWeight: 'bold',
         textAlign: 'center',
         marginBottom: 20,
+        fontFamily: 'Roboto',
         // Removed marginBottom to ensure vertical centering
     },
     confirmContainer: {

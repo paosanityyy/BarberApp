@@ -38,7 +38,7 @@ const BarbersScreen = ({ navigation }) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.barbersButton}
-              onPress={() => {}}
+              onPress={() => navigation.jumpTo("BarberRenz")}
             >
               <Image
                 source={require('../assets/kurt.png')}
@@ -48,7 +48,7 @@ const BarbersScreen = ({ navigation }) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.barbersButton}
-              onPress={() => {}}
+              onPress={() => navigation.jumpTo("BarberKurt")}
             >
               <Image
                 source={require('../assets/renz.png')}
@@ -58,7 +58,7 @@ const BarbersScreen = ({ navigation }) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.barbersButton}
-              onPress={() => {}}
+              onPress={() => navigation.jumpTo("BarberHenok")}
             >
               <Image
                 source={require('../assets/henok.png')}
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between', // Aligns children at the beginning and end of the container
   },
   title: {
-    fontSize: 25,
+    fontSize: 24,
     margin: 30,
     textAlign: 'center',
     fontFamily: 'Roboto',
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   barbersButtonTxt: {
     fontSize: 16,
     color: 'black',
-    marginTop: 20,
+    marginTop: 15,
     fontFamily: 'Roboto',
   },
   barbers: {
@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 30,
     padding: 15,
+    fontWeight: '200',
   },
   fab: {
     position: 'absolute',

@@ -14,15 +14,9 @@ import AboutScreen from './screens/AboutScreen';
 import { useFonts } from 'expo-font';
 import React from 'react';
 import BarberJr from './screens/BarberJr';
-
-
-
-
-
-
-
-
-
+import BarberRenz from './screens/BarberRenz';
+import BarberKurt from './screens/BarberKurt';
+import BarberHenok from './screens/BarberHenok';
 
 function CustomDrawerContent(props) {
     return (
@@ -46,7 +40,7 @@ const Drawer = createDrawerNavigator();
 
 const LogoTitle = () => (
     <Image
-      style={{ width: 100, height: 50, marginTop: 15 }} // Adjust the size according to your logo's dimensions
+      style={{ width: 120, height: 50, marginTop: 15 }} // Adjust the size according to your logo's dimensions
       source={require('./assets/logo.png')}
       resizeMode="contain" // Ensures that the logo is scaled properly within the header
     />
@@ -55,7 +49,7 @@ const LogoTitle = () => (
 
 export default function App(){
     let [fontsLoaded] = useFonts({
-      'Roboto': require('./assets/fonts/Roboto-Thin.ttf')
+      'Roboto': require('./assets/fonts/Roboto-Light.ttf')
     })
    
     return (
@@ -71,15 +65,23 @@ export default function App(){
                         shadowColor: 'transparent',
                         elevation: 0,
                     },
-                    drawerItemStyle: route.name === 'Signup' ? { display: 'none' } : {},
-                    drawerItemStyle: route.name === 'BarberJr' ? { display: 'none' } : {},
+                    drawerItemStyle: [
+                      route.name === 'Signup' ? { display: 'none' } : {},
+                      route.name === 'BarberJr' ? { display: 'none' } : {},
+                      route.name === 'BarberRenz' ? { display: 'none' } : {},
+                      route.name === 'BarberKurt' ? { display: 'none' } : {},
+                      route.name === 'BarberHenok' ? { display: 'none' } : {},
+                    ]
                 })}
             >
                 
                 <Drawer.Screen name='Home' component={Home} />
                 <Drawer.Screen name='Barbers' component={BarbersScreen} />
-                <Drawer.Screen name='Login' component={LoginScreen} />  
                 <Drawer.Screen name='BarberJr' component={BarberJr} />
+                <Drawer.Screen name='BarberRenz' component={BarberRenz} />
+                <Drawer.Screen name='BarberKurt' component={BarberKurt} />
+                <Drawer.Screen name='BarberHenok' component={BarberHenok} />
+                <Drawer.Screen name='Login' component={LoginScreen} />  
                 <Drawer.Screen name='Signup' component={SignupScreen} />
                 <Drawer.Screen name='Appointment' component={AppointmentScreen} />
                 {/* <Drawer.Screen name='AppointmentConfirmation' component={AppointmentConfirmation} /> */}

@@ -13,7 +13,7 @@ const AppointmentScreen = ({navigation}) => {
     const [isBarberModalVisible, setBarberModalVisible] = useState(false);
     const [isServiceModalVisible, setServiceModalVisible] = useState(false);
 
-    const barbers = ['JR', 'Kurt', 'Renz'];
+    const barbers = ['JR', 'Kurt', 'Renz', 'Henok'];
     const services = ['Haircut', 'Haircut + Beard', 'Braids'];
 
     const handleAppointmentSubmit = () => {
@@ -68,81 +68,83 @@ const AppointmentScreen = ({navigation}) => {
      };
 
     return (
-        <View style={styles.container}>
+        <View style={{backgroundColor: 'white'}}>
             <ScrollView>
-
-                {/* Select Barber */}
-                <View style={styles.dropdownContainer}>
-                    <Text style={styles.headerTxt}>Select Barber: </Text>
-                    <TouchableOpacity
-                        style={styles.dropdownButton}
-                        onPress={() => setBarberModalVisible(true)}
-                    >
-                        <View style={{flexDirection:'row', justifyContent: 'space-between', alignItems:'center'}}>
-                            <Text>{selectedBarber}</Text>
-                            <FontAwesomeIcon icon={faChevronDown} size={12} color="#000" />
-                        </View>
-                    </TouchableOpacity>
-                    {isBarberModalVisible && renderModalContent(barbers, selectedBarber, setSelectedBarber, setBarberModalVisible)}
-
-                </View>
-                
-                {/* Select Service */}
-                <View style={styles.dropdownContainer}>
-                    <Text style={styles.headerTxt}>Select Service:</Text>
-                    <TouchableOpacity
-                        style={styles.dropdownButton}
-                        onPress={() => setServiceModalVisible(true)}
-                    >
-                        <View style={{flexDirection:'row', justifyContent: 'space-between', alignItems:'center'}}>
-                            <Text>{selectedService}</Text>
-                            <FontAwesomeIcon icon={faChevronDown} size={12} color="#000" />
-                        </View>
-                    </TouchableOpacity>
-                    {isServiceModalVisible && renderModalContent(services, selectedService, setSelectedService, setServiceModalVisible)}
-                </View>
-
-                <Text style={styles.headerTxt}>Select Date:</Text>
-                <Calendar
-                    // change color of the calendar
-                    
-                    style={styles.calendar}
-                    onDayPress={(day) => setSelectedDate(day.dateString)}
-                    markedDates={{ [selectedDate]: { selected: true, selectedColor: 'grey' }}}
-                    minDate={new Date().toISOString().split('T')[0]}
-                    theme={{
-                        selectedDayBackgroundColor: '#c0c0c0',
-                        todayTextColor: 'red',
-                        arrowColor: '#c0c0c0',
-                        dotColor: 'red',
-                        textDayFontWeight: '500',
-                        textMonthFontWeight: 'bold',
-                        textDayHeaderFontWeight: '500',
-                        textDayFontSize: 14,
-                        textMonthFontSize: 16,
-                        textDayHeaderFontSize: 14,
-                    }}
-                />
-                
-                <Text style={styles.headerTxt}>Select Time:</Text>
-                <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between'}}>
-                    {timeSlots.map((time, index) => (
-                        // Touchable opacity to select the time 4 rows 2 columns
+                <View style={styles.container}>
+                    {/* Select Barber */}
+                    <View style={styles.dropdownContainer}>
+                        <Text style={styles.headerTxt}>Select Barber: </Text>
                         <TouchableOpacity
-                            key={index}
-                            style={{
-                                padding: 10,
-                                backgroundColor: selectedTime === time ? '#3e3e3e' : 'lightgrey',
-                                borderRadius: 5,
-                                margin: 5,
-                                width: '45%',
-                                alignItems: 'center',
-                            }}
-                            onPress={() => setSelectedTime(time)}>
-                            <Text style={{ color: selectedTime === time ? 'white' : 'black' }}>{time}</Text>
+                            style={styles.dropdownButton}
+                            onPress={() => setBarberModalVisible(true)}
+                        >
+                            <View style={{flexDirection:'row', justifyContent: 'space-between', alignItems:'center'}}>
+                                <Text style={styles.selectedField}>{selectedBarber}</Text>
+                                <FontAwesomeIcon icon={faChevronDown} size={12} color="#000" />
+                            </View>
                         </TouchableOpacity>
-                    ))}
+                        {isBarberModalVisible && renderModalContent(barbers, selectedBarber, setSelectedBarber, setBarberModalVisible)}
+
+                    </View>
+                    
+                    {/* Select Service */}
+                    <View style={styles.dropdownContainer}>
+                        <Text style={styles.headerTxt}>Select Service:</Text>
+                        <TouchableOpacity
+                            style={styles.dropdownButton}
+                            onPress={() => setServiceModalVisible(true)}
+                        >
+                            <View style={{flexDirection:'row', justifyContent: 'space-between', alignItems:'center'}}>
+                                <Text style={styles.selectedField}>{selectedService}</Text>
+                                <FontAwesomeIcon icon={faChevronDown} size={12} color="#000" />
+                            </View>
+                        </TouchableOpacity>
+                        {isServiceModalVisible && renderModalContent(services, selectedService, setSelectedService, setServiceModalVisible)}
+                    </View>
+
+                    <Text style={styles.headerTxt}>Select Date:</Text>
+                    <Calendar
+                        // change color of the calendar
+                        
+                        style={styles.calendar}
+                        onDayPress={(day) => setSelectedDate(day.dateString)}
+                        markedDates={{ [selectedDate]: { selected: true, selectedColor: 'grey' }}}
+                        minDate={new Date().toISOString().split('T')[0]}
+                        theme={{
+                            selectedDayBackgroundColor: '#c0c0c0',
+                            todayTextColor: 'red',
+                            arrowColor: '#c0c0c0',
+                            dotColor: 'red',
+                            textDayFontWeight: '500',
+                            textMonthFontWeight: 'bold',
+                            textDayHeaderFontWeight: '500',
+                            textDayFontSize: 14,
+                            textMonthFontSize: 16,
+                            textDayHeaderFontSize: 14,
+                        }}
+                    />
+                    
+                    <Text style={styles.headerTxt}>Select Time:</Text>
+                    <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between'}}>
+                        {timeSlots.map((time, index) => (
+                            // Touchable opacity to select the time 4 rows 2 columns
+                            <TouchableOpacity
+                                key={index}
+                                style={{
+                                    padding: 10,
+                                    backgroundColor: selectedTime === time ? '#3e3e3e' : 'lightgrey',
+                                    borderRadius: 5,
+                                    margin: 5,
+                                    width: '45%',
+                                    alignItems: 'center',
+                                }}
+                                onPress={() => setSelectedTime(time)}>
+                                <Text style={{ color: selectedTime === time ? 'white' : 'black', fontFamily:'Roboto' }}>{time}</Text>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
                 </View>
+                
 
                 <TouchableOpacity style={styles.button} onPress={handleOpenConfirmation}>
                     <Text style={styles.buttonTxt}>Book Appointment</Text>
@@ -172,7 +174,7 @@ const styles = StyleSheet.create({
     // Add your existing styles here
     container:{
         backgroundColor:'white',
-        padding: 20,
+        padding: 40,
     },
     dropdownContainer:{
         flexDirection: 'row',
@@ -190,16 +192,19 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: 'white',
         textAlign: 'center',
+        fontFamily: 'Roboto',
     },
     headerTxt: {
         fontSize: 16,
         marginTop: 20,
         marginBottom: 0,
+        fontFamily: 'Roboto',
     },
-    calendar:{
-        // shrink calendar
-        width: '100%',
+    calendar: {
+        marginTop: 10,
+        marginBottom: 20,
     },
+    
     fab: {
         position: 'absolute',
         backgroundColor: '#3e3e3e',
@@ -233,6 +238,9 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#ccc',
         borderRadius: 5,
+    },
+    selectedField: {
+        fontFamily: 'Roboto',
     },
     // Extend your existing styles
 });
