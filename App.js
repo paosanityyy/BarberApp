@@ -74,7 +74,7 @@ export default function App(){
                 <Drawer.Screen name='BarberJr' component={BarberJr} />
                 <Drawer.Screen name='Login' component={LoginScreen} />  
                 <Drawer.Screen name='Signup' component={SignupScreen} />
-
+                <Drawer.Screen name='Consultation' component={ConsultationScreen} />
                 <Drawer.Screen name='Appointment' component={AppointmentScreen} />
                 {/* <Drawer.Screen name='AppointmentConfirmation' component={AppointmentConfirmation} /> */}
             </Drawer.Navigator>
