@@ -5,8 +5,6 @@ import { faComment } from '@fortawesome/free-solid-svg-icons';
 import { TextInput } from 'react-native-gesture-handler';
 
 const SignupScreen = ({ navigation }) => {
-    
-    
     return (
         <View style={styles.container}>
             <Image
