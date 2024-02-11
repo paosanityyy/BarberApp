@@ -1,20 +1,47 @@
 import React, { useState } from 'react';
-import {FlatList, TouchableOpacity, View} from "react-native";
+import {FlatList, TouchableOpacity, View, Text} from "react-native";
 import {TextInput} from "react-native-gesture-handler";
 
-const createBarber = () => {
+const CreateBarber = () => {
     const [barberFirstName, setBarberFirstName] = useState('');
     const [barberLastName, setBarberLastName] = useState('');
     const [barberEmail, setBarberEmail] = useState('');
     const [barberPhone, setBarberPhone] = useState('');
+    const [barberAddress, setBarberAddress] = useState('');
     const [barbers, setBarbers] = useState([]);
 
     const addBarber = () => {
-        setBarbers([...barbers, { firstName: barberFirstName, lastName: barberLastName, email: barberEmail, phone: barberPhone }]);
+
+        const trimmedEmail = barberEmail.trim();
+        const trimmedPhone = barberPhone.trim();
+
+        if (!barberFirstName || !barberLastName || !barberAddress || !barberEmail || !barberPhone) {
+            alert('Please fill in all fields');
+            return; // Exit the function early if any field is empty
+        }
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(trimmedEmail)) {
+            alert('Please enter a valid email address');
+            return;
+        }
+        const phonePattern = /^\d{3}-\d{3}-\d{4}$/;
+        if (!phonePattern.test(trimmedPhone)) {
+            alert('Please enter a phone number in the format XXX-XXX-XXXX');
+            return;
+        }
+
+        setBarbers([...barbers, { firstName: barberFirstName, lastName: barberLastName, address: barberAddress, email: trimmedEmail, phone: trimmedPhone }]);
         setBarberFirstName('');
         setBarberLastName('');
+        setBarberAddress('')
         setBarberEmail('');
         setBarberPhone('');
+    };
+
+    const deleteBarber = (index) => {
+        const updatedBarbers = [...barbers];
+        updatedBarbers.splice(index, 1); // Remove the barber at the specified index
+        setBarbers(updatedBarbers);
     };
 
     return (
@@ -30,6 +57,12 @@ const createBarber = () => {
                 placeholder="Last Name"
                 value={barberLastName}
                 onChangeText={setBarberLastName}
+                style={styles.input}
+            />
+            <TextInput
+                placeholder="Address"
+                value={barberAddress}
+                onChangeText={setBarberAddress}
                 style={styles.input}
             />
             <TextInput
@@ -51,9 +84,9 @@ const createBarber = () => {
                 data={barbers}
                 renderItem={({ item }) => (
                     <View style={styles.barberCard}>
-                        <Text>{item.firstName} {item.lastName}</Text>
-                        <Text>{item.email}</Text>
-                        <Text>{item.phone}</Text>
+                        <Text>Name: {item.firstName} {item.lastName}</Text>
+                        <Text>Email: {item.email}</Text>
+                        <Text>Phone Number: {item.phone}</Text>
                     </View>
                 )}
             />
@@ -61,7 +94,7 @@ const createBarber = () => {
     );
 }
 
-export default createBarber;
+export default CreateBarber;
 
 const styles = {
     createTitle: {
@@ -73,7 +106,7 @@ const styles = {
         height: '100%',
         alignItems: 'center',
         backgroundColor: 'white',
-        paddingTop: 150,
+        paddingTop: 20,
     },
     input: {
         color: 'black',

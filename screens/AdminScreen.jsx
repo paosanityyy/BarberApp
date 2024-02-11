@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import createBarber from './createBarber'; //
+import React, { } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-const AdminScreen = () => {
-    const [showCreateBarber, setShowCreateBarber] = useState(false);
-
+const AdminScreen = ({ navigation }) => {
     const handleCreateBarberClick = () => {
-        setShowCreateBarber(true);
+        navigation.navigate('CreateBarber');
     };
 
     return (
@@ -15,12 +12,11 @@ const AdminScreen = () => {
             <TouchableOpacity style={styles.button} onPress={handleCreateBarberClick}>
                 <Text style={styles.buttonText}>Create Barber Profile</Text>
             </TouchableOpacity>
-            {showCreateBarber && <createBarber />}
         </View>
     );
 };
 
-const styles = {
+const styles  = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
@@ -29,7 +25,7 @@ const styles = {
     },
     title: {
         fontSize: 24,
-        marginBottom: 20,
+        marginBottom: 50,
     },
     button: {
         backgroundColor: '#3e3e3e',
@@ -41,7 +37,6 @@ const styles = {
         color: '#fff',
         fontSize: 18,
     },
-};
+});
 
 export default AdminScreen;
-
