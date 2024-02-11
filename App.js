@@ -1,16 +1,13 @@
 import 'react-native-gesture-handler'
 import {NavigationContainer} from '@react-navigation/native'
 import {DrawerItemList, createDrawerNavigator} from '@react-navigation/drawer'
-import {View, Image, Text, StyleSheet, ScrollView, ImageBackground} from 'react-native';
+import {View, Image, Text, ScrollView, ImageBackground} from 'react-native';
 import Home from './screens/Home';
 import AppointmentScreen from './screens/AppointmentScreen';
 import SignupScreen from './screens/SignupScreen';
 import LoginScreen from './screens/LoginScreen';
 import ConsultationScreen from './screens/ConsultationScreen';
 import BarbersScreen from './screens/BarbersScreen';
-import AppointmentConfirmation from './screens/AppointmentConfirmation';
-import ReviewsScreen from './screens/ReviewsScreen';
-import AboutScreen from './screens/AboutScreen';
 import {useFonts} from 'expo-font';
 import React from 'react';
 import BarberJr from './screens/BarberJr';
@@ -74,6 +71,7 @@ export default function App() {
                         route.name === 'BarberKurt' ? {display: 'none'} : {},
                         route.name === 'BarberHenok' ? {display: 'none'} : {},
                         route.name === 'CreateBarber' ? {display: 'none'} : {},
+                        route.name === 'Admin' ? {display: 'none'} : {},
                     ]
                 })}
             >

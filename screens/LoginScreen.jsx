@@ -1,11 +1,48 @@
-import React, { useRef } from 'react';
-import { ScrollView, View, Text, Image, Button, TouchableOpacity, Animated, StyleSheet} from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faComment } from '@fortawesome/free-solid-svg-icons';
+import React, { useState } from 'react';
+import {  View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
+
 import { TextInput } from 'react-native-gesture-handler';
-import Signup from './SignupScreen';
+
 
 const LoginScreen = ({ navigation }) => {
+
+    const [userName, setUserName] = useState('');
+    const [userPassword, setUserPassword] = useState('');
+    const [users] = useState([
+        {username: 'admin', password: 'admin'},
+        {username: 'user', password: 'user'},
+    ]);
+
+    const loginUser = () => {
+        if (!userName || !userPassword) {
+            alert('Please fill in all fields');
+            return;
+        }
+        // Check if the user is the admin
+        if (userName === 'admin' && userPassword === 'admin') {
+            // Navigate to the AdminScreen
+            navigation.navigate('Admin');
+            // Clear the input fields
+            setUserName('');
+            setUserPassword('');
+            return;
+        }
+        const matchedUser = users.find(user => user.username === userName && user.password === userPassword);
+
+        if (matchedUser) {
+            // Credentials match, navigate to the Home screen
+            navigation.navigate('Home');
+        } else {
+            // Credentials do not match, display an alert
+            alert('Invalid username or password');
+        }
+
+        // Clear the input fields
+        setUserName('');
+        setUserPassword('');
+    };
+
+
     return (
         <View style={styles.container}>
             <Image
@@ -17,15 +54,22 @@ const LoginScreen = ({ navigation }) => {
                 placeholder="Username"
                 // change placeholder color
                 placeholderTextColor="#c0c0c0"
+                value={userName}
+                onChangeText={setUserName}
                 style={styles.input}
+                autoCapitalize="none"
             />
             <TextInput 
                 placeholder="Password"
                 // change placeholder color
                 placeholderTextColor="#c0c0c0"
+                value={userPassword}
+                onChangeText={setUserPassword}
                 style={styles.input}
+                autoCapitalize="none"
+                secureTextEntry={true}
             />
-            <TouchableOpacity style={styles.button} onPress={() => navigation.jumpTo("Home")}>
+            <TouchableOpacity style={styles.button} onPress={loginUser}>
                 <Text style={styles.buttonTxt}>Login</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.jumpTo("Signup")}>
@@ -51,7 +95,7 @@ const styles = StyleSheet.create({
         height: '100%',
         alignItems: 'center',
         backgroundColor: 'white',
-        paddingTop: 150,
+        paddingTop: 20,
     },
     logo: {
         width: 300,
