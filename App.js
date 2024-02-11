@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler'
-import { NavigationContainer } from '@react-navigation/native'
-import { DrawerItemList, createDrawerNavigator } from '@react-navigation/drawer'
-import { View, Image, Text, StyleSheet, ScrollView, ImageBackground } from 'react-native';
+import {NavigationContainer} from '@react-navigation/native'
+import {DrawerItemList, createDrawerNavigator} from '@react-navigation/drawer'
+import {View, Image, Text, StyleSheet, ScrollView, ImageBackground} from 'react-native';
 import Home from './screens/Home';
 import AppointmentScreen from './screens/AppointmentScreen';
 import SignupScreen from './screens/SignupScreen';
@@ -11,53 +11,55 @@ import BarbersScreen from './screens/BarbersScreen';
 import AppointmentConfirmation from './screens/AppointmentConfirmation';
 import ReviewsScreen from './screens/ReviewsScreen';
 import AboutScreen from './screens/AboutScreen';
-import { useFonts } from 'expo-font';
+import {useFonts} from 'expo-font';
 import React from 'react';
 import BarberJr from './screens/BarberJr';
 import BarberRenz from './screens/BarberRenz';
 import BarberKurt from './screens/BarberKurt';
 import BarberHenok from './screens/BarberHenok';
+import CreateBarber from "./screens/CreateBarber";
+import AdminScreen from "./screens/AdminScreen";
 
 function CustomDrawerContent(props) {
     return (
-      <ScrollView style={{ flex: 1 }}>
-        <ImageBackground
-          source={require('./assets/nav.png')}
-          style={{ width: undefined, padding:16, paddingTop: 150, marginTop: 60}}
-        >
-        <View style={styles.drawerHeader}>
-          <Text style={styles.userName}>John Doe</Text>
-          <Text style={styles.userEmail}>johndoe@example.com</Text>
-        </View>
-        </ImageBackground>
-        <DrawerItemList {...props} /> 
-      </ScrollView>
+        <ScrollView style={{flex: 1}}>
+            <ImageBackground
+                source={require('./assets/nav.png')}
+                style={{width: undefined, padding: 16, paddingTop: 150, marginTop: 60}}
+            >
+                <View style={styles.drawerHeader}>
+                    <Text style={styles.userName}>John Doe</Text>
+                    <Text style={styles.userEmail}>johndoe@example.com</Text>
+                </View>
+            </ImageBackground>
+            <DrawerItemList {...props} />
+        </ScrollView>
     );
-  }
+}
 
 
 const Drawer = createDrawerNavigator();
 
 const LogoTitle = () => (
     <Image
-      style={{ width: 120, height: 50, marginTop: 15 }} // Adjust the size according to your logo's dimensions
-      source={require('./assets/logo.png')}
-      resizeMode="contain" // Ensures that the logo is scaled properly within the header
+        style={{width: 120, height: 50, marginTop: 15}} // Adjust the size according to your logo's dimensions
+        source={require('./assets/logo.png')}
+        resizeMode="contain" // Ensures that the logo is scaled properly within the header
     />
 );
 
 
-export default function App(){
+export default function App() {
     let [fontsLoaded] = useFonts({
-      'Roboto': require('./assets/fonts/Roboto-Light.ttf')
+        'Roboto': require('./assets/fonts/Roboto-Light.ttf')
     })
-   
+
     return (
         <NavigationContainer>
             <Drawer.Navigator
                 drawerContent={(props) => <CustomDrawerContent {...props} />}
-                screenOptions={({ route }) => ({
-                    headerTitle: () => <LogoTitle />,
+                screenOptions={({route}) => ({
+                    headerTitle: () => <LogoTitle/>,
                     drawerActiveBackgroundColor: '#c0c0c0',
                     drawerActiveTintColor: '#ffffff',
                     headerTintColor: '#3e3e3e',
@@ -66,25 +68,28 @@ export default function App(){
                         elevation: 0,
                     },
                     drawerItemStyle: [
-                      route.name === 'Signup' ? { display: 'none' } : {},
-                      route.name === 'BarberJr' ? { display: 'none' } : {},
-                      route.name === 'BarberRenz' ? { display: 'none' } : {},
-                      route.name === 'BarberKurt' ? { display: 'none' } : {},
-                      route.name === 'BarberHenok' ? { display: 'none' } : {},
+                        route.name === 'Signup' ? {display: 'none'} : {},
+                        route.name === 'BarberJr' ? {display: 'none'} : {},
+                        route.name === 'BarberRenz' ? {display: 'none'} : {},
+                        route.name === 'BarberKurt' ? {display: 'none'} : {},
+                        route.name === 'BarberHenok' ? {display: 'none'} : {},
+                        route.name === 'CreateBarber' ? {display: 'none'} : {},
                     ]
                 })}
             >
-                
-                <Drawer.Screen name='Home' component={Home} />
-                <Drawer.Screen name='Barbers' component={BarbersScreen} />
-                <Drawer.Screen name='BarberJr' component={BarberJr} />
-                <Drawer.Screen name='BarberRenz' component={BarberRenz} />
-                <Drawer.Screen name='BarberKurt' component={BarberKurt} />
-                <Drawer.Screen name='BarberHenok' component={BarberHenok} />
-                <Drawer.Screen name='Login' component={LoginScreen} />  
-                <Drawer.Screen name='Signup' component={SignupScreen} />
-                <Drawer.Screen name='Consultation' component={ConsultationScreen} />
-                <Drawer.Screen name='Appointment' component={AppointmentScreen} />
+
+                <Drawer.Screen name='Home' component={Home}/>
+                <Drawer.Screen name='Barbers' component={BarbersScreen}/>
+                <Drawer.Screen name='BarberJr' component={BarberJr}/>
+                <Drawer.Screen name='BarberRenz' component={BarberRenz}/>
+                <Drawer.Screen name='BarberKurt' component={BarberKurt}/>
+                <Drawer.Screen name='BarberHenok' component={BarberHenok}/>
+                <Drawer.Screen name='Login' component={LoginScreen}/>
+                <Drawer.Screen name='Signup' component={SignupScreen}/>
+                <Drawer.Screen name='Consultation' component={ConsultationScreen}/>
+                <Drawer.Screen name='Appointment' component={AppointmentScreen}/>
+                <Drawer.Screen name='Admin' component={AdminScreen}/>
+                <Drawer.Screen name='CreateBarber' component={CreateBarber}/>
                 {/* <Drawer.Screen name='AppointmentConfirmation' component={AppointmentConfirmation} /> */}
             </Drawer.Navigator>
         </NavigationContainer>
@@ -93,12 +98,12 @@ export default function App(){
 
 const styles = {
     userName: {
-      color: 'white',
-      fontSize: 24,
-      fontWeight: 'bold',
+        color: 'white',
+        fontSize: 24,
+        fontWeight: 'bold',
     },
     userEmail: {
-      color: 'white',
-      fontSize: 16,
+        color: 'white',
+        fontSize: 16,
     },
 }
