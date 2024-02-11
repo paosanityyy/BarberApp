@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {FlatList, TouchableOpacity, View, Text} from "react-native";
+import {TouchableOpacity, View, Text, StyleSheet} from "react-native";
 import {TextInput} from "react-native-gesture-handler";
 
 const CreateBarber = () => {
@@ -9,6 +9,7 @@ const CreateBarber = () => {
     const [barberPhone, setBarberPhone] = useState('');
     const [barberAddress, setBarberAddress] = useState('');
     const [barbers, setBarbers] = useState([]);
+    const [barbersAdded, setBarbersAdded] = useState(null);
 
     const addBarber = () => {
 
@@ -31,22 +32,30 @@ const CreateBarber = () => {
         }
 
         setBarbers([...barbers, { firstName: barberFirstName, lastName: barberLastName, address: barberAddress, email: trimmedEmail, phone: trimmedPhone }]);
+        setBarbersAdded(true);
         setBarberFirstName('');
         setBarberLastName('');
         setBarberAddress('')
         setBarberEmail('');
         setBarberPhone('');
+
+        setTimeout(() => {
+            setBarbersAdded(false);
+        }, 3000);
+
     };
 
-    const deleteBarber = (index) => {
-        const updatedBarbers = [...barbers];
-        updatedBarbers.splice(index, 1); // Remove the barber at the specified index
-        setBarbers(updatedBarbers);
-    };
+    // const deleteBarber = (index) => {
+    //     const updatedBarbers = [...barbers];
+    //     updatedBarbers.splice(index, 1); // Remove the barber at the specified index
+    //     setBarbers(updatedBarbers);
+    // };
 
     return (
         <View style={styles.container}>
             <Text style={styles.createTitle}>Create New Barber Profile</Text>
+            {/* Conditional rendering of success message */}
+            {barbersAdded && <Text style={styles.successMessage}>Barber Profile Created</Text>}
             <TextInput
                 placeholder="First Name"
                 value={barberFirstName}
@@ -80,23 +89,23 @@ const CreateBarber = () => {
             <TouchableOpacity style={styles.button} onPress={addBarber}>
                 <Text style={styles.buttonTxt}>Add Barber</Text>
             </TouchableOpacity>
-            <FlatList
-                data={barbers}
-                renderItem={({ item }) => (
-                    <View style={styles.barberCard}>
-                        <Text>Name: {item.firstName} {item.lastName}</Text>
-                        <Text>Email: {item.email}</Text>
-                        <Text>Phone Number: {item.phone}</Text>
-                    </View>
-                )}
-            />
+            {/*<FlatList*/}
+            {/*    data={barbers}*/}
+            {/*    renderItem={({ item }) => (*/}
+            {/*        <View style={styles.barberCard}>*/}
+            {/*            <Text>Name: {item.firstName} {item.lastName}</Text>*/}
+            {/*            <Text>Email: {item.email}</Text>*/}
+            {/*            <Text>Phone Number: {item.phone}</Text>*/}
+            {/*        </View>*/}
+            {/*    )}*/}
+            {/*/>*/}
         </View>
     );
 }
 
 export default CreateBarber;
 
-const styles = {
+const styles = StyleSheet.create({
     createTitle: {
         padding: 20,
         fontSize: 20,
@@ -124,7 +133,6 @@ const styles = {
         width: 200,
         marginBottom:10,
         borderRadius: 5,
-        fontSize: 16,
     },
     buttonTxt:{
         fontSize: 18,
@@ -138,4 +146,9 @@ const styles = {
         width: 350,
         marginBottom: 10,
     },
-};
+    successMessage: {
+        color: 'green',
+        fontSize: 18,
+        fontFamily: 'Roboto',
+    },
+});

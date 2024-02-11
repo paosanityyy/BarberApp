@@ -71,7 +71,7 @@ export default function App() {
                         route.name === 'BarberKurt' ? {display: 'none'} : {},
                         route.name === 'BarberHenok' ? {display: 'none'} : {},
                         route.name === 'CreateBarber' ? {display: 'none'} : {},
-                        route.name === 'Admin' ? {display: 'none'} : {},
+                        //route.name === 'Admin' ? {display: 'none'} : {},
                     ]
                 })}
             >
