@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { View, ScrollView, Image, Text, StyleSheet, Animated, TouchableOpacity } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faComment } from '@fortawesome/free-solid-svg-icons';
-import { faInstagram } from '@fortawesome/free-brands-svg-icons';
+
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
   },
   barberInfo: {
     marginLeft: 10,
+    paddingLeft: 20,
   },
   barbersButtonTxt: {
     fontSize: 20,
@@ -142,9 +143,6 @@ const styles = StyleSheet.create({
   },
   barbers: {
     paddingTop: 50,
-  },
-  barberInfo: {
-    paddingLeft: 20,
   },
   footer: {
     textAlign: 'center',
