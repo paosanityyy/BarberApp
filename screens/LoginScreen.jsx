@@ -31,6 +31,9 @@ const LoginScreen = ({ navigation }) => {
             <TouchableOpacity onPress={() => navigation.jumpTo("Signup")}>
                 <Text style={styles.goToLogin}>Don't have an account yet? Sign up</Text>
             </TouchableOpacity>
+            <Text style={styles.footerText}>
+          © 2023 Central Studios. All Rights Reserved.
+        </Text>
         </View>
     );
 };
@@ -38,14 +41,18 @@ const LoginScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     createTitle: {
         padding: 20,
+        fontSize: 26,
+        fontFamily: 'SourceCodePro',
+    },
+    TextInput:{
         fontSize: 20,
-        fontFamily: 'Roboto',
     },
     goToLogin
     : {
         color: '#3e3e3e',
         marginTop: 20,
         fontFamily: 'Roboto',
+        fontSize: 18,
     },
     container: {
         height: '100%',
@@ -76,11 +83,19 @@ const styles = StyleSheet.create({
         borderRadius: 5
     },
     buttonTxt:{
-        fontSize: 16,
+        fontSize: 20,
         color: 'white',
         textAlign: 'center',
         fontFamily: 'Roboto',
     },
+    footerText: {
+        textAlign: 'center',
+        padding: 15,
+        marginBottom: 30,
+        marginTop: 180,
+        fontWeight: '100',
+        fontSize: 16
+      },
       
 })
 

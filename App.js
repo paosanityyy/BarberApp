@@ -17,6 +17,7 @@ import BarberJr from './screens/BarberJr';
 import BarberRenz from './screens/BarberRenz';
 import BarberKurt from './screens/BarberKurt';
 import BarberHenok from './screens/BarberHenok';
+import BarberQyle from './screens/BarberQyle';
 
 function CustomDrawerContent(props) {
     return (
@@ -49,7 +50,10 @@ const LogoTitle = () => (
 
 export default function App(){
     let [fontsLoaded] = useFonts({
-      'Roboto': require('./assets/fonts/Roboto-Light.ttf')
+      'Roboto': require('./assets/fonts/Roboto-Light.ttf'),
+      'Mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
+      'Roboto-Mono': require('./assets/fonts/RobotoMono-Regular.ttf'),
+      'SourceCodePro': require('./assets/fonts/SourceCodePro-Light.ttf'),
     })
    
     return (
@@ -71,33 +75,40 @@ export default function App(){
                       route.name === 'BarberRenz' ? { display: 'none' } : {},
                       route.name === 'BarberKurt' ? { display: 'none' } : {},
                       route.name === 'BarberHenok' ? { display: 'none' } : {},
+                      route.name === 'BarberQyle' ? { display: 'none' } : {},
                     ]
                 })}
             >
                 
-                <Drawer.Screen name='Home' component={Home} />
-                <Drawer.Screen name='Barbers' component={BarbersScreen} />
-                <Drawer.Screen name='BarberJr' component={BarberJr} />
-                <Drawer.Screen name='BarberRenz' component={BarberRenz} />
-                <Drawer.Screen name='BarberKurt' component={BarberKurt} />
-                <Drawer.Screen name='BarberHenok' component={BarberHenok} />
-                <Drawer.Screen name='Login' component={LoginScreen} />  
-                <Drawer.Screen name='Signup' component={SignupScreen} />
-                <Drawer.Screen name='Appointment' component={AppointmentScreen} />
+                <Drawer.Screen style={styles.drawerItem} name='Home' component={Home} />
+                <Drawer.Screen style={styles.drawerItem} name='Barbers' component={BarbersScreen} />
+                <Drawer.Screen style={styles.drawerItem} name='BarberJr' component={BarberJr} />
+                <Drawer.Screen style={styles.drawerItem} name='BarberRenz' component={BarberRenz} />
+                <Drawer.Screen style={styles.drawerItem} name='BarberKurt' component={BarberKurt} />
+                <Drawer.Screen style={styles.drawerItem} name='BarberHenok' component={BarberHenok} />
+                <Drawer.Screen style={styles.drawerItem} name='BarberQyle' component={BarberQyle} />
+                <Drawer.Screen style={styles.drawerItem} name='Login' component={LoginScreen} />  
+                <Drawer.Screen style={styles.drawerItem} name='Signup' component={SignupScreen} />
+                <Drawer.Screen style={styles.drawerItem} name='Appointment' component={AppointmentScreen} />
                 {/* <Drawer.Screen name='AppointmentConfirmation' component={AppointmentConfirmation} /> */}
             </Drawer.Navigator>
         </NavigationContainer>
     )
 }
 
-const styles = {
-    userName: {
-      color: 'white',
-      fontSize: 24,
-      fontWeight: 'bold',
-    },
-    userEmail: {
-      color: 'white',
-      fontSize: 16,
-    },
-}
+const styles = StyleSheet.create({
+  userName: {
+    color: 'white',
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  userEmail: {
+    color: 'white',
+    fontSize: 16,
+  },
+  drawerItem: {
+    fontFamily: 'Roboto',
+    fontSize: 90, // Change the font size to your desired value
+    fontWeight: 'bold',
+  },
+});

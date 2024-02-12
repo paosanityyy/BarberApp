@@ -9,9 +9,9 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 // Slideshow component
 const Slideshow = () => {
   const images = [
-    require('../assets/jc1.png'),
-    require('../assets/jc2.png'),
-    require('../assets/jc1.png'),
+    require('../assets/q1.jpg'),
+    require('../assets/q2.jpg'),
+    require('../assets/q3.jpg'),
   ];
 
   const [currentIndex, setCurrentIndex] = React.useState(0);
@@ -41,7 +41,7 @@ const Slideshow = () => {
 };
 
 
-const BarberJr = ({ navigation }) => {
+const BarberQyle = ({ navigation }) => {
   const scrollY = useRef(new Animated.Value(0)).current;
 
   const translateY = scrollY.interpolate({
@@ -65,16 +65,16 @@ const BarberJr = ({ navigation }) => {
             onPress={() => {}}
           >
             <Image
-              source={require('../assets/jr.png')}
+              source={require('../assets/qyle.jpg')}
               style={styles.barberImage}
             />
             <View style={styles.barberInfo}>
-              <Text style={styles.barbersButtonTxt}>JR</Text>
-              <Text style={styles.socialLink}>Instagram: @esq_cutz</Text>
+              <Text style={styles.barbersButtonTxt}>Qyle</Text>
+              <Text style={styles.socialLink}>Instagram: @qj.blends</Text>
             </View>
           </TouchableOpacity>
           <Text style={styles.sectionText}>
-          Meet JR, our skilled barber at Central Studios. With a flair for modern styles and meticulous attention to detail, JR creates personalized and trendy haircuts tailored to your unique taste. Experience the art of hairstyling with JR – where expertise meets a friendly touch for a confident and stylish look every time. </Text>
+          Meet Qyle, our exceptional barber at Central Studios. With a keen eye for detail and a passion for the latest trends, Qyle brings creativity and precision to every haircut. </Text>
 
           {/* Include the Slideshow component */}
           <Slideshow />
@@ -217,4 +217,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default BarberJr;
+export default BarberQyle;

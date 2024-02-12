@@ -10,7 +10,7 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 const Slideshow = () => {
   const images = [
     require('../assets/c1.png'),
-    require('../assets/c2.png'),
+    // require('../assets/c2.png'),
     require('../assets/c3.png'),
   ];
 
@@ -97,119 +97,124 @@ const BarberRenz = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-    paddingTop: 0,
-    justifyContent: 'space-between',
-  },
-  barberImage: {
-    width: 160,
-    height: 160,
-    borderRadius: 100,
-    marginTop: 0,
-  },
-  barbersButton: {
-    backgroundColor: 'white',
-    paddingLeft: 30,
-    margin: 0,
-    borderRadius: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  barberInfo: {
-    marginLeft: 10,
-  },
-  barbersButtonTxt: {
-    fontSize: 20,
-    color: 'black',
-    marginTop: 0,
-  },
-  socialIcon: {
-    marginRight: 5,
-  },
-  sectionText: {
-    fontWeight: '300',
-    textAlign: 'justify',
-    fontSize: 14,
-    lineHeight: 18,
-    padding: 30,
-  },
-  socialLink: {
-    fontSize: 14,
-    color: '#3e3e3e',
-    fontWeight: '200',
-  },
-  barbers: {
-    paddingTop: 50,
-  },
-  barberInfo: {
-    paddingLeft: 20,
-  },
-  footer: {
-    textAlign: 'center',
-    marginBottom: 30,
-    padding: 15,
-    fontWeight: '200',
-  },
-  fab: {
-    position: 'absolute',
-    backgroundColor: '#3e3e3e',
-    right: 16,
-    bottom: 16,
-    paddingVertical: 20,
-    paddingHorizontal: 20,
-    borderRadius: 100,
-  },
-
-  // Styles for the Slideshow component
-  slideshowContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 0,
-  },
-  prevButton: {
-    width: 50,
-    height: 30,
-    marginTop: 15,
-    marginRight: 5,
-    backgroundColor: 'transparent',
-    borderWidth: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  nextButton: {
-    width: 50,
-    height: 30,
-    marginTop: 15,
-    marginLeft: 5,
-    backgroundColor: 'transparent',
-    borderWidth: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  slideImage: {
-    width: 200,
-    height: 200,
-    borderRadius: 5,
-  },
-  button: {
-    backgroundColor: '#3e3e3e',
-    padding: 10,
-    width: 130,
-    borderRadius: 5,
-    fontSize: 16,
-    marginTop: 20,
-    alignSelf: 'center',
-    fontFamily: 'Roboto',
-  },
-  buttonTxt:{
-    fontSize: 18,
-    color: 'white',
-    textAlign: 'center',
-    fontWeight: '250',
-  },
-});
+    container: {
+      flex: 1,
+      backgroundColor: 'white',
+      paddingTop: 0,
+      justifyContent: 'space-between',
+      paddingHorizontal: 0,
+    },
+    barberImage: {
+      width: 160,
+      height: 160,
+      borderRadius: 100,
+      marginTop: 0,
+    },
+    barbersButton: {
+      backgroundColor: 'white',
+      paddingLeft: 30,
+      margin: 0,
+      borderRadius: 10,
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    barberInfo: {
+      marginLeft: 10,
+    },
+    barbersButtonTxt: {
+      fontSize: 40,
+      color: 'black',
+      marginTop: 0,
+      fontFamily: 'SourceCodePro',
+    },
+    socialIcon: {
+      marginRight: 5,
+    },
+    sectionText: {
+      fontWeight: '300',
+      textAlign: 'justify',
+      fontSize: 18,
+      lineHeight: 28,
+      padding: 30,
+    },
+    socialLink: {
+      fontSize: 16,
+      color: '#3e3e3e',
+      fontWeight: '300',
+      fontFamily: 'SourceCodePro',
+    },
+    barbers: {
+      paddingTop: 50,
+    },
+    barberInfo: {
+      paddingLeft: 20,
+    },
+    footer: {
+      textAlign: 'center',
+      marginBottom: 30,
+      padding: 15,
+      fontWeight: '200',
+    },
+    fab: {
+      position: 'absolute',
+      backgroundColor: '#3e3e3e',
+      right: 16,
+      bottom: 16,
+      paddingVertical: 20,
+      paddingHorizontal: 20,
+      borderRadius: 100,
+    },
+  
+    // Styles for the Slideshow component
+    slideshowContainer: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: 10,
+    },
+    prevButton: {
+      width: 50,
+      height: 30,
+      marginTop: 15,
+      marginRight: 5,
+      backgroundColor: 'transparent',
+      borderWidth: 0,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    nextButton: {
+      width: 50,
+      height: 30,
+      marginTop: 15,
+      marginLeft: 5,
+      backgroundColor: 'transparent',
+      borderWidth: 0,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    slideImage: {
+      width: 240,
+      height: 240,
+      borderRadius: 5,
+      paddingTop: 20,
+    },
+    button: {
+      backgroundColor: '#3e3e3e',
+      padding: 10,
+      width: 130,
+      borderRadius: 5,
+      fontSize: 16,
+      marginTop: 40,
+      alignSelf: 'center',
+      fontFamily: 'Roboto',
+    },
+    buttonTxt:{
+      fontSize: 18,
+      color: 'white',
+      textAlign: 'center',
+      fontWeight: '250',
+    },
+  });
+  
 
 export default BarberRenz;

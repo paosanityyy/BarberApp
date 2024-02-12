@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { View, ScrollView, Image, Text, StyleSheet, Animated, TouchableOpacity } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faComment } from '@fortawesome/free-solid-svg-icons';
+import { faCut } from '@fortawesome/free-solid-svg-icons';
 import BarberJr from './BarberJr';
 
 
@@ -14,9 +15,14 @@ const BarbersScreen = ({ navigation }) => {
     extrapolate: 'clamp',
   });
 
+  
   return (
     <View style={styles.container}>
-        <Text style={styles.title}>Meet our barbers</Text>
+       {/* <Image
+          source={require('../assets/logo.png')}
+          style={styles.logo}
+        /> */}
+        <Text style={styles.title}>Meet our skilled barbers</Text>
       <ScrollView
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
@@ -66,6 +72,24 @@ const BarbersScreen = ({ navigation }) => {
               />
               <Text style={styles.barbersButtonTxt}>Henok</Text>
             </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.barbersButton}
+              onPress={() => navigation.jumpTo("BarberQyle")}
+            >
+              <Image
+                source={require('../assets/qyle.jpg')}
+                style={styles.barberImage}
+              />
+              <Text style={styles.barbersButtonTxt}>Qyle</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.barbersButton}
+              onPress={() => navigation.jumpTo("Appointment")}
+            >
+             <FontAwesomeIcon icon={faCut} style={styles.scissorIcon} size={40} />
+              <Text style={styles.barbersButtonTxt}>Book now</Text>
+            </TouchableOpacity>
+            
           </View>
         </View>
       </ScrollView>
@@ -90,10 +114,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between', // Aligns children at the beginning and end of the container
   },
   title: {
-    fontSize: 24,
-    margin: 30,
+    fontSize: 22,
+    margin: 0,
+    paddingBottom: 30,
     textAlign: 'center',
-    fontFamily: 'Roboto',
+    fontWeight: '300',
+    fontFamily: 'SourceCodePro',
   },
   barberImage: {
     width: 120,
@@ -104,17 +130,27 @@ const styles = StyleSheet.create({
   barbersButton: {
     backgroundColor: '#e1e1e1',
     padding: 0,
-    width: 160,
+    width: 190,
     height: 190,
     margin: 5,
     borderRadius: 10,
     alignItems: 'center',
   },
+  scissorIcon: {
+    marginTop: 60,
+    marginBottom: 10,
+  },
+  logo: {
+    width: 300,
+    height: 75,
+    marginBottom: 20,
+    alignSelf: 'center',
+},
   barbersButtonTxt: {
-    fontSize: 16,
+    fontSize: 20,
     color: 'black',
     marginTop: 15,
-    fontFamily: 'Roboto',
+    fontFamily: 'SourceCodePro',
   },
   barbers: {
     paddingTop: 0,
@@ -138,8 +174,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    padding: 0,
-    margin: 5,
+    paddingTop: 0,
+    margin: 0,
   },
 });
 

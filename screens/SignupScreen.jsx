@@ -15,37 +15,37 @@ const SignupScreen = ({ navigation }) => {
             <TextInput 
                 placeholder="First Name"
                 // change placeholder color
-                placeholderTextColor="#c0c0c0"
+                placeholderTextColor="grey"
                 style={styles.input}
             />
             <TextInput 
                 placeholder="Last Name"
                 // change placeholder color
-                placeholderTextColor="#c0c0c0"
+                placeholderTextColor="grey"
                 style={styles.input}
             />
             <TextInput 
                 placeholder="Email"
                 // change placeholder color
-                placeholderTextColor="#c0c0c0"
+                placeholderTextColor="grey"
                 style={styles.input}
             />
             <TextInput 
                 placeholder="Phone"
                 // change placeholder color
-                placeholderTextColor="#c0c0c0"
+                placeholderTextColor="grey"
                 style={styles.input}
             />
             <TextInput 
                 placeholder="Username"
                 // change placeholder color
-                placeholderTextColor="#c0c0c0"
+                placeholderTextColor="grey"
                 style={styles.input}
             />
             <TextInput 
                 placeholder="Password"
                 // change placeholder color
-                placeholderTextColor="#c0c0c0"
+                placeholderTextColor="grey"
                 style={styles.input}
             />
             <TouchableOpacity style={styles.button} onPress={() => navigation.jumpTo("Home")}>
@@ -54,6 +54,9 @@ const SignupScreen = ({ navigation }) => {
             <TouchableOpacity onPress={() => navigation.jumpTo("Login")}>
                 <Text style={styles.goToLogin}>Already have an account? Login</Text>
             </TouchableOpacity>
+            <Text style={styles.footerText}>
+          © 2023 Central Studios. All Rights Reserved.
+        </Text>
         </View>
     );
 };
@@ -61,12 +64,13 @@ const SignupScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     createTitle: {
         padding: 20,
-        fontSize: 20,
-        fontFamily: 'Roboto',
+        fontSize: 26,
+        fontFamily: 'SourceCodePro',
     },
     goToLogin: {
         color: '#3e3e3e',
         marginTop: 20,
+        fontSize: 18,
         fontFamily: 'Roboto',
     },
     container: {
@@ -82,7 +86,7 @@ const styles = StyleSheet.create({
     },
     input: {
         color: 'black',
-        height: 40,
+        height: 45,
         margin: 8,
         borderBottomWidth: 1,
         padding: 0,
@@ -97,8 +101,16 @@ const styles = StyleSheet.create({
         marginBottom:10,
         borderRadius: 5
     },
+    footerText: {
+        textAlign: 'center',
+        padding: 15,
+        marginBottom: 30,
+        marginTop: 80,
+        fontWeight: '100',
+        fontSize: 16
+      },
     buttonTxt:{
-        fontSize: 16,
+        fontSize: 20,
         color: 'white',
         textAlign: 'center',
         fontFamily: 'Roboto',
