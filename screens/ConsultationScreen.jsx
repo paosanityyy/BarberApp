@@ -1,6 +1,7 @@
 // import { GiftedChat } from 'react-native-gifted-chat';
 import React, { useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
+import { View, Text, Picker, TextInput } from 'react-native';
 
 
 const ConsultationScreen = () => {
