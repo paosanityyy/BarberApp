@@ -85,8 +85,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontFamily: 'Roboto',
     },
-    goToLogin
-    : {
+    goToLogin: {
         color: '#3e3e3e',
         marginTop: 20,
         fontFamily: 'Roboto',
@@ -98,6 +97,7 @@ const styles = StyleSheet.create({
         paddingTop: 20,
     },
     logo: {
+        marginTop: 100,
         width: 300,
         height: 75,
         marginBottom: 20,
