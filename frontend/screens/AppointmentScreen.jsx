@@ -121,6 +121,7 @@ const AppointmentScreen = ({navigation}) => {
                             textDayFontSize: 14,
                             textMonthFontSize: 16,
                             textDayHeaderFontSize: 14,
+                            
                         }}
                     />
                     

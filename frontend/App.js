@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler'
 import {NavigationContainer} from '@react-navigation/native'
 import {DrawerItemList, createDrawerNavigator} from '@react-navigation/drawer'
-import {View, Image, Text, ScrollView, ImageBackground} from 'react-native';
+import {View, Image, Text, ScrollView, StyleSheet, ImageBackground} from 'react-native';
 import Home from './screens/Home';
 import AppointmentScreen from './screens/AppointmentScreen';
 import SignupScreen from './screens/SignupScreen';
@@ -14,6 +14,7 @@ import BarberJr from './screens/BarberJr';
 import BarberRenz from './screens/BarberRenz';
 import BarberKurt from './screens/BarberKurt';
 import BarberHenok from './screens/BarberHenok';
+import BarberQyle from './screens/BarberQyle';
 import CreateBarber from "./screens/CreateBarber";
 import AdminScreen from "./screens/AdminScreen";
 
@@ -48,7 +49,10 @@ const LogoTitle = () => (
 
 export default function App() {
     let [fontsLoaded] = useFonts({
-        'Roboto': require('./assets/fonts/Roboto-Light.ttf')
+      'Roboto': require('./assets/fonts/Roboto-Light.ttf'),
+      'Mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
+      'Roboto-Mono': require('./assets/fonts/RobotoMono-Regular.ttf'),
+      'SourceCodePro': require('./assets/fonts/SourceCodePro-Light.ttf'),
     })
 
     return (
@@ -65,13 +69,14 @@ export default function App() {
                         elevation: 0,
                     },
                     drawerItemStyle: [
-                        route.name === 'Signup' ? {display: 'none'} : {},
-                        route.name === 'BarberJr' ? {display: 'none'} : {},
-                        route.name === 'BarberRenz' ? {display: 'none'} : {},
-                        route.name === 'BarberKurt' ? {display: 'none'} : {},
-                        route.name === 'BarberHenok' ? {display: 'none'} : {},
-                        route.name === 'CreateBarber' ? {display: 'none'} : {},
-                        //route.name === 'Admin' ? {display: 'none'} : {},
+                      route.name === 'Signup' ? { display: 'none' } : {},
+                      route.name === 'BarberJr' ? { display: 'none' } : {},
+                      route.name === 'BarberRenz' ? { display: 'none' } : {},
+                      route.name === 'BarberKurt' ? { display: 'none' } : {},
+                      route.name === 'BarberHenok' ? { display: 'none' } : {},
+                      route.name === 'BarberQyle' ? { display: 'none' } : {},
+                      route.name === 'Admin' ? { display: 'none' } : {},
+                      route.name === 'CreateBarber' ? { display: 'none' } : {},
                     ]
                 })}
             >
@@ -82,6 +87,7 @@ export default function App() {
                 <Drawer.Screen name='BarberRenz' component={BarberRenz}/>
                 <Drawer.Screen name='BarberKurt' component={BarberKurt}/>
                 <Drawer.Screen name='BarberHenok' component={BarberHenok}/>
+                <Drawer.Screen name='BarberQyle' component={BarberQyle} />
                 <Drawer.Screen name='Login' component={LoginScreen}/>
                 <Drawer.Screen name='Signup' component={SignupScreen}/>
                 <Drawer.Screen name='Consultation' component={ConsultationScreen}/>
@@ -94,14 +100,19 @@ export default function App() {
     )
 }
 
-const styles = {
-    userName: {
-        color: 'white',
-        fontSize: 24,
-        fontWeight: 'bold',
-    },
-    userEmail: {
-        color: 'white',
-        fontSize: 16,
-    },
-}
+const styles = StyleSheet.create({
+  userName: {
+    color: 'white',
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  userEmail: {
+    color: 'white',
+    fontSize: 16,
+  },
+  drawerItem: {
+    fontFamily: 'Roboto',
+    fontSize: 90, // Change the font size to your desired value
+    fontWeight: 'bold',
+  },
+});
