@@ -41,12 +41,7 @@ const Home = ({ navigation }) => {
         />
         <Text style={styles.sectionSubtitle}>We are...</Text>
         <Text style={styles.sectionText}>
-          Lorem Ipsum has been the industry's ever since At vero eos et accusamus et iusto  odio dignissimos ducimus qui
-          blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint
-          occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est
-          laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum
-          soluta nobis est eligendi optio cumque nihil impedit quo minus id
-        </Text>
+        Welcome to Central Studios, where grooming meets excellence. With a passion for style and a commitment to quality, our barbers provide top-tier grooming services in a modern and welcoming atmosphere. Step into Central Studios and experience the perfect blend of tradition, innovation, and impeccable service, ensuring every visit leaves you looking and feeling your best.</Text>
 
         {/* ... Other content ... */}
 
@@ -86,6 +81,7 @@ const styles = {
     marginBottom:10,
     borderRadius: 5,
     fontSize: 16,
+    fontfamily: 'Roboto',
   },
   buttonTxt:{
     fontSize: 18,
@@ -102,6 +98,7 @@ const styles = {
     fontSize: 20,
     marginTop: 20,
     marginBottom: 20,
+    // fontfamily: 'Roboto',
   },
   image: {
     width: 300,
@@ -111,20 +108,23 @@ const styles = {
   },
   sectionSubtitle: {
     fontSize: 18,
+    // fontfamily : 'Roboto',
   },
   sectionText: {
     marginHorizontal: 30,
-    textAlign:'center',
+    textAlign:'justify',
     marginTop: 10,
-    fontSize: 16,
-    lineHeight: 24,
+    fontSize: 18,
+    lineHeight: 28,
     padding: 10,
+    fontWeight: '300',
   },
   footerText: {
     textAlign: 'center',
     padding: 15,
     marginBottom: 30,
     marginTop: 30,
+    fontWeight: '100',
   },
  
    fab: {
