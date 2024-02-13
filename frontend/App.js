@@ -3,6 +3,7 @@ import {NavigationContainer} from '@react-navigation/native'
 import {DrawerItemList, createDrawerNavigator} from '@react-navigation/drawer'
 import {View, Image, Text, ScrollView, StyleSheet, ImageBackground} from 'react-native';
 import Home from './screens/Home';
+import AboutScreen from './screens/AboutScreen';
 import AppointmentScreen from './screens/AppointmentScreen';
 import SignupScreen from './screens/SignupScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -84,6 +85,7 @@ export default function App() {
 
                 <Drawer.Screen name='Home' component={Home}/>
                 <Drawer.Screen name='Barbers' component={BarbersScreen}/>
+                <Drawer.Screen name='About Us' component={AboutScreen}/>
                 <Drawer.Screen name='BarberJr' component={BarberJr}/>
                 <Drawer.Screen name='BarberRenz' component={BarberRenz}/>
                 <Drawer.Screen name='BarberKurt' component={BarberKurt}/>
