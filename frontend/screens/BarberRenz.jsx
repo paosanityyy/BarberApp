@@ -5,6 +5,7 @@ import { faComment } from '@fortawesome/free-solid-svg-icons';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 
+
 // Slideshow component
 const Slideshow = () => {
   const images = [
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
       padding: 30,
     },
     socialLink: {
-      fontSize: 16,
+      fontSize: 12,
       color: '#3e3e3e',
       fontWeight: '300',
       fontFamily: 'SourceCodePro',
