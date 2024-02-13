@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'white',
     textAlign: 'center',
-    fontWeight: '250',
+    fontWeight: '200',
   },
 });
 
