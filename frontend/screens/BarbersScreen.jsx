@@ -30,7 +30,7 @@ const BarbersScreen = ({ navigation }) => {
         )}
         scrollEventThrottle={16}
       >
-        <View  style={styles.barbers}>
+        <View style={styles.barbers}>
           <View style={styles.gridContainer}>
             <TouchableOpacity
               style={styles.barbersButton}
