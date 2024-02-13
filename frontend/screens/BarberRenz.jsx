@@ -73,7 +73,7 @@ const BarberRenz = ({ navigation }) => {
             </View>
           </TouchableOpacity>
           <Text style={styles.sectionText}>
-          Meet Renz, our skilled barber at Central Studios. With years of experience and a passion for creating trendy hairstyles, Renz delivers personalized cuts that elevate your look. From classic styles to modern trends, Renz ensures every client leaves feeling confident and stylish.</Text>
+          Meet Renz, our skilled barber at Central Studios. With years of experience and a passion for creating trendy hairstyles, Renz delivers personalized cuts that elevate your look. </Text>
 
           {/* Include the Slideshow component */}
           <Slideshow />
@@ -133,11 +133,11 @@ const styles = StyleSheet.create({
       fontWeight: '300',
       textAlign: 'justify',
       fontSize: 18,
-      lineHeight: 28,
+      lineHeight: 26,
       padding: 30,
     },
     socialLink: {
-      fontSize: 16,
+      fontSize: 14,
       color: '#3e3e3e',
       fontWeight: '300',
       fontFamily: 'SourceCodePro',

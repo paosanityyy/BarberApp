@@ -2,7 +2,6 @@
   "name": "barbershopapp",
   "version": "1.0.0",
   "main": "index.js",
-  
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
@@ -29,6 +28,7 @@
     "react-native-calendars": "^1.1303.0",
     "react-native-datepicker": "^1.7.2",
     "react-native-gesture-handler": "~2.14.0",
+    "react-native-maps": "1.10.2",
     "react-native-reanimated": "~3.6.2",
     "react-native-web": "~0.19.6"
   },

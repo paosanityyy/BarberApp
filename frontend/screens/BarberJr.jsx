@@ -74,7 +74,7 @@ const BarberJr = ({ navigation }) => {
             </View>
           </TouchableOpacity>
           <Text style={styles.sectionText}>
-          Meet JR, our skilled barber at Central Studios. With a flair for modern styles and meticulous attention to detail, JR creates personalized and trendy haircuts tailored to your unique taste. Experience the art of hairstyling with JR – where expertise meets a friendly touch for a confident and stylish look every time. </Text>
+          Meet JR, our skilled barber at Central Studios. With a flair for modern styles and meticulous attention to detail, JR creates personalized and trendy haircuts tailored to your unique taste. </Text>
 
           {/* Include the Slideshow component */}
           <Slideshow />
@@ -120,7 +120,6 @@ const styles = StyleSheet.create({
   },
   barberInfo: {
     marginLeft: 10,
-    paddingLeft: 20,
   },
   barbersButtonTxt: {
     fontSize: 40,
@@ -135,17 +134,20 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     textAlign: 'justify',
     fontSize: 18,
-    lineHeight: 28,
+    lineHeight: 26,
     padding: 30,
   },
   socialLink: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#3e3e3e',
     fontWeight: '300',
     fontFamily: 'SourceCodePro',
   },
   barbers: {
     paddingTop: 50,
+  },
+  barberInfo: {
+    paddingLeft: 20,
   },
   footer: {
     textAlign: 'center',
@@ -210,7 +212,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'white',
     textAlign: 'center',
-    fontWeight: '200',
+    fontWeight: '250',
   },
 });
 
