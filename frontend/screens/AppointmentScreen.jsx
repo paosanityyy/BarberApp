@@ -13,14 +13,14 @@ const AppointmentScreen = ({navigation}) => {
     const [isBarberModalVisible, setBarberModalVisible] = useState(false);
     const [isServiceModalVisible, setServiceModalVisible] = useState(false);
 
-    const barbers = ['JR', 'Kurt', 'Renz', 'Henok'];
+    const barbers = ['JR', 'Kurt', 'Renz', 'Henok', 'Qyle'];
     const services = ['Haircut', 'Haircut + Beard', 'Braids'];
 
     const handleAppointmentSubmit = () => {
         // Logic to submit the appointment
     };
 
-    const timeSlots = ['12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM'];
+    const timeSlots = ['10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM'];
 
     const renderModalContent = (options, selectedValue, setValue, setModalVisible) => (
         <Modal
@@ -70,6 +70,7 @@ const AppointmentScreen = ({navigation}) => {
     return (
         <View style={{backgroundColor: 'white'}}>
             <ScrollView>
+                <Text style={{fontSize: 24, textAlign: 'center', marginTop: 20, fontFamily: 'Roboto', fontWeight: 'bold'}}>Book an Appointment</Text>
                 <View style={styles.container}>
                     {/* Select Barber */}
                     <View style={styles.dropdownContainer}>
