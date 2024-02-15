@@ -18,6 +18,7 @@ import BarberHenok from './screens/BarberHenok';
 import BarberQyle from './screens/BarberQyle';
 import CreateBarber from "./screens/CreateBarber";
 import AdminScreen from "./screens/AdminScreen";
+import MyAccount from "./screens/MyAccount";
 
 function CustomDrawerContent(props) {
     return (
@@ -92,6 +93,7 @@ export default function App() {
                 <Drawer.Screen name='BarberQyle' component={BarberQyle} />
                 <Drawer.Screen name='Login' component={LoginScreen}/>
                 <Drawer.Screen name='Signup' component={SignupScreen}/>
+                <Drawer.Screen name='MyAccount' component={MyAccount}/>
                 <Drawer.Screen name='Consultation' component={ConsultationScreen}/>
                 <Drawer.Screen name='Appointment' component={AppointmentScreen}/>
                 <Drawer.Screen name='Admin' component={AdminScreen}/>

@@ -3,6 +3,8 @@ import {TouchableOpacity, View, Text, StyleSheet} from "react-native";
 import {TextInput} from "react-native-gesture-handler";
 
 const CreateBarber = () => {
+    const [barberUsername, setBarberUsername] = useState('');
+    const [barberPassword, setBarberPassword] = useState('');
     const [barberFirstName, setBarberFirstName] = useState('');
     const [barberLastName, setBarberLastName] = useState('');
     const [barberEmail, setBarberEmail] = useState('');
@@ -16,7 +18,7 @@ const CreateBarber = () => {
         const trimmedEmail = barberEmail.trim();
         const trimmedPhone = barberPhone.trim();
 
-        if (!barberFirstName || !barberLastName || !barberAddress || !barberEmail || !barberPhone) {
+        if (!barberUsername || !barberPassword || !barberFirstName || !barberLastName || !barberAddress || !barberEmail || !barberPhone) {
             alert('Please fill in all fields');
             return; // Exit the function early if any field is empty
         }
@@ -31,8 +33,10 @@ const CreateBarber = () => {
             return;
         }
 
-        setBarbers([...barbers, { firstName: barberFirstName, lastName: barberLastName, address: barberAddress, email: trimmedEmail, phone: trimmedPhone }]);
+        setBarbers([...barbers, {username: barberUsername,password: barberPassword, firstName: barberFirstName, lastName: barberLastName, address: barberAddress, email: trimmedEmail, phone: trimmedPhone }]);
         setBarbersAdded(true);
+        setBarberUsername('');
+        setBarberPassword('');
         setBarberFirstName('');
         setBarberLastName('');
         setBarberAddress('')
@@ -56,6 +60,19 @@ const CreateBarber = () => {
             <Text style={styles.createTitle}>Create New Barber Profile</Text>
             {/* Conditional rendering of success message */}
             {barbersAdded && <Text style={styles.successMessage}>Barber Profile Created</Text>}
+            <TextInput
+                placeholder="Username"
+                value={barberUsername}
+                onChangeText={setBarberUsername}
+                style={styles.input}
+            />
+            <TextInput
+                placeholder="Password"
+                value={barberPassword}
+                secureTextEntry={true}
+                onChangeText={setBarberPassword}
+                style={styles.input}
+            />
             <TextInput
                 placeholder="First Name"
                 value={barberFirstName}

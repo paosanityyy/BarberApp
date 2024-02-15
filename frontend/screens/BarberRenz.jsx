@@ -5,6 +5,7 @@ import { faComment } from '@fortawesome/free-solid-svg-icons';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 
+
 // Slideshow component
 const Slideshow = () => {
   const images = [
