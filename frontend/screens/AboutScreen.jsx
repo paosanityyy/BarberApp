@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faComment } from '@fortawesome/free-solid-svg-icons';
 import { faCut } from '@fortawesome/free-solid-svg-icons';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import MapView, { Marker } from 'react-native-maps';
 
 const AboutScreen = () => {
@@ -41,8 +42,10 @@ const AboutScreen = () => {
           >
             <Marker coordinate={shopLocation} title="Central Studios" />
             <TouchableOpacity style={styles.directionsButton} onPress={openMaps}>
-            <FontAwesomeIcon icon={faMapMarkerAlt} color="#fff" size={16} style={styles.icon} />
-            <Text style={styles.directionsButtonText}>Get Directions</Text>
+            <Text style={styles.directionsButtonText}>
+                Get Directions  <FontAwesomeIcon icon={faPaperPlane} size={16} color="#ffffff"/>
+            </Text>
+            
           </TouchableOpacity>
           </MapView>
 
@@ -138,7 +141,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 1,
     backgroundColor: '#d3d3d3',
-    marginTop: 40,
+    marginTop: 20,
   },
   aboutUsText: {
     textAlign: 'center',
@@ -254,10 +257,9 @@ mapContainer: {
   directionsButton: {
     flexDirection: 'row',
     backgroundColor: 'rgba(128, 128, 128, 0.7)', // Semi-transparent grey background
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    padding: 10,
     borderRadius: 5,
-    width: 160,
+    width: 180,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 15,
@@ -265,10 +267,7 @@ mapContainer: {
   directionsButtonText: {
     color: '#fff',
     fontSize: 16,
-    fontWeight: 'bold',
-  },
-  icon: {
-    marginRight: 10,
+    fontWeight: '400',
   },
 });
 
