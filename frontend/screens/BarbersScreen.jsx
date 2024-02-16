@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between', // Aligns children at the beginning and end of the container
   },
   title: {
-    fontSize: 22,
+    fontSize: 20,
     margin: 0,
     paddingBottom: 30,
     textAlign: 'center',
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
 },
   barbersButtonTxt: {
-    fontSize: 20,
+    fontSize: 18,
     color: 'black',
     marginTop: 15,
     fontFamily: 'SourceCodePro',
