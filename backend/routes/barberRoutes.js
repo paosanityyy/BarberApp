@@ -77,7 +77,7 @@ router.get('/', async (req, res) => {
 });
 
 // Get a specific barber
-router.get('/update/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
 
   try {
     const barber = await Barber.findById(req.params.id);
@@ -92,7 +92,7 @@ router.get('/update/:id', async (req, res) => {
 });
 
 // Update a specific barber
-router.put('/employees/:id', async (req, res) => {
+router.put('/update/:id', async (req, res) => {
   try {
     const { firstName, lastName, email, phoneNumber, username, password } = req.body;
     const updatedBarber = await Barber.findByIdAndUpdate(
@@ -104,7 +104,7 @@ router.put('/employees/:id', async (req, res) => {
     if (!updatedBarber) {
       return res.status(404).json({ message: 'Barber not found' });
     }
-    res.status(200).json(updatedBarber);
+    res.status(200).json({ message: 'Barber updated successfully' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error updating barber' });
@@ -112,13 +112,13 @@ router.put('/employees/:id', async (req, res) => {
 });
 
 // Delete a specific barber
-router.delete('/:id', async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
   try {
     const deletedBarber = await Barber.findByIdAndDelete(req.params.id);
     if (!deletedBarber) {
       return res.status(404).json({ message: 'Barber not found' });
     }
-    res.status(200).json(deletedBarber);
+    res.status(200).json({ message: 'Barber deleted successfully' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error deleting barber' });
