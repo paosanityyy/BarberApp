@@ -96,12 +96,14 @@ const BarbersScreen = ({ navigation }) => {
 
       <Text style={styles.footer}>© 2023 Central Studios. All Rights Reserved.</Text>
 
+    {/* Floating Action Button */}
     <TouchableOpacity
-      style={styles.fab}
-      onPress={() => {}}
-    >
-      <FontAwesomeIcon icon={faComment} color='#ffffff' size={24} />
-    </TouchableOpacity>
+        style={styles.fab}
+        // on press navigate to consultation screen
+        onPress={() => navigation.jumpTo("Consultation")}
+      >
+        <FontAwesomeIcon icon={faComment} color='#ffffff' size={24} />
+      </TouchableOpacity>
   </View>
   );
 };

@@ -68,7 +68,8 @@ const Home = ({ navigation }) => {
       {/* Floating Action Button */}
       <TouchableOpacity
         style={styles.fab}
-        onPress={() => {}}
+        // on press navigate to consultation screen
+        onPress={() => navigation.jumpTo("Consultation")}
       >
         <FontAwesomeIcon icon={faComment} color='#ffffff' size={24} />
       </TouchableOpacity>
