@@ -5,7 +5,6 @@ const Barber = require('./barberModel');
 var appointmentSchema = new mongoose.Schema({
     // barber name, service, date, time, client name, client phone, client email
     barber: {
-
         type: mongoose.Schema.Types.ObjectId,
         ref: Barber, 
         required: true
@@ -37,4 +36,5 @@ var appointmentSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('Appointment', appointmentSchema);
+const Appointment = mongoose.model('Appointment', appointmentSchema);
+module.exports = Appointment;

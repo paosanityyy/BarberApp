@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import axios from 'axios';
+
 
 const SignupScreen = ({ navigation }) => {
   const [firstName, setFirstName] = useState('');
@@ -8,10 +10,12 @@ const SignupScreen = ({ navigation }) => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [signUpMsg, setSignUpMsg] = useState('');
+
 
   const handleSignup = async () => {
     try {
-      const response = await fetch('http://your-server-ip:3000/signup', {
+      const signUpResponse = await fetch('http://localhost:3000/api/users/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -26,19 +30,15 @@ const SignupScreen = ({ navigation }) => {
         }),
       });
 
-      const result = await response.json();
-
-      if (result.success) {
-        // Signup successful, you can navigate to the home screen or perform other actions
-        navigation.jumpTo('Home');
+      if (signUpResponse.status === 201) {
+        setSignUpMsg('Account created successfully');
       } else {
-        // Signup failed, display an error message or take appropriate action
-        console.error(result.message);
+        setSignUpMsg('Account creation failed');
       }
     } catch (error) {
-      console.error('Error during signup:', error);
-    }
-  };
+      console.error('Error signing up', error);
+    }   
+};
 
   return (
     <View style={styles.container}>
@@ -49,35 +49,35 @@ const SignupScreen = ({ navigation }) => {
         placeholderTextColor="grey"
         style={styles.input}
         value={firstName}
-        onChangeText={(text) => setFirstName(text)}
+        onChangeText={setFirstName}
       />
       <TextInput
         placeholder="Last Name"
         placeholderTextColor="grey"
         style={styles.input}
         value={lastName}
-        onChangeText={(text) => setLastName(text)}
+        onChangeText={setLastName}
       />
       <TextInput
         placeholder="Email"
         placeholderTextColor="grey"
         style={styles.input}
         value={email}
-        onChangeText={(text) => setEmail(text)}
+        onChangeText={setEmail}
       />
       <TextInput
         placeholder="Phone"
         placeholderTextColor="grey"
         style={styles.input}
         value={phoneNumber}
-        onChangeText={(text) => setPhoneNumber(text)}
+        onChangeText={setPhoneNumber}
       />
       <TextInput
         placeholder="Username"
         placeholderTextColor="grey"
         style={styles.input}
         value={username}
-        onChangeText={(text) => setUsername(text)}
+        onChangeText={setUsername}
       />
       <TextInput
         placeholder="Password"
@@ -85,7 +85,7 @@ const SignupScreen = ({ navigation }) => {
         style={styles.input}
         secureTextEntry={true}
         value={password}
-        onChangeText={(text) => setPassword(text)}
+        onChangeText={setPassword}
       />
       <TouchableOpacity style={styles.button} onPress={handleSignup}>
         <Text style={styles.buttonTxt}>Sign Up</Text>
