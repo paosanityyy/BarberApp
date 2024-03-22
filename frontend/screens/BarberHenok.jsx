@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { View, ScrollView, Image, Text, StyleSheet, Animated, TouchableOpacity } from 'react-native';
+import { View, ScrollView, Image, Text, StyleSheet, Animated, TouchableOpacity, Linking } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faComment } from '@fortawesome/free-solid-svg-icons';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
@@ -61,7 +61,9 @@ const BarberKurt = ({ navigation }) => {
         <View style={styles.barbers}>
           <TouchableOpacity
             style={styles.barbersButton}
-            onPress={() => {}}
+            // on press navigate to his instagram url or instagram app
+            onPress={() => {
+              Linking.openURL('https://www.instagram.com/hennyscutzz/');}}
           >
             <Image
               source={require('../assets/henok.png')}

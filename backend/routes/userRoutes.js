@@ -1,67 +1,96 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const router = express.Router();
 const User = require('../models/userModel');
 
-const router = express.Router();
-
-// Signup endpoint
+// Create a new user
 router.post('/signup', async (req, res) => {
     try {
-      // Extract user data from the request body
-      const { firstName, lastName, phoneNumber, email, username, password } = req.body;
-      // Check if a user with the same username or email already exists
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const existingUser = await User.findOne({ $or: [{ username }, { email }] });
-  
-      if (existingUser) {
-        // User with the same username or email already exists
-        return res.status(400).json({ success: false, message: 'Username or email already in use' });
-      }
-  
-      // Create a new user using the User model
-      const newUser = new User({
-        firstName,
-        lastName,
-        phoneNumber,
-        email,
-        username,
-        password,
-      });
-  
-      // Save the user to the database
-      const savedUser = await newUser.save();
-  
-      // Successful signup
-      res.status(201).json({ message: "User registered successfully", user: savedUser });
-    } catch (error) {
-      // Handle errors
-      console.error(error);
-      res.status(500).json({ message: 'Error registering user' });
+        const newUser = new User(req.body);
+        // Inside your signup route
+        const salt = await bcrypt.genSalt(10); // Generate salt
+        const hashedPassword = await bcrypt.hash(req.body.password, salt); // Hash the password
+        newUser.password = hashedPassword; // Set the hashed password
+        const savedUser = await newUser.save();
+        res.status(201).json(savedUser);
+    } catch (err) {
+        res.status(500).json(err);
     }
 });
-  
-// Login endpoint
+
+// User login route
 router.post('/login', async (req, res) => {
     try {
-        const { username, password } = req.body;
-        const user = await User.findOne({ username, password });
-
+        // Find the user by username/email
+        const user = await User.findOne({ username: req.body.username });
         if (!user) {
-          return res.status(401).json({ status: false, message: 'Invalid Username and Password' });
-        }
-        if (user.password !== password) {
-        res.status(401).json({ status: false, message: 'Invalid credentials' });
+            return res.status(404).json("User not found");
         }
 
-        res.status(200).json({ 
-            status: true, 
-            message: 'Login successful', 
-            username: user.username 
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ status: false, message: 'Invalid credentials' });
+        // Check if the password is correct
+        const validPassword = await bcrypt.compare(req.body.password, user.password);
+        if (!validPassword) {
+            return res.status(400).json("Invalid password");
+        }
+
+        // Generate JWT token
+        const token = jwt.sign(
+            { id: user._id, role: user.role },
+            process.env.JWT_SECRET,
+            { expiresIn: "24h" }
+        );
+
+        // Return the token and user info
+        res.status(200).json({ token, user });
+    } catch (err) {
+        res.status(500).json(err);
     }
 });
+
+// Get all users
+router.get('/', async (req, res) => {
+    try {
+        const users = await User.find();
+        res.status(200).json(users);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+// Get a user
+router.get('/:id', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        res.status(200).json(user);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+// Update a user
+router.put('/:id', async (req, res) => {
+    try {
+        const updatedUser = await User.findByIdAndUpdate(
+            req.params.id, 
+            { $set: req.body }, 
+            { new: true } // This option returns the document after update was applied.
+        );
+        res.status(200).json(updatedUser);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+// Delete a user
+router.delete('/:id', async (req, res) => {
+    try {
+        await User.findByIdAndDelete(req.params.id);
+        res.status(200).json({ message: "User has been deleted." });
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
 
 module.exports = router;

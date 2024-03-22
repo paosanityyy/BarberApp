@@ -61,7 +61,8 @@ const BarberKurt = ({ navigation }) => {
         <View style={styles.barbers}>
           <TouchableOpacity
             style={styles.barbersButton}
-            onPress={() => {}}
+            onPress={() => {
+              Linking.openURL('https://www.instagram.com/kurtioo/');}}
           >
             <Image
               source={require('../assets/renz.png')}

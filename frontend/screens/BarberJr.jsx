@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { View, ScrollView, Image, Text, StyleSheet, Animated, TouchableOpacity } from 'react-native';
+import { View, ScrollView, Image, Text, StyleSheet, Animated, TouchableOpacity, Linking } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faComment } from '@fortawesome/free-solid-svg-icons';
 
@@ -62,7 +62,8 @@ const BarberJr = ({ navigation }) => {
         <View style={styles.barbers}>
           <TouchableOpacity
             style={styles.barbersButton}
-            onPress={() => {}}
+            onPress={() => {
+              Linking.openURL('https://www.instagram.com/esq_cutz/');}}
           >
             <Image
               source={require('../assets/jr.png')}

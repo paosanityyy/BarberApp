@@ -16,8 +16,18 @@ const AppointmentScreen = ({navigation}) => {
     const barbers = ['JR', 'Kurt', 'Renz', 'Henok', 'Qyle'];
     const services = ['Haircut', 'Haircut + Beard', 'Braids'];
 
-    const handleAppointmentSubmit = () => {
-        // Logic to submit the appointment
+    const createAppointment = async () => {
+        e.preventDefault();
+        const [appointment, setAppointment] = useState({
+            user: "",
+            barber: "",
+            service: "",
+            date: "",
+        });
+
+        const [createMsg, setCreateMsg] = useState("");
+
+        
     };
 
     const timeSlots = ['10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM'];

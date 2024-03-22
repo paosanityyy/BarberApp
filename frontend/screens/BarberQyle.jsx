@@ -61,7 +61,8 @@ const BarberQyle = ({ navigation }) => {
         <View style={styles.barbers}>
           <TouchableOpacity
             style={styles.barbersButton}
-            onPress={() => {}}
+            onPress={() => {
+              Linking.openURL('https://www.instagram.com/qj.blends/');}}
           >
             <Image
               source={require('../assets/qyle.jpg')}

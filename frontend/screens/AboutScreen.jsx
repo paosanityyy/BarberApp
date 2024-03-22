@@ -7,7 +7,7 @@ import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import MapView, { Marker } from 'react-native-maps';
 
-const AboutScreen = () => {
+const AboutScreen = ({ navigation }) => {
 
     const shopLocation = {
         latitude: 43.697, // Update with the actual latitude

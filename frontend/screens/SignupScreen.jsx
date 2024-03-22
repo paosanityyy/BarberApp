@@ -90,6 +90,9 @@ const SignupScreen = ({ navigation }) => {
       <TouchableOpacity style={styles.button} onPress={handleSignup}>
         <Text style={styles.buttonTxt}>Sign Up</Text>
       </TouchableOpacity>
+      {/* display message when sign up fails */}
+      <Text style={{ color: 'red' }}>{signUpMsg}</Text>
+      
       <TouchableOpacity onPress={() => navigation.jumpTo('Login')}>
         <Text style={styles.goToLogin}>Already have an account? Login</Text>
       </TouchableOpacity>
