@@ -8,6 +8,7 @@ import BarberJr from './BarberJr';
 
 const BarbersScreen = ({ navigation }) => {
   const scrollY = useRef(new Animated.Value(0)).current;
+  
 
   const translateY = scrollY.interpolate({
     inputRange: [0, 100],
