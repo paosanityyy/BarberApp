@@ -46,4 +46,15 @@ router.get('/barber/:barberId', async (req, res) => {
     }
 });
 
+// Get appointments for a client
+router.get('/client/:clientId', async (req, res) => {
+    try {
+        const appointments = await Appointment.find({ clientId: req.params.clientId });
+        res.status(200).json(appointments);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+
 module.exports = router;

@@ -7,34 +7,51 @@ const User = require('../models/userModel');
 // Create a new user
 router.post('/signup', async (req, res) => {
     try {
-        const newUser = new User(req.body);
+        const { firstName, lastName, username, email, phone, role, password } = req.body;
         // Inside your signup route
-        const salt = await bcrypt.genSalt(10); // Generate salt
-        const hashedPassword = await bcrypt.hash(req.body.password, salt); // Hash the password
-        newUser.password = hashedPassword; // Set the hashed password
+        const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
+        const existingUser = await User.findOne({ $or: [{ username }, { email }] });
+
+        if (existingUser) {
+            return res.status(400).json({ success: false, message: "Username or email already exists"});
+        }
+
+        const newUser = new User({
+            firstName,
+            lastName,
+            username,
+            email,
+            phone,
+            role,
+            password: hashedPassword
+        });
+
         const savedUser = await newUser.save();
-        res.status(201).json(savedUser);
+        res.status(201).json({message: "User created successfully", user: savedUser});
     } catch (err) {
-        res.status(500).json(err);
+        console.error(err);
+        res.status(500).json({ message: 'Error registering user. Please try again.'});
     }
 });
 
 // User login route
 router.post('/login', async (req, res) => {
     try {
-        // Find the user by username/email
-        const user = await User.findOne({ username: req.body.username });
+        const { username, password } = req.body;
+        const user = await User.findOne({ username });
+
         if (!user) {
-            return res.status(404).json("User not found");
+            return res.status(400).json({ message: "Invalid username or password" });
         }
 
-        // Check if the password is correct
-        const validPassword = await bcrypt.compare(req.body.password, user.password);
-        if (!validPassword) {
-            return res.status(400).json("Invalid password");
+        // Compare the provided password with the hashed password in the database
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            // If the password doesn't match, return an invalid password error
+            return res.status(400).json({ message: "Invalid password", });
         }
 
-        // Generate JWT token
+        // If password matches, proceed to generate JWT token
         const token = jwt.sign(
             { id: user._id, role: user.role },
             process.env.JWT_SECRET,
@@ -42,17 +59,39 @@ router.post('/login', async (req, res) => {
         );
 
         // Return the token and user info
-        res.status(200).json({ token, user });
+        res.status(200).json({ status: true, message: 'Login successful', user, token });
     } catch (err) {
+        console.error(err);
         res.status(500).json(err);
     }
 });
+
 
 // Get all users
 router.get('/', async (req, res) => {
     try {
         const users = await User.find();
         res.status(200).json(users);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+// Get all barbers
+router.get('/barbers', async (req, res) => {
+    try {
+        const barbers = await User.find({ role: 'barber' });
+        res.status(200).json(barbers);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+// Get all clients
+router.get('/clients', async (req, res) => {
+    try {
+        const clients = await User.find({ role: 'client' });
+        res.status(200).json(clients);
     } catch (err) {
         res.status(500).json(err);
     }
