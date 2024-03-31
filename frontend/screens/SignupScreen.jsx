@@ -21,9 +21,7 @@ const SignupScreen = ({ navigation }) => {
         username,
         password,
       });
-      
-    
-    
+
       // Check if the response status is 201
       if (signUpResponse.status === 201) {
         // If successful, display the success message
