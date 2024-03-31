@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Modal, ScrollView, Image} from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faComment, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import AppointmentConfirmation from './AppointmentConfirmation';
+import { useAuth } from '../AuthContext';
 
 const AppointmentScreen = ({navigation}) => {
     const [selectedDate, setSelectedDate] = useState('');
@@ -12,15 +13,40 @@ const AppointmentScreen = ({navigation}) => {
     const [selectedService, setSelectedService] = useState('Haircut');
     const [isBarberModalVisible, setBarberModalVisible] = useState(false);
     const [isServiceModalVisible, setServiceModalVisible] = useState(false);
+    const { user } = useAuth();
 
-    const barbers = ['JR', 'Kurt', 'Renz', 'Henok'];
+    const barbers = ['JR', 'Kurt', 'Renz', 'Henok', 'Qyle'];
     const services = ['Haircut', 'Haircut + Beard', 'Braids'];
 
-    const handleAppointmentSubmit = () => {
-        // Logic to submit the appointment
+    const createAppointment = async () => {
+        e.preventDefault();
+        const [appointment, setAppointment] = useState({
+            user: "",
+            barber: "",
+            service: "",
+            date: "",
+        });
+
+        const [createMsg, setCreateMsg] = useState("");
+
+        
     };
 
-    const timeSlots = ['12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM'];
+    if (!user) {
+        // Display login message if no user is logged in
+        return (
+            <View style={styles.container}>
+            <View style={styles.noUser}>
+                <Image source={require('../assets/logo.png')} style={styles.logo} />
+                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                    <Text style={styles.goToLogin}>Log in to book an appointment</Text>
+                </TouchableOpacity>
+                <Text style={styles.NoUserfooterText}>© 2023 Central Studios. All Rights Reserved.</Text>
+            </View>
+            </View>
+        );
+    }
+    const timeSlots = ['10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM'];
 
     const renderModalContent = (options, selectedValue, setValue, setModalVisible) => (
         <Modal
@@ -70,6 +96,7 @@ const AppointmentScreen = ({navigation}) => {
     return (
         <View style={{backgroundColor: 'white'}}>
             <ScrollView>
+                <Text style={{fontSize: 24, textAlign: 'center', marginTop: 20, fontFamily: 'Roboto', fontWeight: 'bold'}}>Book an Appointment</Text>
                 <View style={styles.container}>
                     {/* Select Barber */}
                     <View style={styles.dropdownContainer}>
@@ -161,9 +188,11 @@ const AppointmentScreen = ({navigation}) => {
                 <AppointmentConfirmation onClose={handleCloseConfirmation} />
             </Modal>
 
+            {/* Floating Action Button */}
             <TouchableOpacity
                 style={styles.fab}
-                onPress={() => {}}
+                // on press navigate to consultation screen
+                onPress={() => navigation.jumpTo("Consultation")}
             >
                 <FontAwesomeIcon icon={faComment} color='#ffffff' size={24} />
             </TouchableOpacity>
@@ -243,6 +272,33 @@ const styles = StyleSheet.create({
     selectedField: {
         fontFamily: 'Roboto',
     },
+    noUser: {
+        padding: 20,
+        marginTop: 110,
+      },
+      goToLogin: {
+        color: 'white',
+        fontFamily: 'Roboto',
+        fontSize: 18,
+        fontWeight: 'bold',
+        backgroundColor: 'black',
+        padding: 15,
+        borderRadius: 10,
+        alignSelf: 'center',
+        marginTop: 80,
+      },
+      logo: {
+        marginTop: 0,
+        width: 310,
+        height: 85,
+        alignSelf: 'center', // Adjust the alignment of the logo
+      },
+      NoUserfooterText: {
+        textAlign: 'center',
+        padding: 0,
+        marginTop: 380,
+        fontWeight: '100',
+      }
     // Extend your existing styles
 });
 

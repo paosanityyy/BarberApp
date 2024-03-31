@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {TouchableOpacity, View, Text, StyleSheet} from "react-native";
+import {TouchableOpacity, View, Text, StyleSheet, FlatList} from "react-native";
 import {TextInput} from "react-native-gesture-handler";
 
 const CreateBarber = () => {
@@ -106,16 +106,18 @@ const CreateBarber = () => {
             <TouchableOpacity style={styles.button} onPress={addBarber}>
                 <Text style={styles.buttonTxt}>Add Barber</Text>
             </TouchableOpacity>
-            {/*<FlatList*/}
-            {/*    data={barbers}*/}
-            {/*    renderItem={({ item }) => (*/}
-            {/*        <View style={styles.barberCard}>*/}
-            {/*            <Text>Name: {item.firstName} {item.lastName}</Text>*/}
-            {/*            <Text>Email: {item.email}</Text>*/}
-            {/*            <Text>Phone Number: {item.phone}</Text>*/}
-            {/*        </View>*/}
-            {/*    )}*/}
-            {/*/>*/}
+            <FlatList
+               data={barbers}
+               renderItem={({ item }) => (
+                   <View style={styles.barberCard}>
+                          <Text>Username: {item.username}</Text>
+                       <Text>Name: {item.firstName} {item.lastName}</Text>
+                       <Text>Email: {item.email}</Text>
+                          <Text>Address: {item.address}</Text>
+                       <Text>Phone Number: {item.phone}</Text>
+                    </View>
+               )}
+            />
         </View>
     );
 }

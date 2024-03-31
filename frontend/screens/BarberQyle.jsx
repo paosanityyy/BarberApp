@@ -61,7 +61,8 @@ const BarberQyle = ({ navigation }) => {
         <View style={styles.barbers}>
           <TouchableOpacity
             style={styles.barbersButton}
-            onPress={() => {}}
+            onPress={() => {
+              Linking.openURL('https://www.instagram.com/qj.blends/');}}
           >
             <Image
               source={require('../assets/qyle.jpg')}
@@ -85,9 +86,11 @@ const BarberQyle = ({ navigation }) => {
 
       <Text style={styles.footer}>© 2023 Central Studios. All Rights Reserved.</Text>
 
+      {/* Floating Action Button */}
       <TouchableOpacity
         style={styles.fab}
-        onPress={() => {}}
+        // on press navigate to consultation screen
+        onPress={() => navigation.jumpTo("Consultation")}
       >
         <FontAwesomeIcon icon={faComment} color='#ffffff' size={24} />
       </TouchableOpacity>

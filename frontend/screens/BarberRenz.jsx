@@ -14,7 +14,7 @@ const Slideshow = () => {
     require('../assets/c3.png'),
   ];
 
-  const [currentIndex, setCurrentIndex] = React.useState(0);
+  const [currentIndex, setCurrentInsdex] = React.useState(0);
 
   const goToNextSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
@@ -62,7 +62,8 @@ const BarberRenz = ({ navigation }) => {
         <View style={styles.barbers}>
           <TouchableOpacity
             style={styles.barbersButton}
-            onPress={() => {}}
+            onPress={() => {
+              Linking.openURL('https://www.instagram.com/renzoblendzz/');}}
           >
             <Image
               source={require('../assets/kurt.png')}
@@ -86,9 +87,11 @@ const BarberRenz = ({ navigation }) => {
 
       <Text style={styles.footer}>© 2023 Central Studios. All Rights Reserved.</Text>
 
+      {/* Floating Action Button */}
       <TouchableOpacity
         style={styles.fab}
-        onPress={() => {}}
+        // on press navigate to consultation screen
+        onPress={() => navigation.jumpTo("Consultation")}
       >
         <FontAwesomeIcon icon={faComment} color='#ffffff' size={24} />
       </TouchableOpacity>

@@ -41,9 +41,22 @@ const Home = ({ navigation }) => {
         />
         <Text style={styles.sectionSubtitle}>We are...</Text>
         <Text style={styles.sectionText}>
-        Welcome to Central Studios, where grooming meets excellence. With a passion for style and a commitment to quality, our barbers provide top-tier grooming services in a modern and welcoming atmosphere. Step into Central Studios and experience the perfect blend of tradition, innovation, and impeccable service, ensuring every visit leaves you looking and feeling your best.</Text>
+        Where grooming meets excellence. With a passion for style and a commitment to quality, our barbers provide top-tier grooming services in a modern and welcoming atmosphere. Step into Central Studios and experience the perfect blend of tradition, innovation, and impeccable service, ensuring every visit leaves you looking and feeling your best.</Text>
 
-        {/* ... Other content ... */}
+        <View style={styles.separatorLine} />
+        <Text style={styles.sectionOffer}>What we offer</Text>
+
+        <Text style={styles.servicesText}>Haircuts</Text>
+        <Text style={styles.servicesDesc}>Transform your look with our expert haircuts. Our skilled stylists are here to create the perfect hairstyle that suits your personality and enhances your features.</Text>
+
+        <Text style={styles.servicesText}>Haircut + Beard</Text>
+        <Text style={styles.servicesDesc}>Elevate your style with our combined haircut and beard grooming service. Our experienced barbers will craft a seamless look that complements your facial features and showcases your unique charm.</Text>
+
+        <Text style={styles.servicesText}>Braids</Text>
+        <Text style={styles.servicesDesc}>Unleash your individuality with our professional braiding service. Whether you're looking for a classic or trendy braid style, our skilled stylists will bring creativity to your hair, adding a touch of sophistication to your overall appearance.</Text>
+
+
+      
 
         <Text style={styles.footerText}>
           © 2023 Central Studios. All Rights Reserved.
@@ -55,7 +68,8 @@ const Home = ({ navigation }) => {
       {/* Floating Action Button */}
       <TouchableOpacity
         style={styles.fab}
-        onPress={() => {}}
+        // on press navigate to consultation screen
+        onPress={() => navigation.jumpTo("Consultation")}
       >
         <FontAwesomeIcon icon={faComment} color='#ffffff' size={24} />
       </TouchableOpacity>
@@ -67,6 +81,12 @@ const styles = {
   container: {
     alignItems: 'center',
     backgroundColor: 'white'
+  },
+    separatorLine: {
+    width: '100%',
+    height: 1,
+    backgroundColor: '#d3d3d3',
+    marginTop: 20,
   },
   logo: {
     marginTop: 50,
@@ -110,14 +130,36 @@ const styles = {
     fontSize: 18,
     // fontfamily : 'Roboto',
   },
+  sectionOffer: {
+    fontSize: 20,
+    marginTop: 20,
+    marginBottom: 20,
+  },
   sectionText: {
     marginHorizontal: 30,
     textAlign:'justify',
     marginTop: 10,
-    fontSize: 18,
-    lineHeight: 28,
+    lineHeight: 0,
     padding: 10,
     fontWeight: '300',
+    fontSize: 16,
+  },
+  servicesDesc: {
+    marginHorizontal: 30,
+    textAlign:'justify',
+    marginTop: 5,
+    lineHeight: 20,
+    padding: 10,
+    fontWeight: '300',
+    fontSize: 15,
+  },
+  servicesText: {
+    marginHorizontal: 30,
+    textAlign:'justify',
+    marginTop: 5,
+    padding: 10,
+    fontWeight: '400',
+    fontSize: 16,
   },
   footerText: {
     textAlign: 'center',

@@ -1,44 +1,58 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import axios from 'axios';
 
 const SignupScreen = ({ navigation }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [phone, setPhone] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [signUpMsg, setSignUpMsg] = useState('');
 
   const handleSignup = async () => {
     try {
-      const response = await fetch('http://your-server-ip:3000/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          email,
-          phoneNumber,
-          username,
-          password,
-        }),
+      const signUpResponse = await axios.post('http://localhost:3000/api/users/signup', {
+        firstName,
+        lastName,
+        email,
+        phone,
+        username,
+        password,
       });
-
-      const result = await response.json();
-
-      if (result.success) {
-        // Signup successful, you can navigate to the home screen or perform other actions
-        navigation.jumpTo('Home');
+      
+    
+    
+      // Check if the response status is 201
+      if (signUpResponse.status === 201) {
+        // If successful, display the success message
+        setSignUpMsg('Account created successfully');
       } else {
-        // Signup failed, display an error message or take appropriate action
-        console.error(result.message);
+        // If not successful, display a generic error message
+        setSignUpMsg('Account creation failed');
       }
     } catch (error) {
-      console.error('Error during signup:', error);
+      // Handle different error scenarios
+      if (error.response) {
+        // If there's a response from the server, log the details
+        console.error('Server responded with an error status:', error.response.status);
+        console.error('Response data:', error.response.data);
+        console.error('Response headers:', error.response.headers);
+      } else if (error.request) {
+        // If there's no response from the server, log the request details
+        console.error('No response received from the server');
+        console.error('Request data:', error.request);
+      } else {
+        // If there's an error setting up the request, log the error message
+        console.error('Error setting up the request:', error.message);
+      }
+      // Display a generic error message to the user
+      setSignUpMsg('Error signing up. Please try again.');
     }
   };
+  
+  
 
   return (
     <View style={styles.container}>
@@ -49,35 +63,35 @@ const SignupScreen = ({ navigation }) => {
         placeholderTextColor="grey"
         style={styles.input}
         value={firstName}
-        onChangeText={(text) => setFirstName(text)}
+        onChangeText={setFirstName}
       />
       <TextInput
         placeholder="Last Name"
         placeholderTextColor="grey"
         style={styles.input}
         value={lastName}
-        onChangeText={(text) => setLastName(text)}
+        onChangeText={setLastName}
       />
       <TextInput
         placeholder="Email"
         placeholderTextColor="grey"
         style={styles.input}
         value={email}
-        onChangeText={(text) => setEmail(text)}
+        onChangeText={setEmail}
       />
       <TextInput
         placeholder="Phone"
         placeholderTextColor="grey"
         style={styles.input}
-        value={phoneNumber}
-        onChangeText={(text) => setPhoneNumber(text)}
+        value={phone}
+        onChangeText={setPhone}
       />
       <TextInput
         placeholder="Username"
         placeholderTextColor="grey"
         style={styles.input}
         value={username}
-        onChangeText={(text) => setUsername(text)}
+        onChangeText={setUsername}
       />
       <TextInput
         placeholder="Password"
@@ -85,14 +99,18 @@ const SignupScreen = ({ navigation }) => {
         style={styles.input}
         secureTextEntry={true}
         value={password}
-        onChangeText={(text) => setPassword(text)}
+        onChangeText={setPassword}
       />
       <TouchableOpacity style={styles.button} onPress={handleSignup}>
         <Text style={styles.buttonTxt}>Sign Up</Text>
       </TouchableOpacity>
+      {/* display message when sign up fails */}
+      <Text style={{ color: 'red' }}>{signUpMsg}</Text>
+      
       <TouchableOpacity onPress={() => navigation.jumpTo('Login')}>
         <Text style={styles.goToLogin}>Already have an account? Login</Text>
       </TouchableOpacity>
+      {signUpMsg ? <Text>{signUpMsg}</Text> : null}
       <Text style={styles.footerText}>© 2023 Central Studios. All Rights Reserved.</Text>
     </View>
   );

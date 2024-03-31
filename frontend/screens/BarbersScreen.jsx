@@ -8,6 +8,7 @@ import BarberJr from './BarberJr';
 
 const BarbersScreen = ({ navigation }) => {
   const scrollY = useRef(new Animated.Value(0)).current;
+  
 
   const translateY = scrollY.interpolate({
     inputRange: [0, 100],
@@ -96,12 +97,14 @@ const BarbersScreen = ({ navigation }) => {
 
       <Text style={styles.footer}>© 2023 Central Studios. All Rights Reserved.</Text>
 
+    {/* Floating Action Button */}
     <TouchableOpacity
-      style={styles.fab}
-      onPress={() => {}}
-    >
-      <FontAwesomeIcon icon={faComment} color='#ffffff' size={24} />
-    </TouchableOpacity>
+        style={styles.fab}
+        // on press navigate to consultation screen
+        onPress={() => navigation.jumpTo("Consultation")}
+      >
+        <FontAwesomeIcon icon={faComment} color='#ffffff' size={24} />
+      </TouchableOpacity>
   </View>
   );
 };
@@ -114,7 +117,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between', // Aligns children at the beginning and end of the container
   },
   title: {
-    fontSize: 22,
+    fontSize: 20,
     margin: 0,
     paddingBottom: 30,
     textAlign: 'center',
@@ -147,7 +150,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
 },
   barbersButtonTxt: {
-    fontSize: 20,
+    fontSize: 18,
     color: 'black',
     marginTop: 15,
     fontFamily: 'SourceCodePro',
