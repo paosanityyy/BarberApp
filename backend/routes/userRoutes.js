@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const router = express.Router();
 const User = require('../models/userModel');
+const Barber = require('../models/barberModel');
 
 // Create a new user
 router.post('/signup', async (req, res) => {
@@ -27,6 +28,7 @@ router.post('/signup', async (req, res) => {
     res.status(500).json({ message: 'Error registering user. Please try again.' });
   }
 });
+
 
 // User login route
 router.post('/login', async (req, res) => {
@@ -79,6 +81,16 @@ router.get('/', async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+router.get('/clients', async (req, res) => {
+  try {
+    const users = await User.find({ role: 'client' }); // Only retrieve users with the role 'barber'
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 
 // Get a user by ID
 router.get('/:id', async (req, res) => {
