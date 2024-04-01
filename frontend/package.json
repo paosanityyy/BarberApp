@@ -26,6 +26,7 @@
     "expo-app-loading": "^2.1.1",
     "expo-font": "~11.10.3",
     "expo-status-bar": "~1.11.1",
+    "express": "^4.19.2",
     "gesture-handler": "^0.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
