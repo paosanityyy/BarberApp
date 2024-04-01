@@ -122,7 +122,8 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },
     barberInfo: {
-      marginLeft: 10,
+        marginLeft: 10,
+        paddingLeft: 20,
     },
     barbersButtonTxt: {
       fontSize: 40,
@@ -148,9 +149,6 @@ const styles = StyleSheet.create({
     },
     barbers: {
       paddingTop: 50,
-    },
-    barberInfo: {
-      paddingLeft: 20,
     },
     footer: {
       textAlign: 'center',
@@ -215,7 +213,7 @@ const styles = StyleSheet.create({
       fontSize: 18,
       color: 'white',
       textAlign: 'center',
-      fontWeight: '250',
+      fontWeight: '200',
     },
   });
   

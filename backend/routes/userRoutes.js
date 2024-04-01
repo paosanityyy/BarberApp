@@ -48,6 +48,7 @@ router.post('/signup', async (req, res) => {
   }
 });
 
+
 // User login route
 router.post('/login', async (req, res) => {
   try {
@@ -100,6 +101,16 @@ router.get('/', async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+router.get('/clients', async (req, res) => {
+  try {
+    const users = await User.find({ role: 'client' }); // Only retrieve users with the role 'barber'
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 
 // Get a user by ID
 router.get('/:id', async (req, res) => {

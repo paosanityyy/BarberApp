@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Appointment = require('../models/appointmentModel');
 const User = require('../models/userModel');
+const Barber = require('../models/barberModel');
 
 // Schedule an appointment
 router.post('/', async (req, res) => {
@@ -9,7 +10,7 @@ router.post('/', async (req, res) => {
         const { barberId } = req.body;
 
         // First, find the user by the provided barberId to verify their role
-        const barber = await User.findById(barberId);
+        const barber = await Barber.findById(barberId);
 
         // If no user is found with the barberId, or the user is not a barber, return an error
         if (!barber || barber.role !== 'barber') {
