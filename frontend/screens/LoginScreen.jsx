@@ -22,15 +22,28 @@ const LoginScreen = ({ navigation }) => {
                 },
                 body: JSON.stringify({ username: userName, password: userPassword }),
             });
+
+            const response2 = await fetch('http://localhost:3000/api/barbers/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username: userName, password: userPassword }),
+            });
     
             if (!response.ok) {
                 throw new Error('Invalid username or password');
             }
-    
+            if (!response2.ok) {
+                throw new Error('Invalid username or password');
+            }
+
             const data = await response.json();
+            const data2 = await response.json();
     
             // Assuming the response data includes user details such as email and phone
             login(data.user); // Pass the user object to your login function
+            login(data2.user); // Pass the user object to your login function
     
             navigation.navigate('Home');
             setUserName('');
