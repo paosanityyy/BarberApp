@@ -1,15 +1,16 @@
 import 'react-native-gesture-handler'
 import {NavigationContainer} from '@react-navigation/native'
 import {DrawerItemList, createDrawerNavigator} from '@react-navigation/drawer'
-import {View, Image, Text, ScrollView, StyleSheet, ImageBackground} from 'react-native';
+import {View, Image, Text, ScrollView, StyleSheet, ImageBackground, TouchableOpacity} from 'react-native';
 import Home from './screens/Home';
 import AboutScreen from './screens/AboutScreen';
 import AppointmentScreen from './screens/AppointmentScreen';
+import AppointmentConfirmation from './screens/AppointmentConfirmation';
 import SignupScreen from './screens/SignupScreen';
 import LoginScreen from './screens/LoginScreen';
 import ConsultationScreen from './screens/ConsultationScreen';
 import BarbersScreen from './screens/BarbersScreen';
-import {useFonts} from 'expo-font';
+import { useFonts } from 'expo-font';
 import React from 'react';
 import BarberJr from './screens/BarberJr';
 import BarberRenz from './screens/BarberRenz';
@@ -19,22 +20,55 @@ import BarberQyle from './screens/BarberQyle';
 import CreateBarber from "./screens/CreateBarber";
 import AdminScreen from "./screens/AdminScreen";
 import MyAccount from "./screens/MyAccount";
+import EditUserScreen from "./screens/EditUserScreen";
 import ReviewsScreen from './screens/ReviewsScreen';
 import WriteReview from './screens/WriteReview';
+import { AuthProvider, useAuth } from './AuthContext';
+
 
 function CustomDrawerContent(props) {
+    const { user, logout } = useAuth(); // Destructure logout from useAuth
+
+    const handleLogout = async () => {
+        await logout();
+        props.navigation.closeDrawer(); // Close drawer after logout
+    };
+
     return (
-        <ScrollView style={{flex: 1}}>
+        <ScrollView style={{ flex: 1 }}>
             <ImageBackground
                 source={require('./assets/nav.png')}
-                style={{width: undefined, padding: 16, paddingTop: 150, marginTop: 60}}
+                style={{ width: undefined, padding: 16, paddingTop: 150, paddingBottom: 10 }}
             >
                 <View style={styles.drawerHeader}>
-                    <Text style={styles.userName}>John Doe</Text>
-                    <Text style={styles.userEmail}>johndoe@example.com</Text>
+                    <Text style={styles.userName}>{user ? user.username : 'Welcome, Guest'}</Text>
+                    <Text style={styles.userEmail}>{user ? user.email : ''}</Text>
                 </View>
             </ImageBackground>
             <DrawerItemList {...props} />
+            {user ? (
+                <>
+                <TouchableOpacity onPress={() => props.navigation.navigate('My Account')} style={styles.logoutButton}>
+                    <Text style={styles.logoutButtonText}>My Account</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => props.navigation.navigate('Appointment')} style={styles.logoutButton}>
+                    <Text style={styles.logoutButtonText}>Appointment</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => props.navigation.navigate('Consultation')} style={styles.logoutButton}>
+                    <Text style={styles.logoutButtonText}>Consultation</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => props.navigation.navigate('Reviews')} style={styles.logoutButton}>
+                    <Text style={styles.logoutButtonText}>Reviews</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
+                    <Text style={styles.logoutButtonText}>Logout</Text>
+                </TouchableOpacity>
+                </>
+            ) : (
+                 <TouchableOpacity onPress={() => props.navigation.navigate('Login')} style={styles.logoutButton}>
+                    <Text style={styles.logoutButtonText}>Login</Text>
+                </TouchableOpacity>
+            )}
         </ScrollView>
     );
 }
@@ -55,11 +89,11 @@ export default function App() {
     let [fontsLoaded] = useFonts({
       'Roboto': require('./assets/fonts/Roboto-Light.ttf'),
       'Mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
-      'Roboto-Mono': require('./assets/fonts/RobotoMono-Regular.ttf'),
       'SourceCodePro': require('./assets/fonts/SourceCodePro-Light.ttf'),
     })
 
     return (
+        <AuthProvider> 
         <NavigationContainer>
             <Drawer.Navigator
                 drawerContent={(props) => <CustomDrawerContent {...props} />}
@@ -71,7 +105,12 @@ export default function App() {
                     headerStyle: {
                         shadowColor: 'transparent',
                         elevation: 0,
-                    },
+                    },drawerLabelStyle: {
+                        fontFamily: 'Roboto', // Apply the font family here
+                        fontSize: 16, // Match the font size with TouchableOpacity
+                        // fontWeight: 'bold', // Match the font weight
+                        color: 'black'
+                      },
                     drawerItemStyle: [
                       route.name === 'Signup' ? { display: 'none' } : {},
                       route.name === 'BarberJr' ? { display: 'none' } : {},
@@ -82,6 +121,13 @@ export default function App() {
                       route.name === 'Admin' ? { display: 'none' } : {},
                       route.name === 'CreateBarber' ? { display: 'none' } : {},
                       route.name === 'WriteReview' ? { display: 'none' } : {},
+                      route.name === 'Login' ? { display: 'none' } : {},
+                      route.name === 'Appointment' ? { display: 'none' } : {},
+                      route.name === 'Consultation' ? { display: 'none' } : {},
+                      route.name === 'Reviews' ? { display: 'none' } : {},
+                      route.name === 'My Account' ? { display: 'none' } : {},
+                      route.name === 'EditUser' ? { display: 'none' } : {},
+                      route.name === 'AppointmentConfirmation' ? { display: 'none' } : {},
                     ]
                 })}
             >
@@ -103,9 +149,11 @@ export default function App() {
                 <Drawer.Screen name='CreateBarber' component={CreateBarber}/>
                 <Drawer.Screen name='Reviews' component={ReviewsScreen}/>
                 <Drawer.Screen name='WriteReview' component={WriteReview} />
-                {/* <Drawer.Screen name='AppointmentConfirmation' component={AppointmentConfirmation} /> */}
+                <Drawer.Screen name='EditUser' component={EditUserScreen} />
+                <Drawer.Screen name='AppointmentConfirmation' component={AppointmentConfirmation} /> 
             </Drawer.Navigator>
         </NavigationContainer>
+        </AuthProvider>
     )
 }
 
@@ -113,15 +161,24 @@ const styles = StyleSheet.create({
   userName: {
     color: 'white',
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: '300',
   },
   userEmail: {
     color: 'white',
     fontSize: 16,
   },
   drawerItem: {
-    fontFamily: 'Roboto',
+    // fontFamily: 'Roboto',
     fontSize: 90, // Change the font size to your desired value
     fontWeight: 'bold',
+  },
+  logoutButtonText: {
+    // color: 'black',
+    // fontFamily: 'Roboto',
+    fontSize: 16,
+    marginLeft: 20,  
+    marginTop: 15,
+    marginBottom: 15,
+    fontWeight: '300',  
   },
 });

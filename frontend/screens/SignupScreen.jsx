@@ -2,43 +2,57 @@ import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import axios from 'axios';
 
-
 const SignupScreen = ({ navigation }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [phone, setPhone] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [signUpMsg, setSignUpMsg] = useState('');
 
-
   const handleSignup = async () => {
     try {
-      const signUpResponse = await fetch('http://localhost:3000/api/users/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          email,
-          phoneNumber,
-          username,
-          password,
-        }),
+      const signUpResponse = await axios.post('http://localhost:3000/api/users/signup', {
+        firstName,
+        lastName,
+        email,
+        phone,
+        username,
+        password,
       });
-
+      
+    
+    
+      // Check if the response status is 201
       if (signUpResponse.status === 201) {
+        // If successful, display the success message
         setSignUpMsg('Account created successfully');
       } else {
+        // If not successful, display a generic error message
         setSignUpMsg('Account creation failed');
       }
     } catch (error) {
-      console.error('Error signing up', error);
-    }   
-};
+      // Handle different error scenarios
+      if (error.response) {
+        // If there's a response from the server, log the details
+        console.error('Server responded with an error status:', error.response.status);
+        console.error('Response data:', error.response.data);
+        console.error('Response headers:', error.response.headers);
+      } else if (error.request) {
+        // If there's no response from the server, log the request details
+        console.error('No response received from the server');
+        console.error('Request data:', error.request);
+      } else {
+        // If there's an error setting up the request, log the error message
+        console.error('Error setting up the request:', error.message);
+      }
+      // Display a generic error message to the user
+      setSignUpMsg('Error signing up. Please try again.');
+    }
+  };
+  
+  
 
   return (
     <View style={styles.container}>
@@ -69,8 +83,8 @@ const SignupScreen = ({ navigation }) => {
         placeholder="Phone"
         placeholderTextColor="grey"
         style={styles.input}
-        value={phoneNumber}
-        onChangeText={setPhoneNumber}
+        value={phone}
+        onChangeText={setPhone}
       />
       <TextInput
         placeholder="Username"
@@ -96,6 +110,7 @@ const SignupScreen = ({ navigation }) => {
       <TouchableOpacity onPress={() => navigation.jumpTo('Login')}>
         <Text style={styles.goToLogin}>Already have an account? Login</Text>
       </TouchableOpacity>
+      {signUpMsg ? <Text>{signUpMsg}</Text> : null}
       <Text style={styles.footerText}>© 2023 Central Studios. All Rights Reserved.</Text>
     </View>
   );
@@ -153,7 +168,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: 'white',
     textAlign: 'center',
-    fontFamily: 'Roboto',
+    fontFamily: 'SourceCodePro',
   },
 });
 

@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal, ScrollView, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Modal, ScrollView, Alert, Image } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faComment, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { useAuth } from '../AuthContext';
 
 const AppointmentScreen = ({navigation}) => {
+    const { user } = useAuth();
     const [selectedDate, setSelectedDate] = useState('');
     const [markedDates, setMarkedDates] = useState({});
     const [selectedTime, setSelectedTime] = useState(null);
+    const [bookedSlots, setBookedSlots] = useState([]);
     const [barbers, setBarbers] = useState([]);
-    const [selectedBarber, setSelectedBarber] = useState({id: null, name: 'Select Barber'});
-    const [selectedService, setSelectedService] = useState('Select Service');
+    const [selectedBarber, setSelectedBarber] = useState({id: '', name: 'Select Barber'}); // Initialize the selected barber with an empty object
+    const [selectedService, setSelectedService] = useState('Haircut');
     const [isBarberModalVisible, setBarberModalVisible] = useState(false);
     const [isServiceModalVisible, setServiceModalVisible] = useState(false);
     
@@ -18,20 +21,33 @@ const AppointmentScreen = ({navigation}) => {
     const services = ['Haircut', 'Haircut + Beard', 'Braids'];
     const timeSlots = ['10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM'];
 
+    if (!user) {
+        // Display login message if no user is logged in
+        return (
+            <View style={styles.container}>
+            <View style={styles.noUser}>
+                <Image source={require('../assets/logo.png')} style={styles.logo} />
+                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                    <Text style={styles.goToLogin}>Log in to book an appointment</Text>
+                </TouchableOpacity>
+                <Text style={styles.NoUserfooterText}>© 2023 Central Studios. All Rights Reserved.</Text>
+            </View>
+            </View>
+        );
+    }
+
 
     useEffect(() => {
         const fetchBarbers = async () => {
             try {
-                // Assuming your backend endpoint for fetching barbers is something like this
                 const response = await fetch('http://localhost:3000/api/users/barbers', {
                     headers: {
                         'Content-Type': 'application/json',
-                    
                     },
                 });
                 if (!response.ok) throw new Error('Failed to fetch barbers');
                 const data = await response.json();
-                setBarbers(data); // Assuming the response is an array of barbers
+                setBarbers(data);
             } catch (error) {
                 console.error('Error fetching barbers:', error);
                 Alert.alert('Error', 'Failed to fetch barbers');
@@ -40,6 +56,7 @@ const AppointmentScreen = ({navigation}) => {
 
         fetchBarbers();
     }, []);
+
 
     useEffect(() => {
         markMondays();
@@ -72,36 +89,56 @@ const AppointmentScreen = ({navigation}) => {
     
         setMarkedDates(newMarkedDates);
     };
+
+    useEffect(() => {
+        const fetchBookedSlots = async () => {
+            if (selectedDate && selectedBarber.id) {
+                const formattedDate = selectedDate; // Ensure this is in the format your backend expects
+                try {
+                    const response = await fetch(`http://localhost:3000/api/appointments/bookedSlots?date=${formattedDate}&barberId=${selectedBarber.id}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
+                    if (!response.ok) throw new Error('Failed to fetch booked slots');
+                    const bookedSlotsData = await response.json();
+                    setBookedSlots(bookedSlotsData); // Update your state with the fetched data
+                } catch (error) {
+                    console.error('Error fetching booked slots:', error);
+                    Alert.alert('Error', 'Failed to fetch booked slots');
+                }
+            }
+        };
+    
+        fetchBookedSlots();
+    }, [selectedDate, selectedBarber.id]);
     
 
     const createAppointment = async () => {
-        // Step 1: Convert the selected date to a Date object
         const appointmentDate = new Date(selectedDate);
-    
-        // Step 2: Extract the hour and minutes from the selected time
         const [selectedHour, modifier] = selectedTime.split(' ');
         let [hours, minutes] = selectedHour.split(':');
         hours = parseInt(hours);
         minutes = parseInt(minutes);
-    
-        // Convert to 24-hour format if necessary
+
         if (modifier === 'PM' && hours < 12) {
             hours += 12;
         } else if (modifier === 'AM' && hours === 12) {
-            hours = 0; // Midnight is 00 in 24-hour time
+            hours = 0;
         }
-    
-        // Set the hours and minutes on the appointment date
+
         appointmentDate.setHours(hours, minutes);
-    
-        // Step 3: Prepare the appointment details with the combined date and time
+
         const appointmentDetails = {
-            clientId: '123', // Assuming you have a client ID
-            barberId: selectedBarber.id,
+            clientId: user.id,
+            barberId: selectedBarber.id, // Send only the barber's ID
             service: selectedService,
-            dateTime: appointmentDate.toISOString(), // Using ISO string format for the combined date and time
+            date: appointmentDate.toISOString(),
         };
-    
+
+        console.log('Creating appointment:', appointmentDetails);
+
         try {
             const response = await fetch('http://localhost:3000/api/appointments', {
                 method: 'POST',
@@ -110,28 +147,25 @@ const AppointmentScreen = ({navigation}) => {
                 },
                 body: JSON.stringify(appointmentDetails),
             });
-    
-            const data = await response.json();
-    
+
             if (!response.ok) {
-                console.error('Appointment creation failed:', data);
-                Alert.alert('Failed to create appointment');
+                const errorData = await response.json();
+                console.error('Appointment creation failed:', errorData);
+                Alert.alert('Error', 'Failed to create appointment');
                 return;
             }
-    
-            // Construct a message string with appointment details
-            const appointmentDetailsMessage = `
-            Appointment created successfully!
-            Barber: ${selectedBarber}
-            Service: ${selectedService}
-            Date and Time: ${appointmentDate.toLocaleString()}
-            `;
-            Alert.alert('Success', appointmentDetailsMessage);
-            // Optional: Reset form or navigate
-            navigation.navigate('Home');
+
+            const appointmentDetailsForScreen = {
+                name: user.firstName,
+                barberName: selectedBarber.name,
+                service: selectedService,
+                date: appointmentDate.toLocaleString(),
+            };
+
+            navigation.navigate('AppointmentConfirmation', { appointmentDetails: appointmentDetailsForScreen });
         } catch (error) {
-            console.error('Appointment creation failed:', error);
-            Alert.alert('Failed to create appointment');
+            console.error('Appointment creation error:', error);
+            Alert.alert('Error', 'An error occurred while booking the appointment.');
         }
     };
     
@@ -154,7 +188,7 @@ const AppointmentScreen = ({navigation}) => {
                             key={barber._id}
                             style={styles.modalItem}
                             onPress={() => {
-                                setValue({id: barber._id, name: barber.firstName}); // Store both the barber's ID and name
+                                setValue({id: barber._id, name: barber.firstName}); // Update this line
                                 setModalVisible(false);
                             }}
                         >
@@ -166,8 +200,8 @@ const AppointmentScreen = ({navigation}) => {
                 </View>
             </TouchableOpacity>
         </Modal>
-    );
-    
+    );    
+
     const renderServicesDropDown = (options, selectedValue, setValue, setModalVisible) => (
         <Modal
             transparent={true}
@@ -265,27 +299,32 @@ const AppointmentScreen = ({navigation}) => {
 
                     
                     <Text style={styles.headerTxt}>Select Time:</Text>
-                    <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between'}}>
-                        {timeSlots.map((time, index) => (
-                            // Touchable opacity to select the time 4 rows 2 columns
-                            <TouchableOpacity
-                                key={index}
-                                style={{
-                                    padding: 10,
-                                    backgroundColor: selectedTime === time ? '#3e3e3e' : 'lightgrey',
-                                    borderRadius: 5,
-                                    margin: 5,
-                                    width: '45%',
-                                    alignItems: 'center',
-                                }}
-                                onPress={() => setSelectedTime(time)}>
-                                <Text style={{ color: selectedTime === time ? 'white' : 'black', fontFamily:'Roboto' }}>{time}</Text>
-                            </TouchableOpacity>
-                        ))}
+                    <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+                        {timeSlots.map((time, index) => {
+                            const isBooked = bookedSlots.includes(time); // Check if the current slot is booked
+                            return (
+                                <TouchableOpacity
+                                    key={index}
+                                    disabled={isBooked}
+                                    style={{
+                                        padding: 10,
+                                        backgroundColor: isBooked ? 'grey' : selectedTime === time ? '#3e3e3e' : 'lightgrey',
+                                        borderRadius: 5,
+                                        margin: 5,
+                                        width: '45%',
+                                        alignItems: 'center',
+                                    }}
+                                    onPress={() => setSelectedTime(time)}
+                                >
+                                    <Text style={{ color: isBooked ? 'darkgrey' : selectedTime === time ? 'white' : 'black' }}>
+                                        {time}
+                                    </Text>
+                                </TouchableOpacity>
+                            );
+                        })}
                     </View>
                 </View>
                 
-
                 <TouchableOpacity style={styles.button} onPress={createAppointment}>
                     <Text style={styles.buttonTxt}>Book Appointment</Text>
                 </TouchableOpacity>
@@ -376,6 +415,33 @@ const styles = StyleSheet.create({
     selectedField: {
         fontFamily: 'Roboto',
     },
+    noUser: {
+        padding: 20,
+        marginTop: 110,
+      },
+      goToLogin: {
+        color: 'white',
+        fontFamily: 'Roboto',
+        fontSize: 18,
+        fontWeight: 'bold',
+        backgroundColor: 'black',
+        padding: 15,
+        borderRadius: 10,
+        alignSelf: 'center',
+        marginTop: 80,
+      },
+      logo: {
+        marginTop: 0,
+        width: 310,
+        height: 85,
+        alignSelf: 'center', // Adjust the alignment of the logo
+      },
+      NoUserfooterText: {
+        textAlign: 'center',
+        padding: 0,
+        marginTop: 380,
+        fontWeight: '100',
+      }
     // Extend your existing styles
 });
 

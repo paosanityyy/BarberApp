@@ -14,7 +14,7 @@ const Slideshow = () => {
     require('../assets/c3.png'),
   ];
 
-  const [currentIndex, setCurrentIndex] = React.useState(0);
+  const [currentIndex, setCurrentInsdex] = React.useState(0);
 
   const goToNextSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);

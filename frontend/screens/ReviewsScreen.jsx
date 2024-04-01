@@ -1,100 +1,103 @@
-// ReviewsScreen.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faComment } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesome } from '@expo/vector-icons';
 
 const ReviewsScreen = ({ navigation }) => {
-    // Example list of reviews
-    const [reviews, setReviews] = useState([
-        { id: 1, user: 'John Doe', comment: 'Great experience!', rating: 5 },
-        { id: 2, user: 'Jane Smith', comment: 'Could be better.', rating: 3 },
-        { id: 3, user: 'Alice Johnson', comment: 'Not bad.', rating: 4 },
-        { id: 4, user: 'Robert Brown', comment: 'Fantastic service!', rating: 5 },
-        { id: 5, user: 'Sarah Thompson', comment: 'Amazing job!', rating: 5 },
-    ]);
+    const [reviews, setReviews] = useState([]);
 
-    const handleSaveReview = (newReview) => {
-        setReviews([...reviews, newReview]);
+    useEffect(() => {
+        // Here you would fetch reviews from your backend
+        const fetchReviews = async () => {
+        try {
+            const response = await fetch('http://localhost:3000/api/reviews');
+            const data = await response.json();
+            setReviews(data);
+        } catch (error) {
+            console.error('Error fetching reviews:', error);
+        }
+        };
+
+        fetchReviews();
+    }, []);
+
+    // Function to render stars
+    const renderStars = (rating) => {
+        let stars = [];
+        for (let i = 1; i <= 5; i++) {
+            stars.push(
+                <FontAwesome 
+                    key={i} 
+                    name={i <= rating ? 'star' : 'star-o'} 
+                    size={16} 
+                    color="#FFD700" 
+                />
+            );
+        }
+        return <View style={{ flexDirection: 'row' }}>{stars}</View>;
     };
 
-    const renderReviewItem = ({ item }) => (
-        <View style={styles.reviewItem}>
-            <Text style={styles.userName}>{item.user}</Text>
-            <Text style={styles.comment}>{item.comment}</Text>
-            <Text style={styles.rating}>Rating: {item.rating}/5</Text>
-        </View>
-    );
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Reviews</Text>
-            <FlatList
-                data={reviews}
-                renderItem={renderReviewItem}
-                keyExtractor={item => item.id.toString()}
-                style={styles.reviewList}
-            />
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("WriteReview", { onSaveReview: handleSaveReview })}>
-                <Text style={styles.buttonText}>Write a Review</Text>
-                <FontAwesomeIcon icon={faComment} size={20} style={styles.icon} />
-            </TouchableOpacity>
+        <FlatList
+            data={reviews}
+            keyExtractor={item => item._id}
+            renderItem={({ item }) => (
+            <View style={styles.reviewContainer}>
+                <Text style={styles.clientName}>{item.clientId ? `${item.clientId.firstName}` : 'Anonymous'} </Text>
+                <Text style={styles.reviewText}>Barber: {item.barberId ? `${item.barberId.firstName}` : 'Anonymous'} </Text>
+                <View style={styles.reviewRating}>
+                            {renderStars(item.rating)}
+                </View>
+                <Text style={styles.reviewText}>{item.comment}</Text>
+            </View>
+            )}
+        />
+        <TouchableOpacity
+            style={styles.writeReviewButton}
+            onPress={() => navigation.navigate('WriteReview')}
+        >
+            <Text style={styles.writeReviewButtonText}>Write a Review</Text>
+        </TouchableOpacity>
         </View>
     );
+
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
+        padding: 20,
         backgroundColor: 'white',
-        paddingHorizontal: 20,
     },
-    title: {
-        fontSize: 26,
-        marginBottom: 20,
-        fontFamily: 'SourceCodePro',
-    },
-    reviewList: {
-        width: '100%',
-    },
-    reviewItem: {
+    reviewContainer: {
+        padding: 20,
         borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
-        paddingVertical: 10,
-        paddingHorizontal: 20,
+        borderBottomColor: '#cccccc',
     },
-    userName: {
+    clientName: {
         fontSize: 18,
         fontWeight: 'bold',
-        marginBottom: 5,
+        marginBottom: 10,
     },
-    comment: {
+    reviewText: {
         fontSize: 16,
-        marginBottom: 5,
+        marginBottom: 10,
     },
-    rating: {
-        fontSize: 14,
-        color: '#888',
-    },
-    button: {
-        flexDirection: 'row',
-        alignItems: 'center',
+    writeReviewButton: {
         backgroundColor: '#3e3e3e',
-        paddingVertical: 10,
-        paddingHorizontal: 20,
+        padding: 15,
+        margin: 20,
         borderRadius: 5,
-        marginTop: 20,
-        marginBottom:20,
+        alignItems: 'center',
     },
-    buttonText: {
+    writeReviewButtonText: {
         color: 'white',
-        fontSize: 20,
-        marginRight: 10,
-        fontFamily: 'Roboto',
+        fontSize: 18,
     },
-    icon: {
-        color: 'white',
+    reviewRating: {
+        flexDirection: 'row',
+        marginBottom: 10,
     },
 });
 
