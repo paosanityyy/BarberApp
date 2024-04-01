@@ -3,8 +3,23 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { View, Text, Picker, TextInput, StyleSheet, TouchableOpacity, Modal, KeyboardAvoidingView, Platform, Image} from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faComment, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { io } from "socket.io-client";
 
 const ConsultationScreen = () => {
+
+  // const socket = io('http://localhost:5000');
+
+  const socket = io();
+  socket.on('connect', () => {
+    console.log('Connected to socket.io');
+  });
+  socket.on('message', (message) => { 
+    console.log(message);
+  });
+  socket.on('disconnect', () => {
+    console.log('Disconnected from socket.io');
+  });
+
   const [selectedBarber, setSelectedBarber] = useState('JR');
   const [isBarberModalVisible, setBarberModalVisible] = useState(false);
 
