@@ -31,7 +31,7 @@
     "gesture-handler": "^0.0.1",
     "moment-timezone": "^0.5.45",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react-dom": "^18.2.0",
     "react-native": "^0.73.6",
     "react-native-calendars": "^1.1303.0",
     "react-native-datepicker": "^1.7.2",
@@ -39,7 +39,8 @@
     "react-native-maps": "^1.10.0",
     "react-native-reanimated": "~3.6.2",
     "react-native-vector-icons": "^10.0.3",
-    "react-native-web": "~0.19.6",
+    "react-native-web": "^0.19.10",
+    "react-scripts": "^5.0.1",
     "socket.io-client": "^4.7.5"
   },
   "devDependencies": {
