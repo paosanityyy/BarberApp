@@ -101,7 +101,7 @@ const styles = {
     marginBottom:10,
     borderRadius: 5,
     fontSize: 16,
-    fontfamily: 'Roboto',
+    fontfamily: 'SourceCodePro',
   },
   buttonTxt:{
     fontSize: 18,

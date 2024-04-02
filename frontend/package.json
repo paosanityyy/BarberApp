@@ -9,10 +9,12 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo-google-fonts/roboto": "^0.2.3",
     "@expo/metro-runtime": "~3.1.1",
     "@fortawesome/free-brands-svg-icons": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-native-fontawesome": "^0.3.0",
+    "@react-buddy/ide-toolbox": "^2.4.0",
     "@react-native-async-storage/async-storage": "^1.21.0",
     "@react-native-picker/picker": "^2.6.1",
     "@react-navigation/drawer": "^6.6.6",
@@ -23,10 +25,11 @@
     "cors": "^2.8.5",
     "expo": "~50.0.14",
     "expo-app-loading": "^2.1.1",
-    "expo-font": "~11.10.3",
+    "expo-font": "^11.10.3",
     "expo-status-bar": "~1.11.1",
     "express": "^4.19.2",
     "gesture-handler": "^0.0.1",
+    "moment-timezone": "^0.5.45",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "^0.73.6",
@@ -35,10 +38,20 @@
     "react-native-gesture-handler": "~2.14.0",
     "react-native-maps": "^1.10.0",
     "react-native-reanimated": "~3.6.2",
-    "react-native-web": "~0.19.6"
+    "react-native-vector-icons": "^10.0.3",
+    "react-native-web": "~0.19.6",
+    "socket.io-client": "^4.7.5"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "@babel/plugin-transform-async-generator-functions": "^7.24.3",
+    "@babel/plugin-transform-class-properties": "^7.24.1",
+    "@babel/plugin-transform-logical-assignment-operators": "^7.24.1",
+    "@babel/plugin-transform-nullish-coalescing-operator": "^7.24.1",
+    "@babel/plugin-transform-numeric-separator": "^7.24.1",
+    "@babel/plugin-transform-object-rest-spread": "^7.24.1",
+    "@babel/plugin-transform-optional-catch-binding": "^7.24.1",
+    "@babel/plugin-transform-optional-chaining": "^7.24.1"
   },
   "private": true
 }

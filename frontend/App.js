@@ -5,11 +5,12 @@ import {View, Image, Text, ScrollView, StyleSheet, ImageBackground, TouchableOpa
 import Home from './screens/Home';
 import AboutScreen from './screens/AboutScreen';
 import AppointmentScreen from './screens/AppointmentScreen';
+import AppointmentConfirmation from './screens/AppointmentConfirmation';
 import SignupScreen from './screens/SignupScreen';
 import LoginScreen from './screens/LoginScreen';
 import ConsultationScreen from './screens/ConsultationScreen';
 import BarbersScreen from './screens/BarbersScreen';
-import {useFonts} from 'expo-font';
+import { useFonts } from 'expo-font';
 import React from 'react';
 import BarberJr from './screens/BarberJr';
 import BarberRenz from './screens/BarberRenz';
@@ -36,6 +37,7 @@ function CustomDrawerContent(props) {
         props.navigation.closeDrawer(); // Close drawer after logout
     };
 
+
     return (
         <ScrollView style={{flex: 1}}>
             <ImageBackground
@@ -50,21 +52,36 @@ function CustomDrawerContent(props) {
             <DrawerItemList {...props} />
             {user ? (
                 <>
-                    <TouchableOpacity onPress={() => props.navigation.navigate('My Account')}
-                                      style={styles.logoutButton}>
-                        <Text style={styles.logoutButtonText}>My Account</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => props.navigation.navigate('Appointment')}
-                                      style={styles.logoutButton}>
-                        <Text style={styles.logoutButtonText}>Appointment</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => props.navigation.navigate('Consultation')}
-                                      style={styles.logoutButton}>
-                        <Text style={styles.logoutButtonText}>Consultation</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => props.navigation.navigate('Reviews')} style={styles.logoutButton}>
-                        <Text style={styles.logoutButtonText}>Reviews</Text>
-                    </TouchableOpacity>
+                    {user.role === 'admin' ? (
+                     // Admin specific buttons
+                        <>
+                            <TouchableOpacity onPress={() => props.navigation.navigate('Admin')} style={styles.logoutButton}>
+                                <Text style={styles.logoutButtonText}>Admin Dashboard</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => props.navigation.navigate('UserManagement')} style={styles.logoutButton}>
+                                <Text style={styles.logoutButtonText}>User Management</Text>
+                            </TouchableOpacity>
+                        </>   
+                    ) : (
+                        // User specific buttons
+                        <>
+                            <TouchableOpacity onPress={() => props.navigation.navigate('My Account')}
+                                        style={styles.logoutButton}>
+                            <Text style={styles.logoutButtonText}>My Account</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => props.navigation.navigate('Appointment')}
+                                            style={styles.logoutButton}>
+                                <Text style={styles.logoutButtonText}>Appointment</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => props.navigation.navigate('Consultation')}
+                                            style={styles.logoutButton}>
+                                <Text style={styles.logoutButtonText}>Consultation</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => props.navigation.navigate('Reviews')} style={styles.logoutButton}>
+                                <Text style={styles.logoutButtonText}>Reviews</Text>
+                            </TouchableOpacity>
+                        </>
+                    )}
                     <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
                         <Text style={styles.logoutButtonText}>Logout</Text>
                     </TouchableOpacity>
@@ -89,19 +106,18 @@ const LogoTitle = () => (
     />
 );
 
+function AppNavigator() {
+    const { user } = useAuth();
 
-export default function App() {
-    let [fontsLoaded] = useFonts({
-        'Roboto': require('./assets/fonts/Roboto-Light.ttf'),
-        'Mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
-        'Roboto-Mono': require('./assets/fonts/RobotoMono-Regular.ttf'),
-        'SourceCodePro': require('./assets/fonts/SourceCodePro-Light.ttf'),
-    })
+    // Determine the initial route name based on the user's role
+    let initialRouteName = 'Home'; // Default route
+    if (user && user.role === 'admin') {
+        initialRouteName = 'Admin'; // Redirect to Admin screen if user is an admin
+    }
 
     return (
-        <AuthProvider>
-            <NavigationContainer>
-                <Drawer.Navigator
+        <Drawer.Navigator
+                    initialRouteName={initialRouteName}
                     drawerContent={(props) => <CustomDrawerContent {...props} />}
                     screenOptions={({route}) => ({
                         headerTitle: () => <LogoTitle/>,
@@ -124,7 +140,7 @@ export default function App() {
                             route.name === 'BarberKurt' ? {display: 'none'} : {},
                             route.name === 'BarberHenok' ? {display: 'none'} : {},
                             route.name === 'BarberQyle' ? {display: 'none'} : {},
-                            //route.name === 'Admin' ? { display: 'none' } : {},
+                            route.name === 'Admin' ? { display: 'none' } : {},
                             route.name === 'CreateBarber' ? {display: 'none'} : {},
                             route.name === 'UserManagement' ? {display: 'none'} : {},
                             route.name === 'BarberList' ? {display: 'none'} : {},
@@ -135,12 +151,14 @@ export default function App() {
                             route.name === 'Consultation' ? {display: 'none'} : {},
                             route.name === 'Reviews' ? {display: 'none'} : {},
                             route.name === 'My Account' ? {display: 'none'} : {},
-                            route.name === 'EditUser' ? {display: 'none'} : {},
+                            route.name === 'EditUserScreen' ? {display: 'none'} : {},
+                            route.name === 'AppointmentConfirmation' ? { display: 'none' } : {},
                         ]
                     })}
                 >
-
                     <Drawer.Screen name='Home' component={Home}/>
+                    <Drawer.Screen name='Login' component={LoginScreen}/>
+                    <Drawer.Screen name='Signup' component={SignupScreen}/>
                     <Drawer.Screen name='Barbers' component={BarbersScreen}/>
                     <Drawer.Screen name='About Us' component={AboutScreen}/>
                     <Drawer.Screen name='BarberJr' component={BarberJr}/>
@@ -148,21 +166,43 @@ export default function App() {
                     <Drawer.Screen name='BarberKurt' component={BarberKurt}/>
                     <Drawer.Screen name='BarberHenok' component={BarberHenok}/>
                     <Drawer.Screen name='BarberQyle' component={BarberQyle}/>
-                    <Drawer.Screen name='Login' component={LoginScreen}/>
-                    <Drawer.Screen name='Signup' component={SignupScreen}/>
-                    <Drawer.Screen name='My Account' component={MyAccount}/>
-                    <Drawer.Screen name='Consultation' component={ConsultationScreen}/>
-                    <Drawer.Screen name='Appointment' component={AppointmentScreen}/>
-                    <Drawer.Screen name='Admin' component={AdminScreen}/>
-                    <Drawer.Screen name='CreateBarber' component={CreateBarber}/>
-                    <Drawer.Screen name='BarberList' component={BarberList}/>
-                    <Drawer.Screen name='ClientList' component={ClientList}/>
-                    <Drawer.Screen name='Reviews' component={ReviewsScreen}/>
-                    <Drawer.Screen name='WriteReview' component={WriteReview}/>
-                    <Drawer.Screen name='EditUser' component={EditUserScreen}/>
-                    <Drawer.Screen name='UserManagement' component={UserManagement}/>
-                    {/* <Drawer.Screen name='AppointmentConfirmation' component={AppointmentConfirmation} /> */}
-                </Drawer.Navigator>
+                    { user && user.role === 'admin' ? (
+                        <>
+                            <Drawer.Screen name='Admin' component={AdminScreen}/>
+                            <Drawer.Screen name='CreateBarber' component={CreateBarber}/>
+                            <Drawer.Screen name='BarberList' component={BarberList}/>
+                            <Drawer.Screen name='ClientList' component={ClientList}/>
+                            <Drawer.Screen name='EditUserScreen' component={EditUserScreen}/>
+                            <Drawer.Screen name='UserManagement' component={UserManagement}/>
+                        </>
+                    ) : (
+                        <>
+                            <Drawer.Screen name='My Account' component={MyAccount}/>
+                            <Drawer.Screen name='Consultation' component={ConsultationScreen}/>
+                            <Drawer.Screen name='Appointment' component={AppointmentScreen}/>
+                            <Drawer.Screen name='Reviews' component={ReviewsScreen}/>
+                            <Drawer.Screen name='WriteReview' component={WriteReview}/>
+                            <Drawer.Screen name='AppointmentConfirmation' component={AppointmentConfirmation} /> 
+                        </> 
+
+                    )}             
+        </Drawer.Navigator>
+    )
+
+
+}
+
+export default function App() {
+    let [fontsLoaded] = useFonts({
+      'Roboto': require('./assets/fonts/Roboto-Light.ttf'),
+      'Mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
+      'SourceCodePro': require('./assets/fonts/SourceCodePro-Light.ttf'),
+    })
+
+    return (
+        <AuthProvider>
+            <NavigationContainer>
+                <AppNavigator/>
             </NavigationContainer>
         </AuthProvider>
     )
