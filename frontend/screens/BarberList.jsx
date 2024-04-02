@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {View, Text, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
 import axios from 'axios';
 
-const BarberList = () => {
+const BarberList = ({navigation}) => {
     const [barbers, setBarbers] = useState([]);
 
     useEffect(() => {
@@ -11,7 +11,7 @@ const BarberList = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:3000/api/barbers/${id}`);
+            await axios.delete(`http://localhost:3000/api/users/barbers/${id}`);
             // Update your state or data source to reflect the deletion
             console.log(`Barber with id ${id} has been deleted`);
         } catch (error) {
@@ -21,7 +21,7 @@ const BarberList = () => {
 
     const fetchBarbers = async () => {
         try {
-            const response = await axios.get('http://localhost:3000/api/barbers/', {
+            const response = await axios.get('http://localhost:3000/api/users/barbers/', {
                 params: { role: 'barber' }
             });
             setBarbers(response.data);

@@ -6,7 +6,7 @@ import { useAuth } from '../AuthContext';
 
 const BarberProfile = ({ navigation }) => {
   const scrollY = useRef(new Animated.Value(0)).current;
-  const { barber } = useAuth();
+  const { user } = useAuth();
 
   const translateY = scrollY.interpolate({
     inputRange: [0, 100],
@@ -17,7 +17,7 @@ const BarberProfile = ({ navigation }) => {
   return (
       <View style={styles.container}>
         <Image source={require('../assets/logo.png')} style={styles.logo} />
-        {!barber ? (
+        {!user ? (
             <View style={styles.noBarber}>
               <TouchableOpacity onPress={() => navigation.jumpTo('Login')}>
                 <Text style={styles.goToLogin}>Log in to view your account</Text>
@@ -36,11 +36,11 @@ const BarberProfile = ({ navigation }) => {
             >
               <View style={styles.profileContainer}>
                 <Text style={styles.header}>Account</Text>
-                <ProfileDetail label="Username" value={barber.username} />
-                <ProfileDetail label="First name" value={barber.firstName} />
-                <ProfileDetail label="Last name" value={barber.lastName} />
-                <ProfileDetail label="Email" value={barber.email} />
-                <ProfileDetail label="Phone" value={barber.phone} />
+                <ProfileDetail label="Username" value={user.username} />
+                <ProfileDetail label="First name" value={user.firstName} />
+                <ProfileDetail label="Last name" value={user.lastName} />
+                <ProfileDetail label="Email" value={user.email} />
+                <ProfileDetail label="Phone" value={user.phone} />
                 <TouchableOpacity onPress={() => navigation.jumpTo('EditBarberScreen')}>
                   <Text style={styles.button}>Edit</Text>
                 </TouchableOpacity>

@@ -38,6 +38,8 @@ const LoginScreen = ({ navigation }) => {
             // Navigate based on user role
             if (data.user.role === 'admin') {
                 navigation.navigate('Admin'); // Navigate to Admin screen if user is an admin
+            } else if (data.user.role === 'barber') {
+                navigation.navigate('Home'); // Navigate to Barber screen if user is a barber
             } else {
                 navigation.navigate('Home'); // Navigate to Home screen for other roles
             }

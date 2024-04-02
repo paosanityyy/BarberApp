@@ -63,7 +63,15 @@ function CustomDrawerContent(props) {
                             <TouchableOpacity onPress={() => props.navigation.navigate('UserManagement')} style={styles.logoutButton}>
                                 <Text style={styles.logoutButtonText}>User Management</Text>
                             </TouchableOpacity>
-                        </>   
+                        </> 
+                        
+                    ) : user.role === 'barber' ? (
+                        // Barber specific buttons
+                        <>
+                            <TouchableOpacity onPress={() => props.navigation.navigate('BarberProfile')} style={styles.logoutButton}>
+                                <Text style={styles.logoutButtonText}>My Profile</Text>
+                            </TouchableOpacity>
+                        </>
                     ) : (
                         // User specific buttons
                         <>
@@ -176,10 +184,14 @@ function AppNavigator() {
                             <Drawer.Screen name='CreateBarber' component={CreateBarber}/>
                             <Drawer.Screen name='BarberList' component={BarberList}/>
                             <Drawer.Screen name='ClientList' component={ClientList}/>
-                            <Drawer.Screen name='EditUserScreen' component={EditUserScreen}/>
                             <Drawer.Screen name='EditBarberScreen' component={EditBarberScreen}/>
                             <Drawer.Screen name='UserManagement' component={UserManagement}/>
                             <Drawer.Screen name="BarberProfile" component={BarberProfile} />
+                        </>
+                    ) : user && user.role === 'barber' ? (
+                        <>
+                            <Drawer.Screen name='BarberProfile' component={BarberProfile}/>
+                            <Drawer.Screen name='EditBarberScreen' component={EditBarberScreen}/>
                         </>
                     ) : (
                         <>
@@ -188,6 +200,7 @@ function AppNavigator() {
                             <Drawer.Screen name='Appointment' component={AppointmentScreen}/>
                             <Drawer.Screen name='Reviews' component={ReviewsScreen}/>
                             <Drawer.Screen name='WriteReview' component={WriteReview}/>
+                            <Drawer.Screen name='EditUserScreen' component={EditUserScreen}/>
                             <Drawer.Screen name='AppointmentConfirmation' component={AppointmentConfirmation} /> 
                         </> 
 

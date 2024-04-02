@@ -31,7 +31,7 @@ const CreateBarber = () => {
         }
 
         try {
-            const signUpResponse = await axios.post('http://localhost:3000/api/barbers/createBarber', {
+            const signUpResponse = await axios.post('http://localhost:3000/api/users/create-barber', {
                 username: barberUsername,
                 password: barberPassword,
                 firstName: barberFirstName,

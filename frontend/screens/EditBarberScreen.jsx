@@ -3,11 +3,11 @@ import { View, TextInput, StyleSheet, Text, TouchableOpacity} from 'react-native
 import { useAuth } from '../AuthContext';
 
 const EditBarberScreen = ({ navigation }) => {
-    const {barber, updateBarberDetails } = useAuth();
-    const [barberFirstName, setBarberFirstName] = useState(barber.firstName);
-    const [barberLastName, setBarberLastName] = useState(barber.lastName);
-    const [barberEmail, setBarberEmail] = useState(barber.email);
-    const [barberPhone, setBarberPhone] = useState(barber.phone);
+    const {user, updateBarberDetails } = useAuth();
+    const [barberFirstName, setBarberFirstName] = useState(user.firstName);
+    const [barberLastName, setBarberLastName] = useState(user.lastName);
+    const [barberEmail, setBarberEmail] = useState(user.email);
+    const [barberPhone, setBarberPhone] = useState(user.phone);
 
     const handleSubmit = async () => {
         try {

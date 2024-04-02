@@ -48,6 +48,30 @@ router.post('/signup', async (req, res) => {
   }
 });
 
+// Create a new barber
+router.post('/create-barber', async (req, res) => {
+  try {
+    // Generate salt and hash the password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
+    // Create a new user with the hashed password
+    const newBarber = new User({
+      ...req.body,
+      role: 'barber',
+      password: hashedPassword
+    });
+
+    // Save the user
+    const savedBarber = await newBarber.save();
+
+    // Respond to the client
+    res.status(201).json({ message: "Barber created successfully", barber: savedBarber });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error registering barber. Please try again.' });
+  }
+});
 
 // User login route
 router.post('/login', async (req, res) => {
