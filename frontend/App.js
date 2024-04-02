@@ -27,6 +27,8 @@ import WriteReview from './screens/WriteReview';
 import {AuthProvider, useAuth} from './AuthContext';
 import BarberList  from "./screens/BarberList";
 import ClientList from "./screens/ClientList";
+import EditBarberScreen from "./screens/EditBarberScreen";
+import BarberProfile from "./screens/BarberProfile";
 
 
 function CustomDrawerContent(props) {
@@ -152,7 +154,9 @@ function AppNavigator() {
                             route.name === 'Reviews' ? {display: 'none'} : {},
                             route.name === 'My Account' ? {display: 'none'} : {},
                             route.name === 'EditUserScreen' ? {display: 'none'} : {},
+                            route.name === 'EditBarberScreen' ? {display: 'none'} : {},
                             route.name === 'AppointmentConfirmation' ? { display: 'none' } : {},
+                            route.name === 'BarberProfile' ? {display: 'none'} : {},
                         ]
                     })}
                 >
@@ -173,7 +177,9 @@ function AppNavigator() {
                             <Drawer.Screen name='BarberList' component={BarberList}/>
                             <Drawer.Screen name='ClientList' component={ClientList}/>
                             <Drawer.Screen name='EditUserScreen' component={EditUserScreen}/>
+                            <Drawer.Screen name='EditBarberScreen' component={EditBarberScreen}/>
                             <Drawer.Screen name='UserManagement' component={UserManagement}/>
+                            <Drawer.Screen name="BarberProfile" component={BarberProfile} />
                         </>
                     ) : (
                         <>

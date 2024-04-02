@@ -53,7 +53,7 @@ const MyAccount = ({ navigation }) => {
             <Text style={styles.bodyText}>{user.email}</Text>
             <Text style={styles.bodyLabel}>Phone</Text>
             <Text style={styles.bodyText}>{user.phone}</Text>
-            <TouchableOpacity onPress={() => navigation.jumpTo('EditUser')}>
+            <TouchableOpacity onPress={() => navigation.jumpTo('EditUserScreen')}>
             <Text style={styles.button}>Edit</Text>
           </TouchableOpacity>
             <Text style={styles.footerText}>

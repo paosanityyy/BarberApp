@@ -28,6 +28,7 @@ app.get('/', (req, res) => {
     res.send('Barbershop Backend');
 });
 
-app.listen(PORT, () => {
+//Start Server
+server = app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
