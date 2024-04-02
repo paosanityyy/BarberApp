@@ -40,7 +40,6 @@ const BarberList = ({navigation}) => {
                     <View style={styles.barberItem}>
                         <View style={{ flex: 1 }}>
                             <Text>{item.username}</Text>
-                            {/* Add more details to display */}
                             <Text>{item.firstName} {item.lastName}</Text>
                             <Text>{item.email}</Text>
                             <Text>{item.phone}</Text>

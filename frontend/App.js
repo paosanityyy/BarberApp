@@ -29,6 +29,7 @@ import BarberList  from "./screens/BarberList";
 import ClientList from "./screens/ClientList";
 import EditBarberScreen from "./screens/EditBarberScreen";
 import BarberProfile from "./screens/BarberProfile";
+import ViewAppointment from "./screens/ViewAppointment";
 
 
 function CustomDrawerContent(props) {
@@ -165,6 +166,7 @@ function AppNavigator() {
                             route.name === 'EditBarberScreen' ? {display: 'none'} : {},
                             route.name === 'AppointmentConfirmation' ? { display: 'none' } : {},
                             route.name === 'BarberProfile' ? {display: 'none'} : {},
+                            route.name === 'ViewAppointment' ? {display: 'none'} : {},
                         ]
                     })}
                 >
@@ -187,6 +189,7 @@ function AppNavigator() {
                             <Drawer.Screen name='EditBarberScreen' component={EditBarberScreen}/>
                             <Drawer.Screen name='UserManagement' component={UserManagement}/>
                             <Drawer.Screen name="BarberProfile" component={BarberProfile} />
+                            <Drawer.Screen name='ViewAppointment' component={ViewAppointment} />
                         </>
                     ) : user && user.role === 'barber' ? (
                         <>

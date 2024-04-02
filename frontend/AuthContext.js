@@ -25,7 +25,7 @@ export const AuthProvider = ({children}) => {
     }, []);
 
 
-    const login = async (userData,barberData) => {
+    const login = async (userData, barberData) => {
         // Assuming userData includes username, email, and phone
         setUser(userData);
         // Also save user data to AsyncStorage for persistence
@@ -63,32 +63,32 @@ export const AuthProvider = ({children}) => {
             console.error('Error updating user details:', error);
         }
     };
-  const updateBarberDetails = async (updatedDetails) => {
-    try {
-      const response = await fetch(`http://localhost:3000/api/barbers/${barber.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          // Include authorization token if your API requires it
-        },
-        body: JSON.stringify(updatedDetails),
-      });
+    const updateBarberDetails = async (updatedDetails) => {
+        try {
+            const response = await fetch(`http://localhost:3000/api/barbers/${barber.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Include authorization token if your API requires it
+                },
+                body: JSON.stringify(updatedDetails),
+            });
 
-      if (!response.ok) {
-        throw new Error('Failed to update barber details');
-      }
+            if (!response.ok) {
+                throw new Error('Failed to update barber details');
+            }
 
-      const updatedBarber = await response.json();
-      setBarber(updatedBarber);
-      // Update AsyncStorage to ensure persistence
-      await AsyncStorage.setItem('barber', JSON.stringify(updatedBarber));
-    } catch (error) {
-      console.error('Error updating barber details:', error);
-    }
-  };
+            const updatedBarber = await response.json();
+            setBarber(updatedBarber);
+            // Update AsyncStorage to ensure persistence
+            await AsyncStorage.setItem('barber', JSON.stringify(updatedBarber));
+        } catch (error) {
+            console.error('Error updating barber details:', error);
+        }
+    };
 
     return (
-        <AuthContext.Provider value={{user,barber, login, logout, updateUserDetails, updateBarberDetails}}>
+        <AuthContext.Provider value={{user, barber, login, logout, updateUserDetails, updateBarberDetails}}>
             {children}
         </AuthContext.Provider>
     );

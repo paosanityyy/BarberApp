@@ -6,7 +6,7 @@ const AdminScreen = ({ navigation }) => { // Destructuring navigation from props
         navigation.navigate('UserManagement');
     };
     const handleViewAppointmentsClick = () => {
-        navigation.navigate('Appointment');
+        navigation.navigate('ViewAppointment');
     };
 
     return (
