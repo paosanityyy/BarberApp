@@ -5,6 +5,7 @@
       <DevServerState>
         <option name="packageJsonPath" value="$PROJECT_DIR$/frontend/package.json" />
         <option name="scriptName" value="start" />
+        <option name="url" value="http://localhost:8082" />
       </DevServerState>
     </option>
   </component>
