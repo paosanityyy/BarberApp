@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     color: '#3e3e3e',
     marginTop: 20,
     fontSize: 18,
-    fontFamily: 'Roboto',
+    // fontFamily: 'Roboto',
   },
   container: {
     height: '100%',
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     padding: 0,
     width: 350,
-    fontFamily: 'Roboto',
+    // fontFamily: 'Roboto',
   },
   button: {
     marginTop: 20,
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: 'white',
     textAlign: 'center',
-    fontFamily: 'Roboto',
+    // fontFamily: 'Roboto',
   },
 });
 

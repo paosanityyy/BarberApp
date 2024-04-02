@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     goToLogin: {
         color: '#3e3e3e',
         marginTop: 20,
-        fontFamily: 'Roboto',
+        // fontFamily: 'Roboto',
         fontSize: 18,
     },
     container: {
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         padding: 0,
         width: 350,
-        fontFamily: 'Roboto',
+        // fontFamily: 'Roboto',
     },
     button: {
         marginTop: 20,
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: 'white',
         textAlign: 'center',
-        fontFamily: 'Roboto',
+        // fontFamily: 'Roboto',
     },
     footerText: {
         textAlign: 'center',

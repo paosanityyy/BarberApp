@@ -6,15 +6,15 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 
 
 
-// Slideshow component
+/// Slideshow component
 const Slideshow = () => {
   const images = [
     require('../assets/c1.png'),
-    // require('../assets/c2.png'),
-    require('../assets/c3.png'),
+    require('../assets/c2.png'),
+    require('../assets/jc1.png'),
   ];
 
-  const [currentIndex, setCurrentInsdex] = React.useState(0);
+  const [currentIndex, setCurrentIndex] = React.useState(0);
 
   const goToNextSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
@@ -49,7 +49,6 @@ const BarberRenz = ({ navigation }) => {
     outputRange: [0, 100],
     extrapolate: 'clamp',
   });
-
   return (
     <View style={styles.container}>
       <ScrollView
@@ -209,7 +208,7 @@ const styles = StyleSheet.create({
       fontSize: 16,
       marginTop: 40,
       alignSelf: 'center',
-      fontFamily: 'Roboto',
+      // fontFamily: 'Roboto',
     },
     buttonTxt:{
       fontSize: 18,

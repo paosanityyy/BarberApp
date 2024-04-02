@@ -1,21 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal, ScrollView } from 'react-native';
-import { Calendar } from 'react-native-calendars';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faComment, faClose } from '@fortawesome/free-solid-svg-icons';
 
-const AppointmentConfirmation = ({ onClose }) => {
+const AppointmentConfirmation = ({ route, navigation }) => {
+    const { appointmentDetails } = route.params;
     return (
         <View style={styles.container}>
-            <Text style={styles.confirmHeader}>Appointment Confirmed!</Text>
             <View style={styles.confirmContainer}>
-                <Text style={styles.confirmTxt}>Your appointment with JR on</Text>
-                <Text style={styles.confirmTxt}>June 10, 2023 at 2:00 PM</Text>
-                <Text style={styles.confirmTxt}>for a Haircut has been confirmed.</Text>
+                <Text style={styles.confirmHeader}>Appointment Confirmed!</Text>
+                <Text style={styles.confirmTxt}>Client: {appointmentDetails.name}</Text>
+                <Text style={styles.confirmTxt}>Barber: {appointmentDetails.barberName}</Text>
+                <Text style={styles.confirmTxt}>Service: {appointmentDetails.service}</Text>
+                <Text style={styles.confirmTxt}>Date: {appointmentDetails.date}</Text>
+                <TouchableOpacity style={styles.closeButton} onPress={() => navigation.navigate('Home')}>
+                    <Text style={{ color: 'white' }}>Back to Home</Text>
+                </TouchableOpacity>
             </View>
-            <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-                <FontAwesomeIcon icon={faClose} color='#000' size={24} />
-            </TouchableOpacity>
 
             <TouchableOpacity
                 style={styles.fab}
@@ -31,25 +32,24 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white',
-        padding: 20,
+        padding: 10,
         justifyContent: 'center', // Centers children vertically in the container
         alignItems: 'center', // Centers children horizontally in the container
     },
     confirmHeader: {
-        fontSize: 24,
+        fontSize: 32,
         textAlign: 'center',
         marginBottom: 20,
         fontFamily: 'Roboto',
-        // Removed marginBottom to ensure vertical centering
     },
     confirmContainer: {
-        borderWidth: 1,
-        borderColor: 'black',
-        padding: 50,
+        // borderWidth: 1,
+        // borderColor: 'black',
+        padding: 30,
         alignItems: 'center', 
     },
     confirmTxt: {
-        fontSize: 18,
+        fontSize: 24,
         textAlign: 'center',
     },
     fab: {
@@ -61,12 +61,12 @@ const styles = StyleSheet.create({
         borderRadius: 100,
     },
     closeButton: {
-        position: 'absolute',
-        right: 16,
-        top: 50,
-        padding: 20,
+        backgroundColor: '#3e3e3e',
+        padding: 10,
+        borderRadius: 5,
+        marginTop: 20,
     },
-    // ... other styles
+
 });
 
 

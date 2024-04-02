@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 20,
         marginRight: 10,
-        fontFamily: 'Roboto',
+        // fontFamily: 'Roboto',
     },
     icon: {
         color: 'white',

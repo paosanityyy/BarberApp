@@ -5,6 +5,7 @@ import {View, Image, Text, ScrollView, StyleSheet, ImageBackground, TouchableOpa
 import Home from './screens/Home';
 import AboutScreen from './screens/AboutScreen';
 import AppointmentScreen from './screens/AppointmentScreen';
+import AppointmentConfirmation from './screens/AppointmentConfirmation';
 import SignupScreen from './screens/SignupScreen';
 import LoginScreen from './screens/LoginScreen';
 import ConsultationScreen from './screens/ConsultationScreen';
@@ -20,6 +21,7 @@ import CreateBarber from "./screens/CreateBarber";
 import AdminScreen from "./screens/AdminScreen";
 import MyAccount from "./screens/MyAccount";
 import EditUserScreen from "./screens/EditUserScreen";
+import BookingHistoryScreen from './screens/BookingHistoryScreen';
 import ReviewsScreen from './screens/ReviewsScreen';
 import WriteReview from './screens/WriteReview';
 import { AuthProvider, useAuth } from './AuthContext';
@@ -86,7 +88,7 @@ const LogoTitle = () => (
 
 export default function App() {
     let [fontsLoaded] = useFonts({
-      'Roboto': require('./assets/fonts/Roboto-Light.ttf'),
+    //   'Roboto': require('./assets/fonts/Roboto-Light.ttf'),
       'Mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
       'Roboto-Mono': require('./assets/fonts/RobotoMono-Regular.ttf'),
       'SourceCodePro': require('./assets/fonts/SourceCodePro-Light.ttf'),
@@ -127,6 +129,8 @@ export default function App() {
                       route.name === 'Reviews' ? { display: 'none' } : {},
                       route.name === 'My Account' ? { display: 'none' } : {},
                       route.name === 'EditUser' ? { display: 'none' } : {},
+                      route.name === 'BookingHistory' ? { display: 'none' } : {},
+                        route.name === 'AppointmentConfirmation' ? { display: 'none' } : {},
                     ]
                 })}
             >
@@ -149,7 +153,8 @@ export default function App() {
                 <Drawer.Screen name='Reviews' component={ReviewsScreen}/>
                 <Drawer.Screen name='WriteReview' component={WriteReview} />
                 <Drawer.Screen name='EditUser' component={EditUserScreen} />
-                {/* <Drawer.Screen name='AppointmentConfirmation' component={AppointmentConfirmation} /> */}
+                <Drawer.Screen name='BookingHistory' component={BookingHistoryScreen} />
+                <Drawer.Screen name='AppointmentConfirmation' component={AppointmentConfirmation} />
             </Drawer.Navigator>
         </NavigationContainer>
         </AuthProvider>

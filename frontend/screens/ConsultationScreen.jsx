@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     padding: 0,
     width: 350,
-    fontFamily: 'Roboto',
+    // fontFamily: 'Roboto',
   },
   dropdownButton: {
     width: 200,
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 20,
     marginBottom: 0,
-    fontFamily: 'Roboto',
+    // fontFamily: 'Roboto',
   },
   title: {
     fontSize: 24,
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   selectedField: {
-    fontFamily: 'Roboto',
+    // fontFamily: 'Roboto',
   },
   modalOverlay: {
     flex: 1,

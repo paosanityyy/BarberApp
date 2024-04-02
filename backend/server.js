@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes');
+const barberRoutes = require('./routes/barberRoutes');
 // const reviewRoutes = require('./routes/reviews');
 const appointmentRoutes = require('./routes/appointmentRoutes');
 
@@ -17,6 +18,7 @@ app.use(bodyParser.json());
 app.use('/api/users', userRoutes);
 // app.use('/api/reviews', reviewRoutes);
 app.use('/api/appointments', appointmentRoutes);
+app.use('/api/barbers', barberRoutes);
 
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB connected'))

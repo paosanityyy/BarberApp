@@ -208,13 +208,12 @@ const styles = StyleSheet.create({
       fontSize: 16,
       marginTop: 40,
       alignSelf: 'center',
-      fontFamily: 'Roboto',
+      // fontFamily: 'Roboto',
     },
     buttonTxt:{
       fontSize: 18,
       color: 'white',
       textAlign: 'center',
-      fontWeight: '250',
     },
   });
   

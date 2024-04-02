@@ -121,8 +121,8 @@ const styles = StyleSheet.create({
     margin: 0,
     paddingBottom: 30,
     textAlign: 'center',
-    fontWeight: '300',
-    fontFamily: 'SourceCodePro',
+    fontWeight: '200',
+    // fontFamily: 'SourceCodePro',
   },
   barberImage: {
     width: 120,

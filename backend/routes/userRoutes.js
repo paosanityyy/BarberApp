@@ -4,6 +4,26 @@ const bcrypt = require('bcrypt');
 const router = express.Router();
 const User = require('../models/userModel');
 
+// Get all barbers
+router.get('/barbers', async (req, res) => {
+  try {
+    const barbers = await User.find({ role: 'barber' });
+    res.status(200).json(barbers);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// Get all clients
+router.get('/clients', async (req, res) => {
+  try {
+    const clients = await User.find({ role: 'client' });
+    res.status(200).json(clients);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // Create a new user
 router.post('/signup', async (req, res) => {
   try {
