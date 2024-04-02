@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, TextInput, StyleSheet, Text, TouchableOpacity} from 'react-native';
-import { useAuth } from '../AuthContext';
+import { View, TextInput, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { useAuth } from '../AuthContext'; 
 
 const EditUserScreen = ({  navigation }) => {
   const {user, updateUserDetails } = useAuth();
@@ -9,15 +9,28 @@ const EditUserScreen = ({  navigation }) => {
   const [email, setEmail] = useState(user.email);
   const [phone, setPhone] = useState(user.phone);
 
-  const handleSubmit = async () => {
-    // Send a request to your backend to update the user details
-    // On success, update the global state/context with the new details
-    updateUserDetails({ firstName, lastName, email, phone });
-    navigation.goBack(); // Navigate back to the MyAccount screen
+    const handleSubmit = async () => {
+      try {
+          // Attempt to update user details
+          await updateUserDetails({ firstName, lastName, email, phone });
+          
+          // On success, show an alert and navigate back
+          Alert.alert(
+              "Success", 
+              "User details updated successfully",
+              [{ text: "OK", onPress: () => navigation.navigate('My Account') }]
+          );
+      } catch (error) {
+          console.error('Error updating user details:', error);
+          Alert.alert("Error", 
+          "Failed to update user details.");
+      }
   };
+
 
   return (
     <View style={styles.container}>
+       <Text style={styles.header}>Edit Account Details</Text>
     <Text style={styles.bodyLabel}>First name</Text>
       <TextInput
        style={styles.editInput}
@@ -47,7 +60,7 @@ const EditUserScreen = ({  navigation }) => {
         placeholder="Phone"
       />
     {/* <Button title="Save" onPress={handleSubmit} /> */}
-    <TouchableOpacity style={styles.editButton} onPress={handleSubmit}>
+      <TouchableOpacity style={styles.editButton} onPress={handleSubmit}>
         <Text style={styles.editButtonText}>Save</Text>
       </TouchableOpacity>
       <Text style={styles.footerText}>
@@ -64,17 +77,25 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: 'white',
   },
+  header: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    marginTop: 50,
+    marginBottom: 0,
+  },
     bodyLabel: {
         fontSize: 16,
         marginBottom: 5,
         fontWeight: 'bold',
         marginTop: 50,
+        color: '#c0c0c0'
       },
     editInput: {
         height: 40,
         borderColor: 'gray',
-        borderWidth: 1,
-        padding: 10,
+        borderWidth: 0, // Set borderWidth to 0 to remove all borders
+        borderBottomWidth: 0.5, // Apply border only to the bottom
+        padding: 0,
         marginBottom: 0,
     },  
     editButton: {

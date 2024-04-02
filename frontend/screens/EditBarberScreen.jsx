@@ -3,15 +3,15 @@ import { View, TextInput, StyleSheet, Text, TouchableOpacity} from 'react-native
 import { useAuth } from '../AuthContext';
 
 const EditBarberScreen = ({ navigation }) => {
-    const {user, updateBarberDetails } = useAuth();
-    const [barberFirstName, setBarberFirstName] = useState(user.firstName);
-    const [barberLastName, setBarberLastName] = useState(user.lastName);
-    const [barberEmail, setBarberEmail] = useState(user.email);
-    const [barberPhone, setBarberPhone] = useState(user.phone);
+    const {user, updateUserDetails } = useAuth();
+    const [firstName, setFirstName] = useState(user.firstName);
+    const [lastName, setLastName] = useState(user.lastName);
+    const [email, setEmail] = useState(user.email);
+    const [phone, setPhone] = useState(user.phone);
 
     const handleSubmit = async () => {
         try {
-            await updateBarberDetails({ barberFirstName, barberLastName, barberEmail, barberPhone });
+            await updateUserDetails({ firstName, lastName, email, phone });
             navigation.goBack(); // Navigate back to the MyAccount screen
         } catch (error) {
             console.error("Error updating barber details:", error);
@@ -24,29 +24,29 @@ const EditBarberScreen = ({ navigation }) => {
             <Text style={styles.bodyLabel}>First name</Text>
             <TextInput
                 style={styles.editInput}
-                value={barberFirstName}
-                onChangeText={setBarberFirstName}
+                value={firstName}
+                onChangeText={setFirstName}
                 placeholder="First Name"
             />
             <Text style={styles.bodyLabel}>Last name</Text>
             <TextInput
                 style={styles.editInput}
-                value={barberLastName}
-                onChangeText={setBarberLastName}
+                value={lastName}
+                onChangeText={setLastName}
                 placeholder="Last Name"
             />
             <Text style={styles.bodyLabel}>Email address</Text>
             <TextInput
                 style={styles.editInput}
-                value={barberEmail}
-                onChangeText={setBarberEmail}
+                value={email}
+                onChangeText={setEmail}
                 placeholder="Email"
             />
             <Text style={styles.bodyLabel}>Phone number</Text>
             <TextInput
                 style={styles.editInput}
-                value={barberPhone}
-                onChangeText={setBarberPhone}
+                value={phone}
+                onChangeText={setPhone}
                 placeholder="Phone"
             />
             {/* <Button title="Save" onPress={handleSubmit} /> */}

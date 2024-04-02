@@ -116,26 +116,30 @@ const AppointmentScreen = ({navigation}) => {
     
 
     const createAppointment = async () => {
-        const appointmentDate = new Date(selectedDate);
-        const [selectedHour, modifier] = selectedTime.split(' ');
-        let [hours, minutes] = selectedHour.split(':');
-        hours = parseInt(hours);
-        minutes = parseInt(minutes);
+    const timeZoneOffset = new Date().getTimezoneOffset() * 60000; // in milliseconds
+    const localDate = new Date(selectedDate);
+    const adjustedDate = new Date(localDate.getTime() + timeZoneOffset);
+    
+    const appointmentDate = new Date(adjustedDate);
+    const [selectedHour, modifier] = selectedTime.split(' ');
+    let [hours, minutes] = selectedHour.split(':');
+    hours = parseInt(hours);
+    minutes = parseInt(minutes);
 
-        if (modifier === 'PM' && hours < 12) {
-            hours += 12;
-        } else if (modifier === 'AM' && hours === 12) {
-            hours = 0;
-        }
+    if (modifier === 'PM' && hours < 12) {
+        hours += 12;
+    } else if (modifier === 'AM' && hours === 12) {
+        hours = 0;
+    }
 
-        appointmentDate.setHours(hours, minutes);
+    appointmentDate.setHours(hours, minutes);
 
-        const appointmentDetails = {
-            clientId: user.id,
-            barberId: selectedBarber.id, // Send only the barber's ID
-            service: selectedService,
-            date: appointmentDate.toISOString(),
-        };
+    const appointmentDetails = {
+        clientId: user._id,
+        barberId: selectedBarber.id,
+        service: selectedService,
+        date: appointmentDate.toISOString(), // Send the adjusted date
+    };
 
         console.log('Creating appointment:', appointmentDetails);
 

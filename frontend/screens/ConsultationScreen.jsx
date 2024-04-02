@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     padding: 0,
     width: 350,
-    fontFamily: 'Roboto',
+    // fontFamily: 'Roboto',
   },
   messageBox: {
     width: '90%',

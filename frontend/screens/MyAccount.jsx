@@ -1,124 +1,152 @@
-import React, { useRef } from 'react';
-import { ScrollView, View, Text, Image, TouchableOpacity, Animated } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ScrollView } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faComment } from '@fortawesome/free-solid-svg-icons';
-import { useAuth } from '../AuthContext'; // Import the useAuth hook from your authentication context
+import { faEdit, faComment, faHistory, faSave } from '@fortawesome/free-solid-svg-icons';
+import { useAuth } from '../AuthContext';
 
 const MyAccount = ({ navigation }) => {
-  const scrollY = useRef(new Animated.Value(0)).current;
-  const { user } = useAuth(); // Destructure the user from the authentication context
-
-  const translateY = scrollY.interpolate({
-    inputRange: [0, 100],
-    outputRange: [0, 100],
-    extrapolate: 'clamp',
+  const { user, updateUserDetails } = useAuth();
+  const [editMode, setEditMode] = useState(false);
+  const [editedUser, setEditedUser] = useState({
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    phone: user.phone,
   });
+
+  if (!user) {
+    // Display login message if no user is logged in
+    return (
+        <View style={styles.container}>
+        <View style={styles.noUser}>
+            <Image source={require('../assets/logo.png')} style={styles.logo} />
+            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                <Text style={styles.goToLogin}>Log in to book an appointment</Text>
+            </TouchableOpacity>
+            <Text style={styles.NoUserfooterText}>© 2023 Central Studios. All Rights Reserved.</Text>
+        </View>
+        </View>
+    );
+  }
+
+  const handleSave = async () => {
+    try {
+      await updateUserDetails(editedUser);
+      setEditMode(false);
+      Alert.alert("Success", "User details updated successfully");
+    } catch (error) {
+      console.error('Error updating user details:', error);
+      Alert.alert("Error", "Failed to update user details.");
+    }
+  };
+
+  const renderEditableField = (label, value, onChangeText) => (
+    <View style={styles.editableFieldContainer}>
+      <Text style={styles.bodyLabel}>{label}</Text>
+      <TextInput 
+        style={[styles.editInput, editMode ? styles.editInputEditable : styles.editInputNonEditable]}
+        value={value} 
+        onChangeText={(text) => onChangeText(text)} 
+        editable={editMode} 
+      />
+    </View>
+  );
 
   return (
     <View style={styles.container}>
-      
-      {/* Place the logo outside the conditional rendering block */}
-      {/* <Image source={require('../assets/logo.png')} style={styles.logo} /> */}
-      
-      {/* Conditional rendering based on user authentication */}
-      {!user ? (
-        <View style={styles.noUser}>
-          <Image source={require('../assets/logo.png')} style={styles.logo} />
-          <TouchableOpacity onPress={() => navigation.jumpTo('Login')}>
-            <Text style={styles.goToLogin}>Log in to view your account</Text>
-          </TouchableOpacity>
-          <Text style={styles.NoUserfooterText}>
-              © 2023 Central Studios. All Rights Reserved.
-            </Text>
-        </View>
-      ) : (
-        <ScrollView
-          onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-            { useNativeDriver: false }
+      <ScrollView contentContainerStyle={styles.scrollView}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.header}>Account Details</Text>
+          {editMode ? (
+            <TouchableOpacity onPress={handleSave} style={styles.actionButton}>
+              <FontAwesomeIcon icon={faSave} size={24} color="black" />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity onPress={() => setEditMode(true)} style={styles.actionButton}>
+              <FontAwesomeIcon icon={faEdit} size={24} color="black" />
+            </TouchableOpacity>
           )}
-          scrollEventThrottle={16}
+        </View>
+        
+        {renderEditableField('First name', editedUser.firstName, (text) => setEditedUser({ ...editedUser, firstName: text }))}
+        {renderEditableField('Last name', editedUser.lastName, (text) => setEditedUser({ ...editedUser, lastName: text }))}
+        {renderEditableField('Email', editedUser.email, (text) => setEditedUser({ ...editedUser, email: text }))}
+        {renderEditableField('Phone', editedUser.phone, (text) => setEditedUser({ ...editedUser, phone: text }))}
+
+        <TouchableOpacity
+          style={styles.bookingHistoryButton}
+          onPress={() => navigation.navigate('BookingHistory')}
         >
-          <View style={{ padding: 20 }}>
-            <Text style={styles.header}>Account</Text>
-            <Text style={styles.bodyLabel}>Username</Text>
-            <Text style={styles.bodyText}>{user.username}</Text>
-            {/* <Text style={styles.bodyLabel}>User ID</Text>
-            <Text style={styles.bodyText}>{user.id}</Text> */}
-            <Text style={styles.bodyLabel}>First name</Text>
-            <Text style={styles.bodyText}>{user.firstName}</Text>
-            <Text style={styles.bodyLabel}>Last name</Text>
-            <Text style={styles.bodyText}>{user.lastName}</Text>
-            <Text style={styles.bodyLabel}>Email</Text>
-            <Text style={styles.bodyText}>{user.email}</Text>
-            <Text style={styles.bodyLabel}>Phone</Text>
-            <Text style={styles.bodyText}>{user.phone}</Text>
-            <TouchableOpacity onPress={() => navigation.jumpTo('EditUserScreen')}>
-            <Text style={styles.button}>Edit</Text>
-          </TouchableOpacity>
-            <Text style={styles.footerText}>
-              © 2023 Central Studios. All Rights Reserved.
-            </Text>
-          </View>
-        </ScrollView>
-      )}
-      
-      {/* Floating Action Button */}
-      <TouchableOpacity
-        style={styles.fab}
-        onPress={() => navigation.jumpTo("Consultation")}
-      >
+          <FontAwesomeIcon icon={faHistory} size={18} color="#FFF" />
+          <Text style={styles.bookingHistoryButtonText}>Booking History</Text>
+        </TouchableOpacity>
+      </ScrollView>
+
+        <Text style={styles.footerText}>
+            © 2023 Central Studios. All Rights Reserved.
+        </Text>
+
+      <TouchableOpacity style={styles.fab} onPress={() => navigation.jumpTo("Consultation")}>
         <FontAwesomeIcon icon={faComment} color='#ffffff' size={24} />
       </TouchableOpacity>
     </View>
   );
 };
 
-const styles = {
+const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: 'white',
-    height: '100%',
     padding: 40,
   },
+  scrollView: {
+    padding: 20,
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   header: {
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: 'bold',
-    marginTop: 50,
     marginBottom: 20,
+    marginTop: 20,
+
+  },
+  editButtonIcon: {
+      marginTop: 0,
+      color: 'black',
+  },
+  saveButton: {
+    backgroundColor: '#3e3e3e',
+    padding: 10,
+    margin: 20,
+    alignItems: 'center',
+    borderRadius: 5,
+    width: 200,
+    alignSelf: 'center',
+  },
+  saveButtonText: {
+    color: 'white',
+    fontSize: 18,
+  },
+  editableFieldContainer: {
+    marginBottom: 15,
   },
   bodyLabel: {
-    fontSize: 16,
-    marginBottom: 20,
-  },
-  bodyText: {
-    fontSize: 18,
-    marginBottom: 20,
+    fontSize: 17,
+    marginBottom: 5,
+    marginTop: 20,
     fontWeight: 'bold',
     color: '#c0c0c0'
   },
-  button: {
-    backgroundColor: '#3e3e3e',
-    padding: 10,
-    width: 175,
-    marginTop: 20,
-    marginBottom: 10,
-    borderRadius: 5,
-    alignSelf: 'center',
-    fontSize: 20,
-    color: 'white',
-    textAlign: 'center',
-  },
-  buttonTxt: {
-    fontSize: 20,
-    color: 'white',
-    textAlign: 'center',
-  },
-  footerText: {
-    textAlign: 'center',
-    padding: 15,
-    marginBottom: 30,
-    marginTop: 175,
-    fontWeight: '100',
+  editInput: {
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+    paddingTop: 15,
+    paddingBottom: 5,
+
   },
   fab: {
     position: 'absolute',
@@ -128,33 +156,43 @@ const styles = {
     padding: 20,
     borderRadius: 100,
   },
-  noUser: {
-    padding: 20,
-    marginTop: 110,
-  },
-  goToLogin: {
-    color: 'white',
-    // fontFamily: 'Roboto',
-    fontSize: 18,
-
-    backgroundColor: 'black',
-    padding: 15,
-    borderRadius: 10,
+  bookingHistoryButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#3e3e3e',
+    padding: 10,
+    margin: 40,
     alignSelf: 'center',
-    marginTop: 80,
+    borderRadius: 5,
+    width: 180,
   },
-  logo: {
-    marginTop: 0,
-    width: 310,
-    height: 85,
-    alignSelf: 'center', // Adjust the alignment of the logo
+  bookingHistoryButtonText: {
+    color: 'white',
+    fontSize: 18,
+    marginLeft: 10, 
   },
-  NoUserfooterText: {
+  actionButton: {
+    padding: 10,
+    borderRadius: 50,
+  },
+  editInput: {
+    paddingTop: 15,
+    paddingBottom: 5,
+    fontSize: 16, 
+  },
+  editInputEditable: {
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+  },
+  editInputNonEditable: {
+    borderBottomWidth: 0,
+  },
+  footerText: {
     textAlign: 'center',
-    padding: 0,
-    marginTop: 380,
+    padding: 15,
+    marginBottom: 30,
     fontWeight: '100',
-  }
-};
+  },
+});
 
 export default MyAccount;

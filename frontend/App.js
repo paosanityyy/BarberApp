@@ -22,6 +22,7 @@ import UserManagement from "./screens/UserManagement";
 import AdminScreen from "./screens/AdminScreen";
 import MyAccount from "./screens/MyAccount";
 import EditUserScreen from "./screens/EditUserScreen";
+import BookingHistoryScreen from './screens/BookingHistoryScreen';
 import ReviewsScreen from './screens/ReviewsScreen';
 import WriteReview from './screens/WriteReview';
 import {AuthProvider, useAuth} from './AuthContext';
@@ -29,6 +30,7 @@ import BarberList  from "./screens/BarberList";
 import ClientList from "./screens/ClientList";
 import EditBarberScreen from "./screens/EditBarberScreen";
 import BarberProfile from "./screens/BarberProfile";
+import ViewAppointment from "./screens/ViewAppointment";
 
 
 function CustomDrawerContent(props) {
@@ -36,7 +38,7 @@ function CustomDrawerContent(props) {
 
     const handleLogout = async () => {
         await logout();
-        props.navigation.closeDrawer(); // Close drawer after logout
+        props.navigation.navigate('Login'); // Navigate to Home screen after logout
     };
 
 
@@ -165,6 +167,8 @@ function AppNavigator() {
                             route.name === 'EditBarberScreen' ? {display: 'none'} : {},
                             route.name === 'AppointmentConfirmation' ? { display: 'none' } : {},
                             route.name === 'BarberProfile' ? {display: 'none'} : {},
+                            route.name === 'ViewAppointment' ? {display: 'none'} : {},
+                            route.name === 'BookingHistory' ? {display: 'none'} : {},
                         ]
                     })}
                 >
@@ -187,6 +191,7 @@ function AppNavigator() {
                             <Drawer.Screen name='EditBarberScreen' component={EditBarberScreen}/>
                             <Drawer.Screen name='UserManagement' component={UserManagement}/>
                             <Drawer.Screen name="BarberProfile" component={BarberProfile} />
+                            <Drawer.Screen name='ViewAppointment' component={ViewAppointment} />
                         </>
                     ) : user && user.role === 'barber' ? (
                         <>
@@ -201,7 +206,8 @@ function AppNavigator() {
                             <Drawer.Screen name='Reviews' component={ReviewsScreen}/>
                             <Drawer.Screen name='WriteReview' component={WriteReview}/>
                             <Drawer.Screen name='EditUserScreen' component={EditUserScreen}/>
-                            <Drawer.Screen name='AppointmentConfirmation' component={AppointmentConfirmation} /> 
+                            <Drawer.Screen name='AppointmentConfirmation' component={AppointmentConfirmation} />
+                            <Drawer.Screen name='BookingHistory' component={BookingHistoryScreen}/> 
                         </> 
 
                     )}             

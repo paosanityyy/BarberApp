@@ -41,12 +41,11 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginBottom: 20,
         fontFamily: 'Roboto',
-        // Removed marginBottom to ensure vertical centering
     },
     confirmContainer: {
-        borderWidth: 1,
-        borderColor: 'black',
-        padding: 60,
+        // borderWidth: 1,
+        // borderColor: 'black',
+        padding: 30,
         alignItems: 'center', 
     },
     confirmTxt: {
@@ -67,7 +66,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginTop: 20,
     },
-    // ... other styles
+
 });
 
 

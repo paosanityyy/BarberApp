@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     createTitle: {
         padding: 20,
         fontSize: 20,
-        fontFamily: 'Roboto',
+        // fontFamily: 'Roboto',
     },
     container: {
         height: '100%',
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         padding: 0,
         width: 350,
-        fontFamily: 'Roboto',
+        // fontFamily: 'Roboto',
     },
     button: {
         marginTop: 20,
