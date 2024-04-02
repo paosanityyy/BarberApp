@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useAuth } from '../AuthContext'; 
 
-const EditUserScreen = ({ route, navigation }) => {
-  const { user, updateUserDetails } = useAuth();
+const EditUserScreen = ({  navigation }) => {
+  const {user, updateUserDetails } = useAuth();
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [email, setEmail] = useState(user.email);

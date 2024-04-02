@@ -48,6 +48,31 @@ router.post('/signup', async (req, res) => {
   }
 });
 
+// Create a new barber
+router.post('/create-barber', async (req, res) => {
+  try {
+    // Generate salt and hash the password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
+    // Create a new user with the hashed password
+    const newBarber = new User({
+      ...req.body,
+      role: 'barber',
+      password: hashedPassword
+    });
+
+    // Save the user
+    const savedBarber = await newBarber.save();
+
+    // Respond to the client
+    res.status(201).json({ message: "Barber created successfully", barber: savedBarber });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error registering barber. Please try again.' });
+  }
+});
+
 // User login route
 router.post('/login', async (req, res) => {
   try {
@@ -90,6 +115,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
+
 // Get all users
 router.get('/', async (req, res) => {
   try {
@@ -99,6 +125,16 @@ router.get('/', async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+router.get('/clients', async (req, res) => {
+  try {
+    const users = await User.find({ role: 'client' }); // Only retrieve users with the role 'barber'
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 
 // Get a user by ID
 router.get('/:id', async (req, res) => {
@@ -136,6 +172,8 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+
 
 // Additional routes for barbers and clients can be placed here
 

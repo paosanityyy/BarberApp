@@ -40,7 +40,7 @@ const AppointmentScreen = ({navigation}) => {
     useEffect(() => {
         const fetchBarbers = async () => {
             try {
-                const response = await fetch('http://localhost:3000/api/barbers', {
+                const response = await fetch('http://localhost:3000/api/users/barbers', {
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -135,7 +135,7 @@ const AppointmentScreen = ({navigation}) => {
     appointmentDate.setHours(hours, minutes);
 
     const appointmentDetails = {
-        clientId: user.id,
+        clientId: user._id,
         barberId: selectedBarber.id,
         service: selectedService,
         date: appointmentDate.toISOString(), // Send the adjusted date

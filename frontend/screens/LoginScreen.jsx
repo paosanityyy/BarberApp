@@ -26,15 +26,23 @@ const LoginScreen = ({ navigation }) => {
             if (!response.ok) {
                 throw new Error('Invalid username or password');
             }
-    
+
             const data = await response.json();
     
             // Assuming the response data includes user details such as email and phone
             login(data.user); // Pass the user object to your login function
-    
-            navigation.navigate('Home');
+
             setUserName('');
             setUserPassword('');
+
+            // Navigate based on user role
+            if (data.user.role === 'admin') {
+                navigation.navigate('Admin'); // Navigate to Admin screen if user is an admin
+            } else if (data.user.role === 'barber') {
+                navigation.navigate('Home'); // Navigate to Barber screen if user is a barber
+            } else {
+                navigation.navigate('Home'); // Navigate to Home screen for other roles
+            }
         } catch (error) {
             console.error('Login error:', error.message);
             alert('Invalid username or password');
@@ -122,6 +130,7 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'center',
         // fontFamily: 'Roboto',
+        fontFamily: 'SourceCodePro',
     },
     footerText: {
         textAlign: 'center',

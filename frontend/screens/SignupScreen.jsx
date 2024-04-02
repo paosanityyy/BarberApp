@@ -21,9 +21,7 @@ const SignupScreen = ({ navigation }) => {
         username,
         password,
       });
-      
-    
-    
+
       // Check if the response status is 201
       if (signUpResponse.status === 201) {
         // If successful, display the success message
@@ -78,6 +76,7 @@ const SignupScreen = ({ navigation }) => {
         style={styles.input}
         value={email}
         onChangeText={setEmail}
+        autoCapitalize='none'
       />
       <TextInput
         placeholder="Phone"
@@ -92,6 +91,7 @@ const SignupScreen = ({ navigation }) => {
         style={styles.input}
         value={username}
         onChangeText={setUsername}
+        autoCapitalize='none'
       />
       <TextInput
         placeholder="Password"
@@ -100,6 +100,7 @@ const SignupScreen = ({ navigation }) => {
         secureTextEntry={true}
         value={password}
         onChangeText={setPassword}
+        autoCapitalize='none'
       />
       <TouchableOpacity style={styles.button} onPress={handleSignup}>
         <Text style={styles.buttonTxt}>Sign Up</Text>

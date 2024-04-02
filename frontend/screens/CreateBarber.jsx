@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import {TouchableOpacity, View, Text, StyleSheet, FlatList} from "react-native";
-import {TextInput} from "react-native-gesture-handler";
+import { TouchableOpacity, View, Text, StyleSheet, TextInput } from 'react-native';
+import axios from 'axios';
 
 const CreateBarber = () => {
     const [barberUsername, setBarberUsername] = useState('');
@@ -9,18 +9,15 @@ const CreateBarber = () => {
     const [barberLastName, setBarberLastName] = useState('');
     const [barberEmail, setBarberEmail] = useState('');
     const [barberPhone, setBarberPhone] = useState('');
-    const [barberAddress, setBarberAddress] = useState('');
-    const [barbers, setBarbers] = useState([]);
     const [barbersAdded, setBarbersAdded] = useState(null);
 
-    const addBarber = () => {
-
+    const addBarber = async () => {
         const trimmedEmail = barberEmail.trim();
         const trimmedPhone = barberPhone.trim();
 
-        if (!barberUsername || !barberPassword || !barberFirstName || !barberLastName || !barberAddress || !barberEmail || !barberPhone) {
+        if (!barberUsername || !barberPassword || !barberFirstName || !barberLastName || !barberEmail || !barberPhone) {
             alert('Please fill in all fields');
-            return; // Exit the function early if any field is empty
+            return;
         }
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailPattern.test(trimmedEmail)) {
@@ -33,32 +30,37 @@ const CreateBarber = () => {
             return;
         }
 
-        setBarbers([...barbers, {username: barberUsername,password: barberPassword, firstName: barberFirstName, lastName: barberLastName, address: barberAddress, email: trimmedEmail, phone: trimmedPhone }]);
-        setBarbersAdded(true);
+        try {
+            const signUpResponse = await axios.post('http://localhost:3000/api/users/create-barber', {
+                username: barberUsername,
+                password: barberPassword,
+                firstName: barberFirstName,
+                lastName: barberLastName,
+                email: trimmedEmail,
+                phone: trimmedPhone,
+            });
+            console.log(signUpResponse.data); // assuming you want to log the response
+            setBarbersAdded(true);
+        } catch (error) {
+            console.error('Error creating barber profile:', error);
+            // Handle error gracefully, show an alert or log to console
+        }
+
         setBarberUsername('');
         setBarberPassword('');
         setBarberFirstName('');
         setBarberLastName('');
-        setBarberAddress('')
         setBarberEmail('');
         setBarberPhone('');
 
         setTimeout(() => {
             setBarbersAdded(false);
         }, 3000);
-
     };
-
-    // const deleteBarber = (index) => {
-    //     const updatedBarbers = [...barbers];
-    //     updatedBarbers.splice(index, 1); // Remove the barber at the specified index
-    //     setBarbers(updatedBarbers);
-    // };
 
     return (
         <View style={styles.container}>
             <Text style={styles.createTitle}>Create New Barber Profile</Text>
-            {/* Conditional rendering of success message */}
             {barbersAdded && <Text style={styles.successMessage}>Barber Profile Created</Text>}
             <TextInput
                 placeholder="Username"
@@ -86,12 +88,6 @@ const CreateBarber = () => {
                 style={styles.input}
             />
             <TextInput
-                placeholder="Address"
-                value={barberAddress}
-                onChangeText={setBarberAddress}
-                style={styles.input}
-            />
-            <TextInput
                 placeholder="Email"
                 value={barberEmail}
                 onChangeText={setBarberEmail}
@@ -106,21 +102,9 @@ const CreateBarber = () => {
             <TouchableOpacity style={styles.button} onPress={addBarber}>
                 <Text style={styles.buttonTxt}>Add Barber</Text>
             </TouchableOpacity>
-            <FlatList
-               data={barbers}
-               renderItem={({ item }) => (
-                   <View style={styles.barberCard}>
-                          <Text>Username: {item.username}</Text>
-                       <Text>Name: {item.firstName} {item.lastName}</Text>
-                       <Text>Email: {item.email}</Text>
-                          <Text>Address: {item.address}</Text>
-                       <Text>Phone Number: {item.phone}</Text>
-                    </View>
-               )}
-            />
         </View>
     );
-}
+};
 
 export default CreateBarber;
 
@@ -150,20 +134,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#3e3e3e',
         padding: 12,
         width: 200,
-        marginBottom:10,
+        marginBottom: 10,
         borderRadius: 5,
     },
-    buttonTxt:{
+    buttonTxt: {
         fontSize: 18,
         color: 'white',
         textAlign: 'center'
-    },
-    barberCard: {
-        borderWidth: 1,
-        borderColor: 'black',
-        padding: 20,
-        width: 350,
-        marginBottom: 10,
     },
     successMessage: {
         color: 'green',

@@ -1,27 +1,23 @@
-import React, { } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-const AdminScreen = ({ navigation }) => {
-    const handleCreateBarberClick = () => {
-        navigation.navigate('CreateBarber');
+const AdminScreen = ({ navigation }) => { // Destructuring navigation from props
+    const handleUserManagementClick = () => {
+        navigation.navigate('UserManagement');
+    };
+    const handleViewAppointmentsClick = () => {
+        navigation.navigate('ViewAppointment');
     };
 
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Admin Page</Text>
-            <TouchableOpacity style={styles.button} onPress={handleCreateBarberClick}>
+            <TouchableOpacity style={styles.button} onPress={handleUserManagementClick}>
                 <Text style={styles.buttonText}>User Management</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={handleCreateBarberClick}>
-                <Text style={styles.buttonText}>Communication and Support</Text>
+            <TouchableOpacity style={styles.button} onPress={handleViewAppointmentsClick}>
+                <Text style={styles.buttonText}>Manage Appointments</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={handleCreateBarberClick}>
-                <Text style={styles.buttonText}>Payroll Management</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={handleCreateBarberClick}>
-                <Text style={styles.buttonText}>Time Tracking and Attendance</Text>
-            </TouchableOpacity>
-
         </View>
     );
 };
