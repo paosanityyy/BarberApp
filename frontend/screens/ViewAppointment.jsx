@@ -43,36 +43,36 @@ const ViewAppointment = () => {
 
     return (
         <View style={styles.container}>
+            {appointment && (
             <FlatList
                 data={[appointment]}
                 keyExtractor={(item) => item._id}
-                renderItem={({ item }) => (
+                renderItem={({item}) => (
                     <>
-                        <Text style={styles.title}>Appointment Details</Text>
-                        <Text>Appointment ID: {item._id}</Text>
-                        <Text>Client: {item.clientId}</Text>
-                        <Text>Barber: {item.barberId}</Text>
-                        <Text>Appointment Date: {item.date}</Text>
-                        <Text>Service: {item.service}</Text>
-                        <Text>Status: {status}</Text>
-                        <TouchableOpacity
-                            style={[styles.button, { backgroundColor: status === 'pending' ? '#3e3e3e' : 'green' }]}
-                            onPress={() => setStatus(status === 'pending' ? 'completed' : 'pending')}>
-                            <Text style={styles.buttonText}>
-                                {status === 'pending' ? 'Mark as Completed' : 'Mark as Pending'}
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.button} onPress={saveStatus}>
-                            <Text style={styles.buttonText}>Update and Save</Text>
-                        </TouchableOpacity>
-                    </>
+                                <Text style={styles.title}>Appointment Details</Text>
+                                <Text>Client: {item.clientId}</Text>
+                                <Text>Barber: {item.barberId}</Text>
+                                <Text>Appointment Date: {item.date}</Text>
+                                <Text>Service: {item.service}</Text>
+                                <Text>Status: {status}</Text>
+                                <TouchableOpacity
+                                    style={[styles.button, {backgroundColor: status === 'pending' ? '#3e3e3e' : 'green'}]}
+                                    onPress={() => setStatus(status === 'pending' ? 'completed' : 'pending')}>
+                                    <Text style={styles.buttonText}>
+                                        {status === 'pending' ? 'Mark as Completed' : 'Mark as Pending'}
+                                    </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.button} onPress={saveStatus}>
+                                    <Text style={styles.buttonText}>Update and Save</Text>
+                                </TouchableOpacity>
+                            </>
+                        )}
+                    />
                 )}
-            />
         </View>
     );
 };
-
-const styles = StyleSheet.create({
+    const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
