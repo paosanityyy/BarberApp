@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: 'white',
     textAlign: 'center',
-    fontFamily: 'Roboto',
+    // fontFamily: 'Roboto',
 },
 });
 

@@ -240,7 +240,7 @@ const AppointmentScreen = ({navigation}) => {
     return (
         <View style={{backgroundColor: 'white'}}>
             <ScrollView>
-                <Text style={{fontSize: 24, textAlign: 'center', marginTop: 20, fontFamily: 'Roboto', fontWeight: 'bold'}}>Book an Appointment</Text>
+                <Text style={{fontSize: 24, textAlign: 'center', marginTop: 20, fontWeight: 'bold'}}>Book an Appointment</Text>
                 <View style={styles.container}>
                     {/* Select Barber */}
                     <View style={styles.dropdownContainer}>
@@ -369,13 +369,13 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: 'white',
         textAlign: 'center',
-        fontFamily: 'Roboto',
+        // fontFamily: 'Roboto',
     },
     headerTxt: {
         fontSize: 16,
         marginTop: 20,
         marginBottom: 0,
-        fontFamily: 'Roboto',
+        // fontFamily: 'Roboto',
     },
     calendar: {
         marginTop: 10,
@@ -417,7 +417,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     selectedField: {
-        fontFamily: 'Roboto',
+        // fontFamily: 'Roboto',
     },
     noUser: {
         padding: 20,
@@ -425,7 +425,7 @@ const styles = StyleSheet.create({
       },
       goToLogin: {
         color: 'white',
-        fontFamily: 'Roboto',
+        // fontFamily: 'Roboto',
         fontSize: 18,
         fontWeight: 'bold',
         backgroundColor: 'black',

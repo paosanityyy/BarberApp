@@ -145,6 +145,6 @@ const styles = StyleSheet.create({
     successMessage: {
         color: 'green',
         fontSize: 18,
-        fontFamily: 'Roboto',
+        // fontFamily: 'Roboto',
     },
 });

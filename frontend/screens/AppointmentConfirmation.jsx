@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         fontSize: 32,
         textAlign: 'center',
         marginBottom: 20,
-        fontFamily: 'Roboto',
+        // fontFamily: 'Roboto',
     },
     confirmContainer: {
         // borderWidth: 1,

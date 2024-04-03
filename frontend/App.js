@@ -140,7 +140,7 @@ function AppNavigator() {
                             shadowColor: 'transparent',
                             elevation: 0,
                         }, drawerLabelStyle: {
-                            fontFamily: 'Roboto', // Apply the font family here
+                            // fontFamily: 'Roboto', // Apply the font family here
                             fontSize: 16, // Match the font size with TouchableOpacity
                             // fontWeight: 'bold', // Match the font weight
                             color: 'black'
@@ -219,7 +219,7 @@ function AppNavigator() {
 
 export default function App() {
     let [fontsLoaded] = useFonts({
-      'Roboto': require('./assets/fonts/Roboto-Light.ttf'),
+    //   'Roboto': require('./assets/fonts/Roboto-Light.ttf'),
       'Mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
       'SourceCodePro': require('./assets/fonts/SourceCodePro-Light.ttf'),
     })
