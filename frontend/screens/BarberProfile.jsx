@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     margin: 40,
     alignSelf: 'center',
     borderRadius: 5,
-    width: 180,
+    width: 150,
   },
   bookingHistoryButtonText: {
     color: 'white',
