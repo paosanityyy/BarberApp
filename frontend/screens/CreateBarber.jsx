@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, View, Text, StyleSheet, TextInput } from 'react-native';
+import {TouchableOpacity, View, Text, StyleSheet, TextInput, Alert} from 'react-native';
 import axios from 'axios';
 
 
-const CreateBarber = () => {
+const CreateBarber = ({navigation}) => {
     const [barberUsername, setBarberUsername] = useState('');
     const [barberPassword, setBarberPassword] = useState('');
     const [barberFirstName, setBarberFirstName] = useState('');
     const [barberLastName, setBarberLastName] = useState('');
     const [barberEmail, setBarberEmail] = useState('');
     const [barberPhone, setBarberPhone] = useState('');
-    const [barbersAdded, setBarbersAdded] = useState(null);
+    const [setBarbersAdded] = useState(null);
 
     const addBarber = async () => {
         const trimmedEmail = barberEmail.trim();
@@ -42,6 +42,12 @@ const CreateBarber = () => {
             });
             console.log(signUpResponse.data); // assuming you want to log the response
             setBarbersAdded(true);
+            Alert.alert(
+                "Success",
+                "Barber Profile Created Successfully",
+                [{text: "OK", onPress: () => navigation.navigate('Admin')}]
+            );
+
         } catch (error) {
             console.error('Error creating barber profile:', error);
             // Handle error gracefully, show an alert or log to console
@@ -58,11 +64,14 @@ const CreateBarber = () => {
             setBarbersAdded(false);
         }, 3000);
     };
+    const handleBack = () => {
+        navigation.navigate('UserManagement');
+    }
+
 
     return (
         <View style={styles.container}>
             <Text style={styles.createTitle}>Create New Barber Profile</Text>
-            {barbersAdded && <Text style={styles.successMessage}>Barber Profile Created</Text>}
             <TextInput
                 placeholder="Username"
                 placeholderTextColor="grey"
@@ -108,6 +117,9 @@ const CreateBarber = () => {
             />
             <TouchableOpacity style={styles.button} onPress={addBarber}>
                 <Text style={styles.buttonTxt}>Add Barber</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={handleBack}>
+                <Text style={styles.buttonTxt}>Cancel</Text>
             </TouchableOpacity>
         </View>
     );

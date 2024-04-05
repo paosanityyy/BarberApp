@@ -38,12 +38,22 @@ const BarberList = ({ navigation }) => {
         fetchBarbers().then(r => console.log('Barbers fetched'));
     };
 
+    const handleBack = () => {
+        navigation.navigate('UserManagement');
+    }
+
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Barbers</Text>
-            <TouchableOpacity style={styles.refreshButton} onPress={handleRefresh}>
-                <Text style={styles.refreshButtonText}>Refresh</Text>
-            </TouchableOpacity>
+            <View style={styles.controlButtons}>
+                <TouchableOpacity style={styles.refreshButton} onPress={handleBack}>
+                    <Text style={styles.refreshButtonText}>Back</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.refreshButton} onPress={handleRefresh}>
+                    <Text style={styles.refreshButtonText}>Refresh</Text>
+                </TouchableOpacity>
+            </View>
             <FlatList
                 data={barbers}
                 keyExtractor={(item) => item._id}
@@ -81,6 +91,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 10,
         alignSelf: 'center',
+    },
+    controlButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginHorizontal: 20,
+        padding: 15
     },
     refreshButton: {
         backgroundColor: '#3e3e3e',
