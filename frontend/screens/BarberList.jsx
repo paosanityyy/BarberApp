@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import {View, Text, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 
-const BarberList = ({navigation}) => {
+const BarberList = ({ navigation }) => {
     const [barbers, setBarbers] = useState([]);
 
     useEffect(() => {
@@ -30,6 +30,10 @@ const BarberList = ({navigation}) => {
         }
     };
 
+    const navigateToEditBarber = (userDetails) => {
+        navigation.navigate('EditBarberScreen', { userDetails });
+    };
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Barbers</Text>
@@ -37,22 +41,22 @@ const BarberList = ({navigation}) => {
                 data={barbers}
                 keyExtractor={(item) => item._id}
                 renderItem={({ item }) => (
-                    <View style={styles.barberItem}>
-                        <View style={{ flex: 1 }}>
-                            <Text>{item.username}</Text>
-                            <Text>{item.firstName} {item.lastName}</Text>
-                            <Text>{item.email}</Text>
-                            <Text>{item.phone}</Text>
+                    <View style={styles.barberBox}>
+                        <View style={styles.barberInfo}>
+                            <Text style={styles.barberText}>Username: {item.username}</Text>
+                            <Text style={styles.barberText}>Name: {item.firstName} {item.lastName}</Text>
+                            <Text style={styles.barberText}>Email: {item.email}</Text>
+                            <Text style={styles.barberText}>Phone: {item.phone}</Text>
                         </View>
-                        <TouchableOpacity onPress={() => navigation.jumpTo('EditBarberScreen')}>
-                            <Text>Edit</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => handleDelete(item._id)}>
-                            <Text>Delete</Text>
-                        </TouchableOpacity>
+                        <View style={styles.buttonContainer}>
+                            <TouchableOpacity style={styles.button} onPress={() => navigateToEditBarber(item)}>
+                                <Text>Edit</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.button} onPress={() => handleDelete(item._id)}>
+                                <Text>Delete</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-
-
                 )}
             />
         </View>
@@ -62,18 +66,40 @@ const BarberList = ({navigation}) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
         padding: 20,
+        backgroundColor: '#fff',
     },
     title: {
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 10,
     },
-    barberItem: {
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
-        paddingVertical: 10,
+    barberBox: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 5,
+        padding: 10,
+        marginBottom: 10,
+    },
+    barberInfo: {
+        flex: 1,
+    },
+    barberText: {
+        marginBottom: 5,
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    button: {
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 5,
+        padding: 5,
+        marginLeft: 10,
     },
 });
 

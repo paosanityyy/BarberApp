@@ -192,6 +192,8 @@ function AppNavigator() {
                             <Drawer.Screen name='UserManagement' component={UserManagement}/>
                             <Drawer.Screen name="BarberProfile" component={BarberProfile} />
                             <Drawer.Screen name='ViewAppointment' component={ViewAppointment} />
+                            <Drawer.Screen name='EditUserScreen' component={EditUserScreen}/>
+                            <Drawer.Screen name='My Account' component={MyAccount}/>
                         </>
                     ) : user && user.role === 'barber' ? (
                         <>
