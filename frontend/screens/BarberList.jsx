@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import {View, Text, FlatList, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import axios from 'axios';
 
 const BarberList = ({ navigation }) => {
@@ -14,6 +14,11 @@ const BarberList = ({ navigation }) => {
             await axios.delete(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/users/${id}`);
             // Update your state or data source to reflect the deletion
             console.log(`Barber with id ${id} has been deleted`);
+            Alert.alert(
+                'Success',
+                'Barber Deleted Successfully',
+                [{ text: 'OK', onPress: () => fetchBarbers() }]
+            )
         } catch (error) {
             console.error('Error deleting user:', error);
         }
