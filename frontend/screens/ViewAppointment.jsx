@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator} from 'react-native';
 import axios from 'axios';
-import Config from 'react-native-config';
 
-const ViewAppointment = () => {
+
+const ViewAppointment = ({navigation}) => {
     const [appointments, setAppointments] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -26,14 +26,22 @@ const ViewAppointment = () => {
     const handleRefresh = () => {
         fetchAppointments().then(r => console.log('Appointments fetched'));
     };
+    const handleBack = () => {
+        navigation.navigate('Admin');
+    }
 
 
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Appointments</Text>
+            <View style={styles.controlButtons}>
+            <TouchableOpacity style={styles.refreshButton} onPress={handleBack}>
+                <Text style={styles.refreshButtonText}>Back</Text>
+            </TouchableOpacity>
             <TouchableOpacity style={styles.refreshButton} onPress={handleRefresh}>
                 <Text style={styles.refreshButtonText}>Refresh</Text>
             </TouchableOpacity>
+            </View>
             {isLoading ? (
                 <ActivityIndicator size="large" color="#0000ff"/>
             ) : appointments.length > 0 ? (
@@ -73,6 +81,12 @@ const styles = StyleSheet.create({
     },
     boldText: {
         fontWeight: 'bold',
+    },
+    controlButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginHorizontal: 20,
+        padding: 15
     },
     title: {
         fontSize: 36,
