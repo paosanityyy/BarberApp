@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
       const storedUser = await AsyncStorage.getItem('user');
       if (storedUser) setUser(JSON.parse(storedUser));
     };
-    loadUser();
+    loadUser().then(r => console.log('User loaded'));
   }, []);
 
   const login = async (userData) => {
@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
 
   const updateUserDetails = async (updatedDetails) => {
     try {
-      const response = await fetch(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/users/${user._id}`, {
+      const response = await fetch(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/users/${user.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

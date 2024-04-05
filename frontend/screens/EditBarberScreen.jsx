@@ -1,26 +1,53 @@
-import React, { useState } from 'react';
-import { View, TextInput, StyleSheet, Text, TouchableOpacity} from 'react-native';
-import { useAuth } from '../AuthContext';
+import React, {useEffect, useState} from 'react';
+import {View, TextInput, StyleSheet, Text, TouchableOpacity, Alert} from 'react-native';
+import {useAuth} from '../AuthContext';
 
-const EditBarberScreen = ({ navigation }) => {
-    const {user, updateUserDetails } = useAuth();
-    const [firstName, setFirstName] = useState(user.firstName);
-    const [lastName, setLastName] = useState(user.lastName);
-    const [email, setEmail] = useState(user.email);
-    const [phone, setPhone] = useState(user.phone);
+
+const EditBarberScreen = ({route, navigation}) => {
+    const {updateUserDetails} = useAuth();
+
+    const {userDetails} = route.params;
+
+
+    const [firstName, setFirstName] = useState(userDetails.firstName);
+    const [lastName, setLastName] = useState(userDetails.lastName);
+    const [email, setEmail] = useState(userDetails.email);
+    const [phone, setPhone] = useState(userDetails.phone);
+
+
+    useEffect(() => {
+        // Update state when userDetails change
+        setFirstName(userDetails.firstName);
+        setLastName(userDetails.lastName);
+        setEmail(userDetails.email);
+        setPhone(userDetails.phone);
+    }, [userDetails]);
 
     const handleSubmit = async () => {
         try {
-            await updateUserDetails({ firstName, lastName, email, phone });
-            navigation.goBack(); // Navigate back to the MyAccount screen
+            // Attempt to update user details
+            await updateUserDetails({firstName, lastName, email, phone});
+
+            // On success, show an alert and navigate back
+            Alert.alert(
+                "Success",
+                "User details updated successfully",
+                [{text: "OK", onPress: () => navigation.navigate('BarberList')}]
+            );
         } catch (error) {
-            console.error("Error updating barber details:", error);
-            // Handle error (e.g., show an error message to the user)
+            console.error('Error updating user details:', error);
+            Alert.alert("Error",
+                "Failed to update user details.");
         }
+    };
+
+    const handleBack = () => {
+        navigation.navigate('BarberList');
     };
 
     return (
         <View style={styles.container}>
+            <Text style={styles.header}>Edit Account Details</Text>
             <Text style={styles.bodyLabel}>First name</Text>
             <TextInput
                 style={styles.editInput}
@@ -49,15 +76,16 @@ const EditBarberScreen = ({ navigation }) => {
                 onChangeText={setPhone}
                 placeholder="Phone"
             />
-            {/* <Button title="Save" onPress={handleSubmit} /> */}
             <TouchableOpacity style={styles.editButton} onPress={handleSubmit}>
                 <Text style={styles.editButtonText}>Save</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.backButton} onPress={handleBack}>
+                <Text style={styles.backButtonText}>Back</Text>
             </TouchableOpacity>
             <Text style={styles.footerText}>
                 © 2023 Central Studios. All Rights Reserved.
             </Text>
         </View>
-
     );
 };
 
@@ -67,11 +95,16 @@ const styles = StyleSheet.create({
         height: '100%',
         backgroundColor: 'white',
     },
+    header: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        marginBottom: 25,
+    },
     bodyLabel: {
         fontSize: 16,
         marginBottom: 5,
         fontWeight: 'bold',
-        marginTop: 50,
+        marginTop: 15,
     },
     editInput: {
         height: 40,
@@ -80,12 +113,25 @@ const styles = StyleSheet.create({
         padding: 10,
         marginBottom: 0,
     },
+    backButton: {
+        backgroundColor: 'gray',
+        padding: 10,
+        width: 175,
+        marginBottom: 10,
+        borderRadius: 5,
+        alignSelf: 'center',
+    },
+    backButtonText: {
+        color: 'white',
+        textAlign: 'center',
+        fontSize: 20,
+    },
     editButton: {
         backgroundColor: '#3e3e3e',
         padding: 10,
         width: 175,
-        marginTop: 50,
-        marginBottom: 10,
+        marginTop: 45,
+        marginBottom: 30,
         borderRadius: 5,
         alignSelf: 'center',
         fontSize: 20,
@@ -101,7 +147,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         padding: 15,
         marginBottom: 30,
-        marginTop: 170,
         fontWeight: '100',
     },
 });

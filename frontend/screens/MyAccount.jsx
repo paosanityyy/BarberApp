@@ -146,6 +146,7 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     paddingTop: 15,
     paddingBottom: 5,
+    fontSize: 16,
 
   },
   fab: {
@@ -174,11 +175,6 @@ const styles = StyleSheet.create({
   actionButton: {
     padding: 10,
     borderRadius: 50,
-  },
-  editInput: {
-    paddingTop: 15,
-    paddingBottom: 5,
-    fontSize: 16, 
   },
   editInputEditable: {
     borderBottomWidth: 1,
