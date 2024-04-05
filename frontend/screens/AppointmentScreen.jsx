@@ -16,10 +16,10 @@ const AppointmentScreen = ({navigation}) => {
     const [selectedService, setSelectedService] = useState('Haircut');
     const [isBarberModalVisible, setBarberModalVisible] = useState(false);
     const [isServiceModalVisible, setServiceModalVisible] = useState(false);
-    
 
     const services = ['Haircut', 'Haircut + Beard', 'Braids'];
     const timeSlots = ['10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM'];
+
 
     if (!user) {
         // Display login message if no user is logged in
@@ -172,9 +172,6 @@ const AppointmentScreen = ({navigation}) => {
             Alert.alert('Error', 'An error occurred while booking the appointment.');
         }
     };
-    
-
-    
 
     const renderBarberDropDown = (options, selectedValue, setValue, setModalVisible) => (
         <Modal
@@ -449,4 +446,4 @@ const styles = StyleSheet.create({
     // Extend your existing styles
 });
 
-export default AppointmentScreen;1
+export default AppointmentScreen;

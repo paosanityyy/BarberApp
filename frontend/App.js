@@ -194,6 +194,7 @@ function AppNavigator() {
                             <Drawer.Screen name='ViewAppointment' component={ViewAppointment} />
                             <Drawer.Screen name='EditUserScreen' component={EditUserScreen}/>
                             <Drawer.Screen name='My Account' component={MyAccount}/>
+                            <Drawer.Screen name='Appointment' component={AppointmentScreen}/>
                         </>
                     ) : user && user.role === 'barber' ? (
                         <>

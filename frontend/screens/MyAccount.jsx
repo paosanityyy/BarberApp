@@ -1,18 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ScrollView, Image} from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faEdit, faComment, faHistory, faSave } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../AuthContext';
 
 const MyAccount = ({ navigation }) => {
   const { user, updateUserDetails } = useAuth();
-  const [editMode, setEditMode] = useState(false);
-  const [editedUser, setEditedUser] = useState({
-    firstName: user.firstName,
-    lastName: user.lastName,
-    email: user.email,
-    phone: user.phone,
-  });
 
   if (!user) {
     // Display login message if no user is logged in
@@ -29,6 +22,14 @@ const MyAccount = ({ navigation }) => {
     );
   }
 
+  const [editMode, setEditMode] = useState(false);
+  const [editedUser, setEditedUser] = useState({
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    phone: user.phone,
+  });
+
   const handleSave = async () => {
     try {
       await updateUserDetails(editedUser);
@@ -43,11 +44,11 @@ const MyAccount = ({ navigation }) => {
   const renderEditableField = (label, value, onChangeText) => (
     <View style={styles.editableFieldContainer}>
       <Text style={styles.bodyLabel}>{label}</Text>
-      <TextInput 
+      <TextInput
         style={[styles.editInput, editMode ? styles.editInputEditable : styles.editInputNonEditable]}
-        value={value} 
-        onChangeText={(text) => onChangeText(text)} 
-        editable={editMode} 
+        value={value}
+        onChangeText={(text) => onChangeText(text)}
+        editable={editMode}
       />
     </View>
   );
@@ -67,7 +68,7 @@ const MyAccount = ({ navigation }) => {
             </TouchableOpacity>
           )}
         </View>
-        
+
         {renderEditableField('First name', editedUser.firstName, (text) => setEditedUser({ ...editedUser, firstName: text }))}
         {renderEditableField('Last name', editedUser.lastName, (text) => setEditedUser({ ...editedUser, lastName: text }))}
         {renderEditableField('Email', editedUser.email, (text) => setEditedUser({ ...editedUser, email: text }))}
@@ -165,12 +166,12 @@ const styles = StyleSheet.create({
     margin: 40,
     alignSelf: 'center',
     borderRadius: 5,
-    width: 180,
+    width: 200,
   },
   bookingHistoryButtonText: {
     color: 'white',
     fontSize: 18,
-    marginLeft: 10, 
+    marginLeft: 10,
   },
   actionButton: {
     padding: 10,

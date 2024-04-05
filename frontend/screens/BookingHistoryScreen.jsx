@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator} from 'react-native';
 import axios from 'axios';
-import { useAuth } from '../AuthContext';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faComment } from '@fortawesome/free-solid-svg-icons';
+import {useAuth} from '../AuthContext';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faComment} from '@fortawesome/free-solid-svg-icons';
 
-const BookingHistoryScreen = ({ navigation }) => {
-    const { user } = useAuth(); // Get the logged-in user info
+const BookingHistoryScreen = ({navigation}) => {
+    const {user} = useAuth(); // Get the logged-in user info
     const [bookings, setBookings] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -15,7 +15,7 @@ const BookingHistoryScreen = ({ navigation }) => {
             if (!user) return;
             try {
                 // Ensure the URL and the user ID field matches your setup. It might be `user._id` or similar.
-                const response = await axios.get(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/appointments/client/${user._id}`);
+                const response = await axios.get(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/appointments/client/${user.id}`);
                 setBookings(response.data);
             } catch (error) {
                 console.log(error);
@@ -35,25 +35,39 @@ const BookingHistoryScreen = ({ navigation }) => {
         );
     }
 
+    const handleBack = () => {
+        navigation.navigate('My Account');
+    };
+
     return (
         <View style={styles.container}>
             {isLoading ? (
-                <ActivityIndicator size="large" color="#0000ff" />
+                <ActivityIndicator size="large" color="#0000ff"/>
             ) : bookings.length > 0 ? (
                 <>
-                <Text style={styles.title}>Booking History</Text>
-                <ScrollView>
-                    {bookings.map((booking) => (
-                        <View key={booking._id} style={styles.bookingCard}>
-                            <Text style={styles.bookingText}><Text style={styles.boldText}>Date:</Text> {new Date(booking.date).toLocaleDateString()}</Text>
-                            <Text style={styles.bookingText}><Text style={styles.boldText}>Time:</Text> {new Date(booking.date).toLocaleTimeString()}</Text>
-                            <Text style={styles.bookingText}><Text style={styles.boldText}>Barber:</Text> {booking.barberId ? booking.barberId.firstName : 'Unknown'}</Text>
-                            <Text style={styles.bookingText}><Text style={styles.boldText}>Service:</Text> {booking.service}</Text>
-                        </View>
-                    ))}
-                </ScrollView>
-                <TouchableOpacity style={styles.button} onPress={() => navigation.jumpTo("Appointment")}>
+                    <Text style={styles.title}>Booking History</Text>
+                    <ScrollView>
+                        {bookings.map((booking) => (
+                            <View key={booking._id} style={styles.bookingCard}>
+                                <Text style={styles.bookingText}><Text
+                                    style={styles.boldText}>Date:</Text> {new Date(booking.date).toLocaleDateString()}
+                                </Text>
+                                <Text style={styles.bookingText}><Text
+                                    style={styles.boldText}>Time:</Text> {new Date(booking.date).toLocaleTimeString()}
+                                </Text>
+                                <Text style={styles.bookingText}><Text
+                                    style={styles.boldText}>Barber:</Text> {booking.barberId ? booking.barberId.firstName : 'Unknown'}
+                                </Text>
+                                <Text style={styles.bookingText}><Text
+                                    style={styles.boldText}>Service:</Text> {booking.service}</Text>
+                            </View>
+                        ))}
+                    </ScrollView>
+                    <TouchableOpacity style={styles.button} onPress={() => navigation.jumpTo("Appointment")}>
                         <Text style={styles.buttonTxt}>Rebook</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.button} onPress={() => handleBack()}>
+                        <Text style={styles.buttonTxt}>Back to Profile</Text>
                     </TouchableOpacity>
                 </>
             ) : (
@@ -65,7 +79,7 @@ const BookingHistoryScreen = ({ navigation }) => {
                 </View>
             )}
             <TouchableOpacity style={styles.fab} onPress={() => navigation.jumpTo("Consultation")}>
-                <FontAwesomeIcon icon={faComment} color='#ffffff' size={24} />
+                <FontAwesomeIcon icon={faComment} color='#ffffff' size={24}/>
             </TouchableOpacity>
         </View>
     );
