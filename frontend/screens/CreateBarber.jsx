@@ -65,12 +65,14 @@ const CreateBarber = () => {
             {barbersAdded && <Text style={styles.successMessage}>Barber Profile Created</Text>}
             <TextInput
                 placeholder="Username"
+                placeholderTextColor="grey"
                 value={barberUsername}
                 onChangeText={setBarberUsername}
                 style={styles.input}
             />
             <TextInput
                 placeholder="Password"
+                placeholderTextColor="grey"
                 value={barberPassword}
                 secureTextEntry={true}
                 onChangeText={setBarberPassword}
@@ -78,24 +80,28 @@ const CreateBarber = () => {
             />
             <TextInput
                 placeholder="First Name"
+                placeholderTextColor="grey"
                 value={barberFirstName}
                 onChangeText={setBarberFirstName}
                 style={styles.input}
             />
             <TextInput
                 placeholder="Last Name"
+                placeholderTextColor="grey"
                 value={barberLastName}
                 onChangeText={setBarberLastName}
                 style={styles.input}
             />
             <TextInput
                 placeholder="Email"
+                placeholderTextColor="grey"
                 value={barberEmail}
                 onChangeText={setBarberEmail}
                 style={styles.input}
             />
             <TextInput
                 placeholder="Phone Number"
+                placeholderTextColor="grey"
                 value={barberPhone}
                 onChangeText={setBarberPhone}
                 style={styles.input}

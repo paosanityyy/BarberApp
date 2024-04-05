@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import axios from 'axios';
 import Config from 'react-native-config';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const SignupScreen = ({ navigation }) => {
   const [firstName, setFirstName] = useState('');

@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler'
 import {NavigationContainer} from '@react-navigation/native'
 import {DrawerItemList, createDrawerNavigator} from '@react-navigation/drawer'
-import {View, Image, Text, ScrollView, StyleSheet, ImageBackground, TouchableOpacity} from 'react-native';
+import {View, Image, Text, ScrollView, StyleSheet, ImageBackground, TouchableOpacity, StatusBar} from 'react-native';
 import Home from './screens/Home';
 import AboutScreen from './screens/AboutScreen';
 import AppointmentScreen from './screens/AppointmentScreen';
@@ -227,6 +227,7 @@ export default function App() {
     return (
         <AuthProvider>
             <NavigationContainer>
+                <StatusBar barStyle='dark-content'/>
                 <AppNavigator/>
             </NavigationContainer>
         </AuthProvider>

@@ -7,7 +7,8 @@ const User = require('../models/userModel');
 // Get all barbers
 router.get('/barbers', async (req, res) => {
   try {
-    const barbers = await User.find({ role: 'barber' });
+    const barbers = await User.find({ role: 'barber' })
+                              .populate('firstName');
     res.status(200).json(barbers);
   } catch (err) {
     res.status(500).json(err);
