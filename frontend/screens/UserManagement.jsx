@@ -11,6 +11,9 @@ const UserManagement = ({ navigation }) => { // Destructuring navigation from pr
     const handleViewClientClick = () => {
         navigation.navigate('ClientList');
     };
+    const handleBack = () => {
+        navigation.navigate('Admin');
+    }
 
     return (
         <View style={styles.container}>
@@ -23,6 +26,9 @@ const UserManagement = ({ navigation }) => { // Destructuring navigation from pr
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={handleViewClientClick}>
                 <Text style={styles.buttonText}>View Clients</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={handleBack}>
+                <Text style={styles.buttonText}>Back</Text>
             </TouchableOpacity>
         </View>
     );

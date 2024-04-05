@@ -44,6 +44,7 @@ const ClientList = ({navigation}) => {
             <TouchableOpacity style={styles.refreshButton} onPress={handleRefresh}>
                 <Text style={styles.refreshButtonText}>Refresh</Text>
             </TouchableOpacity>
+
             <FlatList
                 data={clients}
                 keyExtractor={(item) => item._id}
@@ -80,6 +81,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 10,
+        alignSelf: 'center',
     },
     refreshButton: {
         backgroundColor: '#3e3e3e',

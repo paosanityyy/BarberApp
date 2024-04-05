@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 10,
+        alignSelf: 'center',
     },
     refreshButton: {
         backgroundColor: '#3e3e3e',
