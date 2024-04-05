@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (userData) => {
+    console.log('Logging in:', userData);
     setUser(userData);
     await AsyncStorage.setItem('user', JSON.stringify(userData));
   };
@@ -27,7 +28,7 @@ export const AuthProvider = ({ children }) => {
 
   const updateUserDetails = async (updatedDetails) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/users/${user.id}`, {
+      const response = await fetch(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/users/${user._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

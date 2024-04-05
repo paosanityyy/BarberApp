@@ -40,7 +40,7 @@ const AppointmentScreen = ({navigation}) => {
     useEffect(() => {
         const fetchBarbers = async () => {
             try {
-                const response = await fetch('http://localhost:3000/api/users/barbers', {
+                const response = await fetch(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/users/barbers`, {
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -95,7 +95,7 @@ const AppointmentScreen = ({navigation}) => {
             if (selectedDate && selectedBarber.id) {
                 const formattedDate = selectedDate; // Ensure this is in the format your backend expects
                 try {
-                    const response = await fetch(`http://localhost:3000/api/appointments/bookedSlots?date=${formattedDate}&barberId=${selectedBarber.id}`, {
+                    const response = await fetch(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/appointments/bookedSlots?date=${formattedDate}&barberId=${selectedBarber.id}`, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
@@ -135,7 +135,7 @@ const AppointmentScreen = ({navigation}) => {
     appointmentDate.setHours(hours, minutes);
 
     const appointmentDetails = {
-        clientId: user._id,
+        clientId: user.id,
         barberId: selectedBarber.id,
         service: selectedService,
         date: appointmentDate.toISOString(), // Send the adjusted date
@@ -144,7 +144,7 @@ const AppointmentScreen = ({navigation}) => {
         console.log('Creating appointment:', appointmentDetails);
 
         try {
-            const response = await fetch('http://localhost:3000/api/appointments', {
+            const response = await fetch(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/appointments`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -449,4 +449,4 @@ const styles = StyleSheet.create({
     // Extend your existing styles
 });
 
-export default AppointmentScreen;
+export default AppointmentScreen;1

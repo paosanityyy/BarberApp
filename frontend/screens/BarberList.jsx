@@ -11,7 +11,7 @@ const BarberList = ({navigation}) => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:3000/api/users/barbers/${id}`);
+            await axios.delete(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/users/barbers/${id}`);
             // Update your state or data source to reflect the deletion
             console.log(`Barber with id ${id} has been deleted`);
         } catch (error) {
@@ -21,7 +21,7 @@ const BarberList = ({navigation}) => {
 
     const fetchBarbers = async () => {
         try {
-            const response = await axios.get('http://localhost:3000/api/users/barbers/', {
+            const response = await axios.get(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/users/barbers/`, {
                 params: { role: 'barber' }
             });
             setBarbers(response.data);

@@ -15,7 +15,7 @@ const BookingHistoryScreen = ({ navigation }) => {
             if (!user) return;
             try {
                 // Ensure the URL and the user ID field matches your setup. It might be `user._id` or similar.
-                const response = await axios.get(`http://localhost:3000/api/appointments/client/${user._id}`);
+                const response = await axios.get(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/appointments/client/${user._id}`);
                 setBookings(response.data);
             } catch (error) {
                 console.log(error);

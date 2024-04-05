@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import { useAuth } from '../AuthContext'; // Import the useAuth hook from your authentication context
+import { useAuth } from '../AuthContext';
 
 const LoginScreen = ({ navigation }) => {
     const [userName, setUserName] = useState('');
@@ -15,7 +15,7 @@ const LoginScreen = ({ navigation }) => {
         }
     
         try {
-            const response = await fetch('http://localhost:3000/api/users/login', {
+            const response = await fetch(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/users/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

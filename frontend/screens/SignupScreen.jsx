@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import axios from 'axios';
+import Config from 'react-native-config';
 
 const SignupScreen = ({ navigation }) => {
   const [firstName, setFirstName] = useState('');
@@ -10,10 +11,11 @@ const SignupScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [signUpMsg, setSignUpMsg] = useState('');
+  const API_URL = Config.API_URL;
 
   const handleSignup = async () => {
     try {
-      const signUpResponse = await axios.post('http://localhost:3000/api/users/signup', {
+      const signUpResponse = await axios.post(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/users/signup`, {
         firstName,
         lastName,
         email,

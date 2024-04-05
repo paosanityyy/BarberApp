@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import Config from 'react-native-config';
 
 const ReviewsScreen = ({ navigation }) => {
     const [reviews, setReviews] = useState([]);
@@ -9,7 +10,7 @@ const ReviewsScreen = ({ navigation }) => {
         // Here you would fetch reviews from your backend
         const fetchReviews = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/reviews');
+            const response = await fetch(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/reviews`);
             const data = await response.json();
             setReviews(data);
         } catch (error) {

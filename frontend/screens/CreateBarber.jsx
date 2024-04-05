@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, View, Text, StyleSheet, TextInput } from 'react-native';
 import axios from 'axios';
+import Config from 'react-native-config';
 
 const CreateBarber = () => {
     const [barberUsername, setBarberUsername] = useState('');
@@ -31,7 +32,7 @@ const CreateBarber = () => {
         }
 
         try {
-            const signUpResponse = await axios.post('http://localhost:3000/api/users/create-barber', {
+            const signUpResponse = await axios.post(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/users/create-barber`, {
                 username: barberUsername,
                 password: barberPassword,
                 firstName: barberFirstName,
