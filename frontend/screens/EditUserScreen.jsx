@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {View, TextInput, Text, TouchableOpacity, StyleSheet, Alert} from 'react-native';
-import {useAuth} from '../AuthContext';
+import axios from "axios";
 
 const EditUserScreen = ({route, navigation}) => {
-    const {updateUserDetails} = useAuth();
 
     const {userDetails} = route.params;
 
@@ -24,8 +23,14 @@ const EditUserScreen = ({route, navigation}) => {
 
     const handleSubmit = async () => {
         try {
+            const userData = {
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                phone: phone
+            };
             // Attempt to update user details
-            await updateUserDetails({firstName, lastName, email, phone});
+            await axios.put( `https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/users/${userDetails._id}`, userData);
 
             // On success, show an alert and navigate back
             Alert.alert(

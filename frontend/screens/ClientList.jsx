@@ -34,9 +34,16 @@ const ClientList = ({navigation}) => {
         navigation.navigate('EditUserScreen', { userDetails });
     };
 
+    const handleRefresh = () => {
+        fetchClients().then(r => console.log('Clients fetched'));
+    };
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Clients</Text>
+            <TouchableOpacity style={styles.refreshButton} onPress={handleRefresh}>
+                <Text style={styles.refreshButtonText}>Refresh</Text>
+            </TouchableOpacity>
             <FlatList
                 data={clients}
                 keyExtractor={(item) => item._id}
@@ -73,6 +80,18 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 10,
+    },
+    refreshButton: {
+        backgroundColor: '#3e3e3e',
+        padding: 10,
+        width: 100,
+        marginBottom: 10,
+        borderRadius: 5,
+        alignSelf: 'flex-end',
+    },
+    refreshButtonText: {
+        color: 'white',
+        textAlign: 'center',
     },
     clientBox: {
         flexDirection: 'row',

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, View, Text, StyleSheet, TextInput } from 'react-native';
 import axios from 'axios';
-import Config from 'react-native-config';
+
 
 const CreateBarber = () => {
     const [barberUsername, setBarberUsername] = useState('');
