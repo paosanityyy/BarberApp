@@ -199,6 +199,7 @@ function AppNavigator() {
                         <>
                             <Drawer.Screen name='BarberProfile' component={BarberProfile}/>
                             <Drawer.Screen name='EditBarberScreen' component={EditBarberScreen}/>
+                            <Drawer.Screen name='ViewAppointment' component={ViewAppointment} />
                         </>
                     ) : (
                         <>

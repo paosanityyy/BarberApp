@@ -11,7 +11,7 @@ const BarberList = ({ navigation }) => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/users/barbers/${id}`);
+            await axios.delete(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/users/${id}`);
             // Update your state or data source to reflect the deletion
             console.log(`Barber with id ${id} has been deleted`);
         } catch (error) {
@@ -34,9 +34,16 @@ const BarberList = ({ navigation }) => {
         navigation.navigate('EditBarberScreen', { userDetails });
     };
 
+    const handleRefresh = () => {
+        fetchBarbers().then(r => console.log('Barbers fetched'));
+    };
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Barbers</Text>
+            <TouchableOpacity style={styles.refreshButton} onPress={handleRefresh}>
+                <Text style={styles.refreshButtonText}>Refresh</Text>
+            </TouchableOpacity>
             <FlatList
                 data={barbers}
                 keyExtractor={(item) => item._id}
@@ -73,6 +80,18 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 10,
+    },
+    refreshButton: {
+        backgroundColor: '#3e3e3e',
+        padding: 10,
+        width: 100,
+        marginBottom: 10,
+        borderRadius: 5,
+        alignSelf: 'flex-end',
+    },
+    refreshButtonText: {
+        color: 'white',
+        textAlign: 'center',
     },
     barberBox: {
         flexDirection: 'row',

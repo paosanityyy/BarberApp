@@ -1,19 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {View, TextInput, StyleSheet, Text, TouchableOpacity, Alert} from 'react-native';
-import {useAuth} from '../AuthContext';
-
+import axios from "axios";
 
 const EditBarberScreen = ({route, navigation}) => {
-    const {updateUserDetails} = useAuth();
 
     const {userDetails} = route.params;
-
 
     const [firstName, setFirstName] = useState(userDetails.firstName);
     const [lastName, setLastName] = useState(userDetails.lastName);
     const [email, setEmail] = useState(userDetails.email);
     const [phone, setPhone] = useState(userDetails.phone);
-
 
     useEffect(() => {
         // Update state when userDetails change
@@ -25,14 +21,20 @@ const EditBarberScreen = ({route, navigation}) => {
 
     const handleSubmit = async () => {
         try {
+            const userData = {
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                phone: phone
+            };
             // Attempt to update user details
-            await updateUserDetails({firstName, lastName, email, phone});
-
+            await axios.put( `https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/users/${userDetails._id}`, userData);
             // On success, show an alert and navigate back
             Alert.alert(
                 "Success",
                 "User details updated successfully",
                 [{text: "OK", onPress: () => navigation.navigate('BarberList')}]
+
             );
         } catch (error) {
             console.error('Error updating user details:', error);
@@ -52,7 +54,7 @@ const EditBarberScreen = ({route, navigation}) => {
             <TextInput
                 style={styles.editInput}
                 value={firstName}
-                onChangeText={setFirstName}
+                onChangeText= {setFirstName}
                 placeholder="First Name"
             />
             <Text style={styles.bodyLabel}>Last name</Text>

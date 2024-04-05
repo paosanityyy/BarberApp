@@ -128,7 +128,7 @@ router.get('/', async (req, res) => {
 
 router.get('/clients', async (req, res) => {
   try {
-    const users = await User.find({ role: 'client' }); // Only retrieve users with the role 'barber'
+    const users = await User.find({ role: 'client' }); // Only retrieve users with the role 'client'
     res.status(200).json(users);
   } catch (err) {
     res.status(500).json(err);
@@ -152,12 +152,12 @@ router.get('/:id', async (req, res) => {
 // Update a user
 router.put('/:id', async (req, res) => {
   try {
-    const updatedUser = await User.findByIdAndUpdate(
+    await User.findByIdAndUpdate(
       req.params.id,
       { $set: req.body },
       { new: true }
     );
-    res.status(200).json(updatedUser);
+    res.status(200).json({message: "User has been updated."});
   } catch (err) {
     res.status(500).json(err);
   }
@@ -172,8 +172,6 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json(err);
   }
 });
-
-
 
 // Additional routes for barbers and clients can be placed here
 
