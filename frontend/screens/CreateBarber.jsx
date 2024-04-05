@@ -10,7 +10,6 @@ const CreateBarber = ({navigation}) => {
     const [barberLastName, setBarberLastName] = useState('');
     const [barberEmail, setBarberEmail] = useState('');
     const [barberPhone, setBarberPhone] = useState('');
-    const [setBarbersAdded] = useState(null);
 
     const addBarber = async () => {
         const trimmedEmail = barberEmail.trim();
@@ -41,7 +40,6 @@ const CreateBarber = ({navigation}) => {
                 phone: trimmedPhone,
             });
             console.log(signUpResponse.data); // assuming you want to log the response
-            setBarbersAdded(true);
             Alert.alert(
                 "Success",
                 "Barber Profile Created Successfully",
@@ -60,9 +58,6 @@ const CreateBarber = ({navigation}) => {
         setBarberEmail('');
         setBarberPhone('');
 
-        setTimeout(() => {
-            setBarbersAdded(false);
-        }, 3000);
     };
     const handleBack = () => {
         navigation.navigate('UserManagement');
