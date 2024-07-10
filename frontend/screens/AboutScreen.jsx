@@ -15,7 +15,7 @@ const AboutScreen = ({ navigation }) => {
       };
     
       const openMaps = () => {
-        const url=`https://www.google.com/maps/search/?api=1&destination=${shopLocation.latitude},${shopLocation.longitude}`;
+        const url=`https://www.google.com/maps/dir//876+Weston+Rd,+York,+ON+M6N+3R6/@43.6832573,-79.563671,12z/data=!4m8!4m7!1m0!1m5!1m1!1s0x882b36adf353a0f9:0xc2273ff50c560674!2m2!1d-79.4812703!2d43.6832869?entry=ttu`;
         Linking.openURL(url);
       }
 
@@ -43,7 +43,7 @@ const AboutScreen = ({ navigation }) => {
             <Marker coordinate={shopLocation} title="Central Studios" />
             <TouchableOpacity style={styles.directionsButton} onPress={openMaps}>
             <Text style={styles.directionsButtonText}>
-                Get Directions  <FontAwesomeIcon icon={faPaperPlane} size={16} color="#ffffff"/>
+                Get Directions
             </Text>
             
           </TouchableOpacity>
@@ -253,15 +253,17 @@ mapContainer: {
   map: {
     height: 200,
     width: '100%',
+    height: 300,
     margin: 15,
 
   },
   directionsButton: {
     flexDirection: 'row',
-    backgroundColor: 'rgba(128, 128, 128, 0.7)', // Semi-transparent grey background
+    backgroundColor: 'rgba(128, 128, 128, 0.9)', // Semi-transparent grey background
     padding: 10,
     borderRadius: 5,
-    width: 180,
+    width: 130,
+    marginHorizontal: 15,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 15,

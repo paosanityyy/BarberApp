@@ -1,11 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {View, Text, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator, Alert} from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import { AuthContext } from '../AuthContext';
 
 
 const ViewBarberAppointment = ({navigation}) => {
+    const {user} = useContext(AuthContext)
     const [appointments, setAppointments] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -16,7 +18,7 @@ const ViewBarberAppointment = ({navigation}) => {
 
     const fetchAppointments = async () => {
         try {
-            const response = await axios.get(`/api/appointments/`);
+            const response = await axios.get(`/api/appointments/barber/${user._id}`);
             setAppointments(response.data);
         } catch (error) {
             console.log('Error fetching appointments:', error);

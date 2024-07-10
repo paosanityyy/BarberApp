@@ -1,54 +1,32 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import { useAuth } from '../AuthContext';
+import { AuthContext } from '../AuthContext';
+import axios from 'axios';
 
 const LoginScreen = ({ navigation }) => {
-    const [userName, setUserName] = useState('');
-    const [userPassword, setUserPassword] = useState('');
-    const { login } = useAuth(); // Destructure the login function from the authentication context
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [redirect, setRedirect] = useState(false);
+    const { setUser } = useContext(AuthContext);
 
     const loginUser = async () => {
-        if (!userName || !userPassword) {
-            alert('Please fill in all fields');
-            return;
-        }
-    
         try {
-            const response = await fetch(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/users/login`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username: userName, password: userPassword }),
-            });
-    
-            if (!response.ok) {
-                throw new Error('Invalid username or password');
-            }
-
-            const data = await response.json();
-    
-            // Assuming the response data includes user details such as email and phone
-            login(data.user); // Pass the user object to your login function
-
-            setUserName('');
-            setUserPassword('');
-
-            // Navigate based on user role
-            if (data.user.role === 'admin') {
-                navigation.navigate('Admin'); // Navigate to Admin screen if user is an admin
-            } else if (data.user.role === 'barber') {
-                navigation.navigate('Home'); // Navigate to Barber screen if user is a barber
-            } else {
-                navigation.navigate('Home'); // Navigate to Home screen for other roles
-            }
-        } catch (error) {
-            console.error('Login error:', error.message);
-            alert('Invalid username or password');
+            const {data} = await axios.post('/api/users/login', { username, password });
+            setUser(data);
+            setRedirect(true);
+        } catch (err) {
+            alert(`Invalid credentials: ${err}`);
         }
     };
-    
+
+    useEffect(() => {
+        if (redirect) {
+            navigation.navigate('Home');
+            setRedirect(false); // Reset redirect state
+        }
+    }, [redirect]);
+
     return (
         <View style={styles.container}>
             <Image source={require('../assets/logo.png')} style={styles.logo} />
@@ -56,16 +34,16 @@ const LoginScreen = ({ navigation }) => {
             <TextInput 
                 placeholder="Username"
                 placeholderTextColor="#c0c0c0"
-                value={userName}
-                onChangeText={setUserName}
+                value={username}
+                onChangeText={setUsername}
                 style={styles.input}
                 autoCapitalize="none"
             />
             <TextInput 
                 placeholder="Password"
                 placeholderTextColor="#c0c0c0"
-                value={userPassword}
-                onChangeText={setUserPassword}
+                value={password}
+                onChangeText={setPassword}
                 style={styles.input}
                 autoCapitalize="none"
                 secureTextEntry={true}
@@ -73,7 +51,7 @@ const LoginScreen = ({ navigation }) => {
             <TouchableOpacity style={styles.button} onPress={loginUser}>
                 <Text style={styles.buttonTxt}>Login</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.jumpTo("Signup")}>
+            <TouchableOpacity onPress={() => navigation.jumpTo("Register")}>
                 <Text style={styles.goToLogin}>Don't have an account yet? Sign up</Text>
             </TouchableOpacity>
             <Text style={styles.footerText}>
@@ -83,17 +61,14 @@ const LoginScreen = ({ navigation }) => {
     );
 };
 
-
 const styles = StyleSheet.create({
     createTitle: {
         padding: 20,
         fontSize: 26,
-        fontFamily: 'SourceCodePro',
     },
     goToLogin: {
         color: '#3e3e3e',
         marginTop: 20,
-        // fontFamily: 'Roboto',
         fontSize: 18,
     },
     container: {
@@ -115,7 +90,6 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         padding: 0,
         width: 350,
-        // fontFamily: 'Roboto',
     },
     button: {
         marginTop: 20,
@@ -129,8 +103,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: 'white',
         textAlign: 'center',
-        // fontFamily: 'Roboto',
-        fontFamily: 'SourceCodePro',
     },
     footerText: {
         textAlign: 'center',

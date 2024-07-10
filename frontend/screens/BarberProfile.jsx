@@ -78,7 +78,7 @@ const BarberProfile = ({ navigation }) => {
               onPress={() => navigation.navigate('ViewAppointment')}
           >
             <FontAwesomeIcon icon={faHistory} size={18} color="#FFF" />
-            <Text style={styles.bookingHistoryButtonText}>Bookings</Text>
+            <Text style={styles.bookingHistoryButtonText}>View Bookings</Text>
           </TouchableOpacity>
         </ScrollView>
 
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     margin: 40,
     alignSelf: 'center',
     borderRadius: 5,
-    width: 150,
+    width: 170,
   },
   bookingHistoryButtonText: {
     color: 'white',

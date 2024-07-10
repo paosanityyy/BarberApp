@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {View, Text, FlatList, StyleSheet, TouchableOpacity, Alert} from 'react-native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faArrowsRotate, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 
 const BarberList = ({ navigation }) => {
@@ -11,7 +13,7 @@ const BarberList = ({ navigation }) => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/users/${id}`);
+            await axios.delete(`/api/users/${id}`);
             // Update your state or data source to reflect the deletion
             console.log(`Barber with id ${id} has been deleted`);
             Alert.alert(
@@ -26,7 +28,7 @@ const BarberList = ({ navigation }) => {
 
     const fetchBarbers = async () => {
         try {
-            const response = await axios.get(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/users/barbers/`, {
+            const response = await axios.get(`/api/users/barbers/`, {
                 params: { role: 'barber' }
             });
             setBarbers(response.data);
@@ -50,13 +52,11 @@ const BarberList = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Barbers</Text>
+            
             <View style={styles.controlButtons}>
-                <TouchableOpacity style={styles.refreshButton} onPress={handleBack}>
-                    <Text style={styles.refreshButtonText}>Back</Text>
-                </TouchableOpacity>
+                <Text style={styles.title}>Barbers</Text>
                 <TouchableOpacity style={styles.refreshButton} onPress={handleRefresh}>
-                    <Text style={styles.refreshButtonText}>Refresh</Text>
+                    <FontAwesomeIcon icon={faArrowsRotate} color='#3e3e3e' size={24} />
                 </TouchableOpacity>
             </View>
             <FlatList
@@ -65,17 +65,17 @@ const BarberList = ({ navigation }) => {
                 renderItem={({ item }) => (
                     <View style={styles.barberBox}>
                         <View style={styles.barberInfo}>
-                            <Text style={styles.barberText}>Username: {item.username}</Text>
-                            <Text style={styles.barberText}>Name: {item.firstName} {item.lastName}</Text>
-                            <Text style={styles.barberText}>Email: {item.email}</Text>
-                            <Text style={styles.barberText}>Phone: {item.phone}</Text>
+                            <Text style={styles.barberText}><Text style={{fontWeight:'bold'}}>Username: </Text> {item.username}</Text>
+                            <Text style={styles.barberText}><Text style={{fontWeight:'bold'}}>Name: </Text>{item.firstName} {item.lastName}</Text>
+                            <Text style={styles.barberText}><Text style={{fontWeight:'bold'}}>Email: </Text>{item.email}</Text>
+                            <Text style={styles.barberText}><Text style={{fontWeight:'bold'}}>Phone: </Text>{item.phone}</Text>
                         </View>
                         <View style={styles.buttonContainer}>
-                            <TouchableOpacity style={styles.button} onPress={() => navigateToEditBarber(item)}>
-                                <Text>Edit</Text>
+                            <TouchableOpacity style={styles.editButton} onPress={() => navigateToEditBarber(item)}>
+                                <FontAwesomeIcon icon={faEdit} color='#3e3e3e' size={20}/>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.button} onPress={() => handleDelete(item._id)}>
-                                <Text>Delete</Text>
+                            <TouchableOpacity style={styles.editButton} onPress={() => handleDelete(item._id)}>
+                                <FontAwesomeIcon icon={faTrash} color='#3e3e3e' size={20}/>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -92,22 +92,18 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     title: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginBottom: 10,
-        alignSelf: 'center',
+        fontSize: 24,
+        fontWeight: '500',
     },
     controlButtons: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center',
         marginHorizontal: 20,
-        padding: 15
+        marginBottom: 20,
     },
     refreshButton: {
-        backgroundColor: '#3e3e3e',
         padding: 10,
-        width: 100,
-        marginBottom: 10,
         borderRadius: 5,
         alignSelf: 'flex-end',
     },
@@ -119,28 +115,26 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        borderWidth: 1,
-        borderColor: '#ccc',
+        backgroundColor: '#f2f2f2',
         borderRadius: 5,
-        padding: 10,
+        padding: 15,
         marginBottom: 10,
     },
     barberInfo: {
         flex: 1,
     },
     barberText: {
+        fontSize: 16,
         marginBottom: 5,
     },
     buttonContainer: {
         flexDirection: 'row',
         alignItems: 'center',
     },
-    button: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 5,
+    editButton: {
         padding: 5,
-        marginLeft: 10,
+        borderRadius: 5,
+        margin: 5,
     },
 });
 

@@ -24,14 +24,14 @@ const CreateBarber = ({navigation}) => {
             alert('Please enter a valid email address');
             return;
         }
-        const phonePattern = /^\d{3}-\d{3}-\d{4}$/;
+        const phonePattern = /^\d{10}$/;
         if (!phonePattern.test(trimmedPhone)) {
-            alert('Please enter a phone number in the format XXX-XXX-XXXX');
+            alert('Please enter 10 digit phone number');
             return;
         }
 
         try {
-            const signUpResponse = await axios.post(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/users/create-barber`, {
+            const signUpResponse = await axios.post(`/api/users/create-barber`, {
                 username: barberUsername,
                 password: barberPassword,
                 firstName: barberFirstName,
@@ -73,6 +73,7 @@ const CreateBarber = ({navigation}) => {
                 value={barberUsername}
                 onChangeText={setBarberUsername}
                 style={styles.input}
+                autoCapitalize='none'
             />
             <TextInput
                 placeholder="Password"
@@ -81,6 +82,7 @@ const CreateBarber = ({navigation}) => {
                 secureTextEntry={true}
                 onChangeText={setBarberPassword}
                 style={styles.input}
+                autoCapitalize='none'
             />
             <TextInput
                 placeholder="First Name"
@@ -102,6 +104,7 @@ const CreateBarber = ({navigation}) => {
                 value={barberEmail}
                 onChangeText={setBarberEmail}
                 style={styles.input}
+                autoCapitalize='none'
             />
             <TextInput
                 placeholder="Phone Number"
@@ -109,6 +112,7 @@ const CreateBarber = ({navigation}) => {
                 value={barberPhone}
                 onChangeText={setBarberPhone}
                 style={styles.input}
+                keyboardType='numeric'
             />
             <TouchableOpacity style={styles.button} onPress={addBarber}>
                 <Text style={styles.buttonTxt}>Add Barber</Text>

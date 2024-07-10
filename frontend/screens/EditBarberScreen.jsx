@@ -6,6 +6,7 @@ const EditBarberScreen = ({route, navigation}) => {
 
     const {userDetails} = route.params;
 
+    const [username, setUsername] = useState(userDetails.username);
     const [firstName, setFirstName] = useState(userDetails.firstName);
     const [lastName, setLastName] = useState(userDetails.lastName);
     const [email, setEmail] = useState(userDetails.email);
@@ -13,6 +14,7 @@ const EditBarberScreen = ({route, navigation}) => {
 
     useEffect(() => {
         // Update state when userDetails change
+        setUsername(userDetails.username);
         setFirstName(userDetails.firstName);
         setLastName(userDetails.lastName);
         setEmail(userDetails.email);
@@ -28,7 +30,7 @@ const EditBarberScreen = ({route, navigation}) => {
                 phone: phone
             };
             // Attempt to update user details
-            await axios.put( `https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/users/${userDetails._id}`, userData);
+            await axios.put( `/api/users/${userDetails._id}`, userData);
             // On success, show an alert and navigate back
             Alert.alert(
                 "Success",

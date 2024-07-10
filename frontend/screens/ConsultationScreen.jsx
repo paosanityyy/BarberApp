@@ -1,32 +1,50 @@
 import React, { useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
-import { View, Text, Picker, TextInput, StyleSheet, TouchableOpacity, Modal, KeyboardAvoidingView, Platform, Image, Button, Form} from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, KeyboardAvoidingView, Button, Form} from 'react-native';
+import axios from 'axios';
 
 const ConsultationScreen = () => {
+
+  //https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/consultations
+  //http://localhost:3000/api/consultations
 
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
+  const [submitMsg, setSubmitMsg] = useState('');
 
-  const sendEmail = event => {
-    event.preventDefault();
-
-    console.log('We will fill this up shortly.');
-    // code to trigger Sending email
+  const handleSubmit = async () => {
+    try {
+      const submitResponse = await axios.post(`/api/consultations`, {
+        fullName,
+        email,
+        subject,
+        message,
+      });
+  
+      // Check if the response status is 201
+      if (submitResponse.status === 201) {
+        // If successful, display the success message
+        setSubmitMsg('Inquiry submitted successfully');
+        // Reset form fields
+        setFullName('');
+        setEmail('');
+        setSubject('');
+        setMessage('');
+      } else {
+        // If not successful, display a generic error message
+        setSubmitMsg('Failed to submit inquiry');
+      }
+    } catch (error) {
+      // Handle different error scenarios
+      console.error('Error submitting inquiry:', error);
+      // Display a generic error message to the user
+      setSubmitMsg('Error submitting inquiry. Please try again.');
+    }
   };
-
-  const onInputChange = event => {
-    const { name, value } = event.target;
-
-    setState({
-      ...state,
-      [name]: value
-    });
-  };
-
+  
   return (
-
     <View style={styles.container}>
       <Text style={styles.title}>Inquiry Form</Text>
       <Text style={styles.label}>Name:</Text>
@@ -70,9 +88,11 @@ const ConsultationScreen = () => {
         style={styles.messageBox}
         autoCapitalize="none"
       />
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
           <Text style={styles.buttonTxt}>Submit</Text>
       </TouchableOpacity>
+      <Text style={{ color: 'red' }}>{submitMsg}</Text>
+      <Text style={styles.footerText}>© 2023 Central Studios. All Rights Reserved.</Text>
     </View>
   );
 };

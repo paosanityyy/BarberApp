@@ -13,10 +13,9 @@ const CustomDrawerContent = ({ navigation, user }) => {
           <>
             <Text>{user.username}</Text>
             <Text>{user.email}</Text>
-            {/* Display other user information */}
           </>
         ) : (
-          <Text>Login or Signup Here</Text>
+          <Text>Login or Sign up Here</Text>
         )}
       </View>
     </DrawerContentScrollView>

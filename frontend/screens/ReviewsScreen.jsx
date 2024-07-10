@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import Config from 'react-native-config';
+import axios from 'axios';
 
 const ReviewsScreen = ({ navigation }) => {
     const [reviews, setReviews] = useState([]);
-
     useEffect(() => {
         // Here you would fetch reviews from your backend
         const fetchReviews = async () => {
         try {
-            const response = await fetch(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/reviews`);
-            const data = await response.json();
-            setReviews(data);
+            const response = await axios.get(`/api/reviews`);
+            setReviews(response.data);
         } catch (error) {
             console.error('Error fetching reviews:', error);
         }

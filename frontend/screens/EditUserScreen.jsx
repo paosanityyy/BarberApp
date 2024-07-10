@@ -30,7 +30,7 @@ const EditUserScreen = ({route, navigation}) => {
                 phone: phone
             };
             // Attempt to update user details
-            await axios.put( `https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/users/${userDetails._id}`, userData);
+            await axios.put( `/api/users/${userDetails._id}`, userData);
 
             // On success, show an alert and navigate back
             Alert.alert(

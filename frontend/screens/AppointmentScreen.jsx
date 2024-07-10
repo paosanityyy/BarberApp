@@ -2,52 +2,31 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal, ScrollView, Alert, Image } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faComment, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faComment, faChevronDown, faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../AuthContext';
+import axios from 'axios';
 
-const AppointmentScreen = ({navigation}) => {
+const AppointmentScreen = ({ navigation }) => {
     const { user } = useAuth();
     const [selectedDate, setSelectedDate] = useState('');
     const [markedDates, setMarkedDates] = useState({});
     const [selectedTime, setSelectedTime] = useState(null);
-    const [bookedSlots, setBookedSlots] = useState([]);
     const [barbers, setBarbers] = useState([]);
-    const [selectedBarber, setSelectedBarber] = useState({id: '', name: 'Select Barber'}); // Initialize the selected barber with an empty object
+    const [selectedBarber, setSelectedBarber] = useState({ id: '', name: 'Select Barber' });
     const [selectedService, setSelectedService] = useState('Haircut');
     const [isBarberModalVisible, setBarberModalVisible] = useState(false);
     const [isServiceModalVisible, setServiceModalVisible] = useState(false);
+    const [isCalendarVisible, setCalendarVisible] = useState(false);
+    const [isTimeSlotsVisible, setTimeSlotsVisible] = useState(false);
 
     const services = ['Haircut', 'Haircut + Beard', 'Braids'];
     const timeSlots = ['10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM'];
 
-
-    if (!user) {
-        // Display login message if no user is logged in
-        return (
-            <View style={styles.container}>
-            <View style={styles.noUser}>
-                <Image source={require('../assets/logo.png')} style={styles.logo} />
-                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                    <Text style={styles.goToLogin}>Log in to book an appointment</Text>
-                </TouchableOpacity>
-                <Text style={styles.NoUserfooterText}>© 2023 Central Studios. All Rights Reserved.</Text>
-            </View>
-            </View>
-        );
-    }
-
-
     useEffect(() => {
         const fetchBarbers = async () => {
             try {
-                const response = await fetch(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/users/barbers`, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
-                if (!response.ok) throw new Error('Failed to fetch barbers');
-                const data = await response.json();
-                setBarbers(data);
+                const response = await axios.get(`/api/users/barbers`);
+                setBarbers(response.data);
             } catch (error) {
                 console.error('Error fetching barbers:', error);
                 Alert.alert('Error', 'Failed to fetch barbers');
@@ -56,7 +35,6 @@ const AppointmentScreen = ({navigation}) => {
 
         fetchBarbers();
     }, []);
-
 
     useEffect(() => {
         markMondays();
@@ -67,11 +45,9 @@ const AppointmentScreen = ({navigation}) => {
         const today = new Date();
         today.setHours(0, 0, 0, 0); // Normalize today's date
     
-        // Calculate the end date for marking Mondays (e.g., 12 months from today)
         const endDate = new Date(new Date().setMonth(today.getMonth() + 12));
     
         for (let date = new Date(today); date <= endDate; date.setDate(date.getDate() + 1)) {
-            // Check if the day is Monday
             if (date.getDay() === 1) {
                 const dateString = date.toISOString().split('T')[0];
     
@@ -90,74 +66,37 @@ const AppointmentScreen = ({navigation}) => {
         setMarkedDates(newMarkedDates);
     };
 
-    useEffect(() => {
-        const fetchBookedSlots = async () => {
-            if (selectedDate && selectedBarber.id) {
-                const formattedDate = selectedDate; // Ensure this is in the format your backend expects
-                try {
-                    const response = await fetch(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/appointments/bookedSlots?date=${formattedDate}&barberId=${selectedBarber.id}`, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                    });
-                    if (!response.ok) throw new Error('Failed to fetch booked slots');
-                    const bookedSlotsData = await response.json();
-                    setBookedSlots(bookedSlotsData); // Update your state with the fetched data
-                } catch (error) {
-                    console.error('Error fetching booked slots:', error);
-                    Alert.alert('Error', 'Failed to fetch booked slots');
-                }
-            }
-        };
-    
-        fetchBookedSlots();
-    }, [selectedDate, selectedBarber.id]);
-    
 
     const createAppointment = async () => {
-    const timeZoneOffset = new Date().getTimezoneOffset() * 60000; // in milliseconds
-    const localDate = new Date(selectedDate);
-    const adjustedDate = new Date(localDate.getTime() + timeZoneOffset);
-    
-    const appointmentDate = new Date(adjustedDate);
-    const [selectedHour, modifier] = selectedTime.split(' ');
-    let [hours, minutes] = selectedHour.split(':');
-    hours = parseInt(hours);
-    minutes = parseInt(minutes);
+        const timeZoneOffset = new Date().getTimezoneOffset() * 60000; // in milliseconds
+        const localDate = new Date(selectedDate);
+        const adjustedDate = new Date(localDate.getTime() + timeZoneOffset);
+        
+        const appointmentDate = new Date(adjustedDate);
+        const [selectedHour, modifier] = selectedTime.split(' ');
+        let [hours, minutes] = selectedHour.split(':');
+        hours = parseInt(hours);
+        minutes = parseInt(minutes);
 
-    if (modifier === 'PM' && hours < 12) {
-        hours += 12;
-    } else if (modifier === 'AM' && hours === 12) {
-        hours = 0;
-    }
+        if (modifier === 'PM' && hours < 12) {
+            hours += 12;
+        } else if (modifier === 'AM' && hours === 12) {
+            hours = 0;
+        }
 
-    appointmentDate.setHours(hours, minutes);
+        appointmentDate.setHours(hours, minutes);
 
-    const appointmentDetails = {
-        clientId: user.id,
-        barberId: selectedBarber.id,
-        service: selectedService,
-        date: appointmentDate.toISOString(), // Send the adjusted date
-    };
+        const appointmentDetails = {
+            clientId: user._id,
+            barberId: selectedBarber.id,
+            service: selectedService,
+            date: appointmentDate.toISOString(), // Send the adjusted date
+        };
 
         console.log('Creating appointment:', appointmentDetails);
 
         try {
-            const response = await fetch(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/appointments`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(appointmentDetails),
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                console.error('Appointment creation failed:', errorData);
-                Alert.alert('Error', 'Failed to create appointment');
-                return;
-            }
+            const response = await axios.post(`/api/appointments`, appointmentDetails);
 
             const appointmentDetailsForScreen = {
                 name: user.firstName,
@@ -189,11 +128,11 @@ const AppointmentScreen = ({navigation}) => {
                             key={barber._id}
                             style={styles.modalItem}
                             onPress={() => {
-                                setValue({id: barber._id, name: barber.firstName}); // Update this line
+                                setValue({ id: barber._id, name: barber.firstName });
                                 setModalVisible(false);
                             }}
                         >
-                            <Text style={{color: selectedValue.id === barber._id ? '#000' : '#666'}}>
+                            <Text style={{ color: selectedValue.id === barber._id ? '#000' : '#666' }}>
                                 {barber.firstName}
                             </Text>
                         </TouchableOpacity>
@@ -201,7 +140,7 @@ const AppointmentScreen = ({navigation}) => {
                 </View>
             </TouchableOpacity>
         </Modal>
-    );    
+    );
 
     const renderServicesDropDown = (options, selectedValue, setValue, setModalVisible) => (
         <Modal
@@ -233,53 +172,27 @@ const AppointmentScreen = ({navigation}) => {
         </Modal>
     );
 
-
-    return (
-        <View style={{backgroundColor: 'white'}}>
-            <ScrollView>
-                <Text style={{fontSize: 24, textAlign: 'center', marginTop: 20, fontWeight: 'bold'}}>Book an Appointment</Text>
-                <View style={styles.container}>
-                    {/* Select Barber */}
-                    <View style={styles.dropdownContainer}>
-                        <Text style={styles.headerTxt}>Select Barber: </Text>
-                        <TouchableOpacity
-                            style={styles.dropdownButton}
-                            onPress={() => setBarberModalVisible(true)}
-                        >
-                            <View style={{flexDirection:'row', justifyContent: 'space-between', alignItems:'center'}}>
-                                <Text style={styles.selectedField}>{selectedBarber.name}</Text>
-                                <FontAwesomeIcon icon={faChevronDown} size={12} color="#000" />
-                            </View>
-                        </TouchableOpacity>
-                        {isBarberModalVisible && renderBarberDropDown(barbers, selectedBarber, setSelectedBarber, setBarberModalVisible)}
-
-                    </View>
-                    
-                    {/* Select Service */}
-                    <View style={styles.dropdownContainer}>
-                        <Text style={styles.headerTxt}>Select Service:</Text>
-                        <TouchableOpacity
-                            style={styles.dropdownButton}
-                            onPress={() => setServiceModalVisible(true)}
-                        >
-                            <View style={{flexDirection:'row', justifyContent: 'space-between', alignItems:'center'}}>
-                                <Text style={styles.selectedField}>{selectedService}</Text>
-                                <FontAwesomeIcon icon={faChevronDown} size={12} color="#000" />
-                            </View>
-                        </TouchableOpacity>
-                        {isServiceModalVisible && renderServicesDropDown(services, selectedService, setSelectedService, setServiceModalVisible)}
-                    </View>
-
-                    <Text style={styles.headerTxt}>Select Date:</Text>
+    const renderCalendarModal = () => (
+        <Modal
+            transparent={true}
+            visible={true}
+            onRequestClose={() => setCalendarVisible(false)}
+        >
+            <TouchableOpacity
+                style={styles.modalOverlay}
+                onPress={() => setCalendarVisible(false)}
+            >
+                <View style={styles.modalContent}>
                     <Calendar
                         markingType={'custom'}
                         markedDates={{
-                            ...markedDates, // This includes the marking of Mondays as non-selectable
-                            [selectedDate]: { ...markedDates[selectedDate], selected: true, selectedColor: '#333333' }, // Merge any existing marks with the selection
+                            ...markedDates,
+                            [selectedDate]: { ...markedDates[selectedDate], selected: true, selectedColor: '#333333' },
                         }}
                         onDayPress={(day) => {
-                            if (!markedDates[day.dateString]?.disabled) { // Check if the day is not disabled (not a Monday in this context)
+                            if (!markedDates[day.dateString]?.disabled) {
                                 setSelectedDate(day.dateString);
+                                setCalendarVisible(false);
                             }
                         }}
                         style={styles.calendar}
@@ -297,45 +210,140 @@ const AppointmentScreen = ({navigation}) => {
                             textDayHeaderFontSize: 14,
                         }}
                     />
+                </View>
+            </TouchableOpacity>
+        </Modal>
+    );
 
-                    
-                    <Text style={styles.headerTxt}>Select Time:</Text>
-                    <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+    const renderTimeSlotsModal = () => (
+        <Modal
+            transparent={true}
+            visible={true}
+            onRequestClose={() => setTimeSlotsVisible(false)}
+        >
+            <TouchableOpacity
+                style={styles.modalOverlay}
+                onPress={() => setTimeSlotsVisible(false)}
+            >
+                <View style={styles.modalContent}>
+                    <View style={{ flexDirection: 'column', justifyContent:'center',  gap:10 }}>
                         {timeSlots.map((time, index) => {
-                            const isBooked = bookedSlots.includes(time); // Check if the current slot is booked
                             return (
-                                <TouchableOpacity
-                                    key={index}
-                                    disabled={isBooked}
-                                    style={{
-                                        padding: 10,
-                                        backgroundColor: isBooked ? 'grey' : selectedTime === time ? '#3e3e3e' : 'lightgrey',
-                                        borderRadius: 5,
-                                        margin: 5,
-                                        width: '45%',
-                                        alignItems: 'center',
-                                    }}
-                                    onPress={() => setSelectedTime(time)}
-                                >
-                                    <Text style={{ color: isBooked ? 'darkgrey' : selectedTime === time ? 'white' : 'black' }}>
-                                        {time}
-                                    </Text>
-                                </TouchableOpacity>
+                                <View key={index}>
+                                    <TouchableOpacity
+                                        style={{
+                                            padding: 10,
+                                            backgroundColor: selectedTime === time ? '#3e3e3e' : 'lightgrey',
+                                            borderRadius: 5,
+                                            alignItems: 'center',
+                                        }}
+                                        onPress={() => {
+                                            setSelectedTime(time);
+                                            setTimeSlotsVisible(false);
+                                        }}
+                                    >
+                                        <Text style={{ color: selectedTime === time ? 'white' : 'black' }}>
+                                            {time}
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
                             );
                         })}
                     </View>
                 </View>
-                
+            </TouchableOpacity>
+        </Modal>
+    );
+
+    // Early return for non-logged in users should be here to avoid hook issues
+    if (!user) {
+        return (
+            <View style={styles.container}>
+                <View style={styles.noUser}>
+                    <Image source={require('../assets/logo.png')} style={styles.logo} />
+                    <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                        <Text style={styles.goToLogin}>Log in to book an appointment</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.NoUserFooterText}>© 2023 Central Studios. All Rights Reserved.</Text>
+                </View>
+            </View>
+        );
+    }
+
+    return (
+        <View>
+            <ScrollView style={{ backgroundColor: 'white', height: '100%' }}>
+                <Text style={{ fontSize: 24, textAlign: 'center', marginTop: 20, fontWeight: 'bold' }}>Book an Appointment</Text>
+                <View style={styles.container}>
+                    {/* Select Barber */}
+                    <View style={styles.dropdownContainer}>
+                        <Text style={styles.headerTxt}>Select Barber: </Text>
+                        <TouchableOpacity
+                            style={styles.dropdownButton}
+                            onPress={() => setBarberModalVisible(true)}
+                        >
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <Text style={styles.selectedField}>{selectedBarber.name}</Text>
+                                <FontAwesomeIcon icon={faChevronDown} size={12} color="#000" />
+                            </View>
+                        </TouchableOpacity>
+                        {isBarberModalVisible && renderBarberDropDown(barbers, selectedBarber, setSelectedBarber, setBarberModalVisible)}
+                    </View>
+
+                    {/* Select Service */}
+                    <View style={styles.dropdownContainer}>
+                        <Text style={styles.headerTxt}>Select Service:</Text>
+                        <TouchableOpacity
+                            style={styles.dropdownButton}
+                            onPress={() => setServiceModalVisible(true)}
+                        >
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <Text style={styles.selectedField}>{selectedService}</Text>
+                                <FontAwesomeIcon icon={faChevronDown} size={12} color="#000" />
+                            </View>
+                        </TouchableOpacity>
+                        {isServiceModalVisible && renderServicesDropDown(services, selectedService, setSelectedService, setServiceModalVisible)}
+                    </View>
+
+                    {/* Select Date */}
+                    <View style={styles.dropdownContainer}>
+                        <Text style={styles.headerTxt}>Select Date:</Text>
+                        <TouchableOpacity
+                            style={styles.dropdownButton}
+                            onPress={() => setCalendarVisible(true)}
+                        >
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <Text style={styles.selectedField}>{selectedDate || 'YYYY-MM-dd'}</Text>
+                                <FontAwesomeIcon icon={faCalendar} size={12} color="#000" />
+                            </View>
+                        </TouchableOpacity>
+                        {isCalendarVisible && renderCalendarModal()}
+                    </View>
+
+                    {/* Select Time */}
+                    <View style={styles.dropdownContainer}>
+                        <Text style={styles.headerTxt}>Select Time:</Text>
+                        <TouchableOpacity
+                            style={styles.dropdownButton}
+                            onPress={() => setTimeSlotsVisible(true)}
+                        >
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <Text style={styles.selectedField}>{selectedTime || 'Select Time'}</Text>
+                                <FontAwesomeIcon icon={faChevronDown} size={12} color="#000" />
+                            </View>
+                        </TouchableOpacity>
+                        {isTimeSlotsVisible && renderTimeSlotsModal()}
+                    </View>
+                </View>
+
                 <TouchableOpacity style={styles.button} onPress={createAppointment}>
                     <Text style={styles.buttonTxt}>Book Appointment</Text>
                 </TouchableOpacity>
 
             </ScrollView>
 
-            {/* Floating Action Button */}
             <TouchableOpacity
                 style={styles.fab}
-                // on press navigate to consultation screen
                 onPress={() => navigation.jumpTo("Consultation")}
             >
                 <FontAwesomeIcon icon={faComment} color='#ffffff' size={24} />
@@ -345,13 +353,15 @@ const AppointmentScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-    // Add your existing styles here
-    container:{
-        backgroundColor:'white',
-        padding: 40,
+    container: {
+        flex: 1,
+        backgroundColor: 'white',
+        padding: 50
     },
-    dropdownContainer:{
+    dropdownContainer: {
+        padding: 10,
         flexDirection: 'row',
+        alignSelf: 'center',
     },
     button: {
         backgroundColor: '#3e3e3e',
@@ -363,22 +373,19 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     buttonTxt: {
-        fontSize: 16,
+        fontSize: 18,
         color: 'white',
         textAlign: 'center',
-        // fontFamily: 'Roboto',
     },
     headerTxt: {
-        fontSize: 16,
+        fontSize: 18,
         marginTop: 20,
         marginBottom: 0,
-        // fontFamily: 'Roboto',
     },
     calendar: {
         marginTop: 10,
         marginBottom: 20,
     },
-    
     fab: {
         position: 'absolute',
         backgroundColor: '#3e3e3e',
@@ -414,15 +421,18 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     selectedField: {
-        // fontFamily: 'Roboto',
+        color: '#000',
+        fontSize: 18,
+    },
+    selectedDate: {
+        alignSelf: 'center',
     },
     noUser: {
         padding: 20,
         marginTop: 110,
-      },
-      goToLogin: {
+    },
+    goToLogin: {
         color: 'white',
-        // fontFamily: 'Roboto',
         fontSize: 18,
         fontWeight: 'bold',
         backgroundColor: 'black',
@@ -430,20 +440,19 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignSelf: 'center',
         marginTop: 80,
-      },
-      logo: {
+    },
+    logo: {
         marginTop: 0,
         width: 310,
         height: 85,
-        alignSelf: 'center', // Adjust the alignment of the logo
-      },
-      NoUserfooterText: {
+        alignSelf: 'center',
+    },
+    NoUserFooterText: {
         textAlign: 'center',
         padding: 0,
         marginTop: 380,
         fontWeight: '100',
-      }
-    // Extend your existing styles
+    }
 });
 
 export default AppointmentScreen;

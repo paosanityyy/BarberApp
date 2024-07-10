@@ -11,7 +11,7 @@ const ClientList = ({navigation}) => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/users/${id}`);
+            await axios.delete(`/api/users/${id}`);
             console.log(`User with id ${id} has been deleted`);
             // Update your state or data source to reflect the deletion
             Alert.alert(
@@ -26,7 +26,7 @@ const ClientList = ({navigation}) => {
 
     const fetchClients = async () => {
         try {
-            const response = await axios.get(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/users/clients`, {
+            const response = await axios.get(`/api/users/clients`, {
                 params: {role: 'client'}
             });
             setClients(response.data);

@@ -55,7 +55,10 @@ router.get('/', async (req, res) => {
 // Get appointments for a barber
 router.get('/barber/:barberId', async (req, res) => {
     try {
-        const appointments = await Appointment.find({ barberId: req.params.barberId });
+        const appointments = await Appointment.find({ barberId: req.params.barberId })
+                                            .populate('clientId', 'firstName')
+                                            .populate('barberId', 'firstName')
+                                            .sort({ date: -1 });
         res.status(200).json(appointments);
     } catch (err) {
         res.status(500).json(err);
@@ -72,70 +75,13 @@ router.get('/client/:clientId', async (req, res) => {
     }
 });
 
-// fetch booked slots for a barber on a specific date
-router.get('/bookedSlots', async (req, res) => {
-    const { date, barberId } = req.query;
-
-    if (!date || !barberId) {
-        return res.status(400).json({ message: 'Date and barber ID are required' });
-    }
-
+// Mark an appointment as completed
+router.put('/complete/:appointmentId', async (req, res) => {
     try {
-        // Assuming your Appointment model has a date field that stores the date and time
-        // of the appointment and a barberId field for the barber's ID
-        const appointments = await Appointment.find({
-            barberId: barberId,
-            date: {
-                $gte: new Date(date),
-                $lt: new Date(new Date(date).getTime() + 24 * 60 * 60 * 1000), // Next day
-            },
-        });
-
-        // Extract just the time part of the booked appointments
-        const bookedSlots = appointments.map(appointment => {
-            const appointmentDate = new Date(appointment.date);
-            return `${appointmentDate.getHours()}:${appointmentDate.getMinutes() === 0 ? '00' : appointmentDate.getMinutes()}`;
-            // Or format the time as needed to match your timeSlots format
-        });
-
-        res.json(bookedSlots);
+        const updatedAppointment = await Appointment.findByIdAndUpdate(req.params.appointmentId, { status: 'completed' }, { new: true });
+        res.status(200).json(updatedAppointment);
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Error fetching booked slots', error: err });
-    }
-});
-
-
-// fetch booked slots for a barber on a specific date
-router.get('/bookedSlots', async (req, res) => {
-    const { date, barberId } = req.query;
-
-    if (!date || !barberId) {
-        return res.status(400).json({ message: 'Date and barber ID are required' });
-    }
-
-    try {
-        // Assuming your Appointment model has a date field that stores the date and time
-        // of the appointment and a barberId field for the barber's ID
-        const appointments = await Appointment.find({
-            barberId: barberId,
-            date: {
-                $gte: new Date(date),
-                $lt: new Date(new Date(date).getTime() + 24 * 60 * 60 * 1000), // Next day
-            },
-        });
-
-        // Extract just the time part of the booked appointments
-        const bookedSlots = appointments.map(appointment => {
-            const appointmentDate = new Date(appointment.date);
-            return `${appointmentDate.getHours()}:${appointmentDate.getMinutes() === 0 ? '00' : appointmentDate.getMinutes()}`;
-            // Or format the time as needed to match your timeSlots format
-        });
-
-        res.json(bookedSlots);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Error fetching booked slots', error: err });
+        res.status(500).json(err);
     }
 });
 

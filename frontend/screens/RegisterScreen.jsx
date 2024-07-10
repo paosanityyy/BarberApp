@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import axios from 'axios';
-import Config from 'react-native-config';
-import { ScrollView } from 'react-native-gesture-handler';
 
-const SignupScreen = ({ navigation }) => {
+export default function RegisterScreen({ navigation }){
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -12,11 +10,11 @@ const SignupScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [signUpMsg, setSignUpMsg] = useState('');
-  const API_URL = Config.API_URL;
 
-  const handleSignup = async () => {
+  async function handleSignUp(e) {
+    e.preventDefault();
     try {
-      const signUpResponse = await axios.post(`https://centralstudios-ca-a198e1dad7a2.herokuapp.com/api/users/signup`, {
+      const signUpResponse = await axios.post(`/api/users/register`, {
         firstName,
         lastName,
         email,
@@ -105,11 +103,11 @@ const SignupScreen = ({ navigation }) => {
         onChangeText={setPassword}
         autoCapitalize='none'
       />
-      <TouchableOpacity style={styles.button} onPress={handleSignup}>
+      <TouchableOpacity style={styles.button} onPress={handleSignUp}>
         <Text style={styles.buttonTxt}>Sign Up</Text>
       </TouchableOpacity>
       {/* display message when sign up fails */}
-      <Text style={{ color: 'red' }}>{signUpMsg}</Text>
+      
       
       <TouchableOpacity onPress={() => navigation.jumpTo('Login')}>
         <Text style={styles.goToLogin}>Already have an account? Login</Text>
@@ -124,7 +122,6 @@ const styles = StyleSheet.create({
   createTitle: {
     padding: 20,
     fontSize: 26,
-    fontFamily: 'SourceCodePro',
   },
   goToLogin: {
     color: '#3e3e3e',
@@ -175,5 +172,3 @@ const styles = StyleSheet.create({
     // fontFamily: 'Roboto',
   },
 });
-
-export default SignupScreen;
